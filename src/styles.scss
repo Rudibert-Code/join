@@ -1,17 +1,95 @@
 :root {
-  --main_header: #2A3647;
-  --main_white: #F6F7F8;
-  --main_blue: #29ABE2;
-  --user_orange: #FFA35E;
-  --user_pink: #FF5EB3;
-  --user_blue: #6E52FF;
-  --user_purple: #9327FF;
-  --user_lightblue: #00BEE8;
-  --user_red: #FF745E;
-  --label_user: #0038FF;
-  --label_technical: #1FD7C1;
-  --priority_urgent: #FF3D00;
-  --priority_medium: #FFA800;
-  --priority_low: #7AE229;
-  --requirement: #E60026;
+  --main_header: #2a3647;
+  --main_white: #f6f7f8;
+  --main_black: #000000;
+  --main_blue: #29abe2;
+  --user_orange: #ffa35e;
+  --user_pink: #ff5eb3;
+  --user_blue: #6e52ff;
+  --user_purple: #9327ff;
+  --user_lightblue: #00bee8;
+  --user_red: #ff745e;
+  --label_user: #0038ff;
+  --label_technical: #1fd7c1;
+  --priority_urgent: #ff3d00;
+  --priority_medium: #ffa800;
+  --priority_low: #7ae229;
+  --requirement: #e60026;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/join/public/assets/fonts/Inter_18pt-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/join/public/assets/fonts/Inter_18pt-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+html,
+body {
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 6.4rem;
+  color: var(--main_black);
+}
+
+h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 6.1rem;
+  color: var(--main_black);
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 4.7rem;
+  color: var(--main_blue);
+}
+
+p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: var(--main_black);
+}
+
+span {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: var(--main_white);
+}
+
+button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: var(--main_white);
+  padding: 10px 24px;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
