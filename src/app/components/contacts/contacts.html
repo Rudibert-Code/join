@@ -1,13 +1,5 @@
 <section class="contacts_base">
-    <section class="contacts_container">
-        @for (user of placeholders; track $index) {
-            <section class="contact">
-                <div class="contact-icon_base" id=""></div>
-                <div class="contact_info">
-                    <p>{{user.name}} {{user.surname}}</p>
-                    <p class="email">{{user.eMail}}</p>
-                </div>
-            </section>
-        }
-    </section>
+    {{sortByAlphabet()}}
+    <div class="contacts_container" id="contact_list">
+    </div>
 </section>
