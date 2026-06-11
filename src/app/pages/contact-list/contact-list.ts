@@ -5,7 +5,7 @@ import { App } from "../../app";
 
 @Component({
   selector: 'app-contact-list',
-  imports: [Header, NavBar, App],
+  imports: [Header, NavBar],
   templateUrl: './contact-list.html',
   styleUrl: './contact-list.scss',
 })
