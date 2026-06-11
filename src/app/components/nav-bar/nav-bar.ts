@@ -6,6 +6,7 @@ interface Functions{
   name:String,
   id:string,
   routlink:string
+  trigger?:string
 }
 
 @Component({
@@ -39,12 +40,14 @@ export class NavBar {
       img:'/assets/UI/icon_contacts.png',
       name:'Contacts',
       id:'contacs',
-      routlink:''
+      routlink:'',
+      trigger:''
     },
   ]
 
   // on click : background-color of all icons to default, then switch SELECTED icon background   
   selectOption(icon:Functions){
+
     let selectedIcon = document.getElementById(icon.id) as HTMLDivElement;
 
     for (let index = 0; index < this.function.length; index++) {
