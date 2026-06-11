@@ -1,0 +1,22 @@
+.contact-button_shape{
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    bottom: 0;
+    left: calc(100% - 40px);
+
+    width: 56px;
+    height: 56px;
+    border-radius: 100px;
+
+    background-color: var(--main_header);
+    box-shadow: 0 8px 5px rgba(0, 0, 0, 0.177);
+
+    &:hover{
+        background-color: var(--main_blue);
+    }
+}

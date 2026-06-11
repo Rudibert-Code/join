@@ -1,0 +1,8 @@
+<footer id="nav-bar">
+    @for (icons of function; track $index) {
+        <div (click)="selectOption(icons)" class="footer_icon" routerLink="{{icons.routlink}}" id="{{icons.id}}">
+            <img src="{{icons.img}}" alt="">
+            <p>{{icons.name}}</p>
+        </div>  
+    }
+</footer>
