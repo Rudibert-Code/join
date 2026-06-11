@@ -15,9 +15,19 @@ interface dummyList{
 export class Contacts {
   placeholders:dummyList[]=[
     {
+      name:"Helga",
+      surname:"Helga",
+      eMail:"helga@mail.de",
+    },
+    {
       name:"Alex",
       surname:"Alex",
       eMail:"alex@mail.de",
+    },
+    {
+      name:"Maria",
+      surname:"Maria",
+      eMail:"maria@mail.de",
     },
     {
       name:"Ben",
@@ -25,19 +35,12 @@ export class Contacts {
       eMail:"ben@mail.de",
     },
     {
-      name:"Helga",
-      surname:"Helga",
-      eMail:"helga@mail.de",
-    },
-    {
       name:"Herbert",
       surname:"Herbert",
       eMail:"herbert@mail.de",
     },
-    {
-      name:"Maria",
-      surname:"Maria",
-      eMail:"maria@mail.de",
-    },
   ]
+
+  sortByAlphabet(){
+  }
 }
