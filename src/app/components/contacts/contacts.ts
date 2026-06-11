@@ -50,8 +50,9 @@ export class Contacts {
 
   //sortByAlphabet(){
 //
-  //  this.reassembledList.slice(0,0);
-  //  
+  //  this.reassembledList.slice(0, 0);
+  //  console.log("FIRST STEP" , this.reassembledList)
+//
   //  // search sorce-array for user names > add user names to reassembling list 
   //  for (let index = 0; index < this.placeholders.length; index++) {
   //    this.userName = String(this.placeholders[index].name);
@@ -60,7 +61,7 @@ export class Contacts {
 //
   //  // sort reassembling list alphabetically
   //  this.reassembledList.sort();
-  //  console.log(this.reassembledList)
+  //  console.log("SECOND STEP" , this.reassembledList)
 //
   //}
 }
