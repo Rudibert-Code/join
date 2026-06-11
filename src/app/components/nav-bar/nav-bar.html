@@ -1,6 +1,6 @@
-<footer>
+<footer id="nav-bar">
     @for (icons of function; track $index) {
-        <div class="footer_icon" id="{{icons.id}}">
+        <div (click)="selectOption(icons)" class="footer_icon" id="{{icons.id}}">
             <img src="{{icons.img}}" alt="">
             <p>{{icons.name}}</p>
         </div>  
