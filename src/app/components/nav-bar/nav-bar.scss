@@ -3,11 +3,12 @@ footer{
     justify-content: space-between;
     align-items: center;
 
-
     z-index: 2;
 
+    position: absolute;
+    bottom: 0;
+
     width: 100%;
-    max-width: 428px;
     height: 80px;
     padding: 0 16px;
     background-color: var(--main_header);
