@@ -8,16 +8,18 @@
     z-index: 2;
 
     width: 100%;
-    max-width: 428px;
     height: 80px;
-    padding: 0 16px;
     background-color: var(--main_white);
     box-shadow: 0 8px 5px rgba(0, 0, 0, 0.177);
 
     >img{
         width: 32px;
         height: 39px;
+        padding-left: 16px;
     }
+}
+.user_icon_position{
+    padding-right: 16px;
 }
 .user_icon{
     display: flex;

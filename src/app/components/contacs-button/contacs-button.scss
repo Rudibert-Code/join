@@ -5,9 +5,11 @@
     justify-content: center;
     align-items: center;
 
+    z-index: 2;
+
     position: absolute;
-    bottom: 0;
-    left: calc(100% - 40px);
+    top: calc(100% - 152px);
+    left: calc(100% - 72px);
 
     width: 56px;
     height: 56px;

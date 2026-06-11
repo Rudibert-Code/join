@@ -1,16 +1,23 @@
 footer{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-
 
     z-index: 2;
 
+    position: absolute;
+    bottom: 0;
+
     width: 100%;
-    max-width: 428px;
     height: 80px;
-    padding: 0 16px;
     background-color: var(--main_header);
+
+    >section{
+        width: calc(100% - 32px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 .footer_icon{
     display: flex;
