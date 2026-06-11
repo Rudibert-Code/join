@@ -1,5 +1,13 @@
+import { NgSwitchCase } from '@angular/common';
 import { Injectable, signal } from '@angular/core';
 import { createClient } from '@supabase/supabase-js'
+
+interface Contact{
+  firstname: string,
+  lastname: string,
+  phone: string,
+  email: string,
+}
 
 
 @Injectable({
@@ -10,7 +18,7 @@ supabaseURL = 'https://voxswosamxhzcmspddjw.supabase.co'
 supabaseKey = 'sb_publishable_dtywlOnyxHoBjKZ9RHogMQ_xa3sIvBC'
 supabase = createClient(this.supabaseURL, this.supabaseKey)
 
-contacts = signal<{firstname:string, lastname:string, phone:string, email:string}[]>([])
+contacts = signal<Contact[]>([])
 
 // read all contacts and set it 
   async getContacts() {
@@ -22,11 +30,11 @@ contacts = signal<{firstname:string, lastname:string, phone:string, email:string
   }
 
 // create an contact
-  async setContact(contacts:{ firstname:string, lastname:string, phone:string, email:string }) {
+  async setContact(newContact: Contact) {
     const { data, error } = await this.supabase
   .from('contacts')
   .insert([
-    { contacts },
+    newContact,
   ])
   .select()
   }
