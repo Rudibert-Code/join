@@ -3,8 +3,8 @@ import { Injectable, signal } from '@angular/core';
 import { createClient } from '@supabase/supabase-js'
 
 interface Contact{
-  firstname: string,
-  lastname: string,
+  first_name: string,
+  last_name: string,
   phone: string,
   email: string,
 }
@@ -22,21 +22,33 @@ contacts = signal<Contact[]>([])
 
 // read all contacts and set it 
   async getContacts() {
-    let { data: contacts, error } = await this.supabase
-  .from('contacts')
-  .select('firstname, lastname, phone, email')
-  if(!contacts) return
-  this.contacts.set(contacts)
+    const { data: contacts, error } = await this.supabase
+      .from('contacts')
+      .select('first_name, last_name, phone, email')
+
+    if (error) {
+      console.error('Supabase getContacts error', error)
+      return
+    }
+
+    if (!contacts) {
+      this.contacts.set([])
+      return
+    }
+
+    this.contacts.set(contacts)
   }
 
 // create an contact
   async setContact(newContact: Contact) {
     const { data, error } = await this.supabase
-  .from('contacts')
-  .insert([
-    newContact,
-  ])
-  .select()
+      .from('contacts')
+      .insert([newContact])
+      .select()
+    if (data) {
+      await this.getContacts()
+    }
+    return data
   }
 
 // update contacts
@@ -44,7 +56,7 @@ contacts = signal<Contact[]>([])
 async updateContact(id:number) {
   const { data, error } = await this.supabase
   .from('contacts')
-  .update({ firstname: '', lastname: '', phone: '', email: '' })
+  .update({ first_name: '', last_name: '', phone: '', email: '' })
   .eq('id', id)
   .select()
 }

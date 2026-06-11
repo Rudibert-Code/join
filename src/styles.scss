@@ -22,15 +22,13 @@
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('/join/public/assets/fonts/Inter_18pt-Bold.ttf') format('truetype');
-  font-weight: 700;
+  font-family: 'Inter_18pt-Bold';
+  src: url('/assets/fonts/Inter_18pt-Bold.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('/join/public/assets/fonts/Inter_18pt-Regular.ttf') format('truetype');
-  font-weight: 400;
+  font-family: 'Inter_18pt-Regular';
+  src: url('/assets/fonts/Inter_18pt-Regular.ttf') format('truetype');
 }
 
 html,
@@ -41,43 +39,37 @@ body {
 }
 
 h1 {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-family: 'Inter_18pt-Bold', sans-serif;
   font-size: 6.4rem;
   color: var(--main_black);
 }
 
 h2 {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-family: 'Inter_18pt-Bold', sans-serif;
   font-size: 6.1rem;
   color: var(--main_black);
 }
 
 h3 {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-family: 'Inter_18pt-Bold', sans-serif;
   font-size: 4.7rem;
   color: var(--main_blue);
 }
 
 p {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
+  font-family: 'Inter_18pt-Regular', sans-serif;
   font-size: 1.6rem;
   color: var(--main_black);
 }
 
 span {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
+  font-family: 'Inter_18pt-Regular', sans-serif;
   font-size: 1.6rem;
   color: var(--main_white);
 }
 
 button {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
+  font-family: 'Inter_18pt-Regular', sans-serif;
   font-size: 1.6rem;
   color: var(--main_white);
   padding: 10px 24px;
@@ -89,8 +81,7 @@ button {
 }
 
 a {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
+  font-family: 'Inter_18pt-Regular', sans-serif;
   font-size: 1.6rem;
   text-decoration: none;
   &:hover {

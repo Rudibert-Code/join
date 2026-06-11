@@ -1,10 +1,5 @@
-import { Component } from '@angular/core';
-
-interface dummyList{
-  name:string,
-  surname:string,
-  eMail:string,
-}
+import { Component, inject } from '@angular/core';
+import { Supabase } from '../../supabase';
 
 @Component({
   selector: 'app-contacts',
@@ -14,53 +9,58 @@ interface dummyList{
 })
 export class Contacts {
 
-  placeholders:dummyList[]=[
-    {
-      name:"Helga",
-      surname:"Helga",
-      eMail:"helga@mail.de",
-    },
-    {
-      name:"Alex",
-      surname:"Alex",
-      eMail:"alex@mail.de",
-    },
-    {
-      name:"Maria",
-      surname:"Maria",
-      eMail:"maria@mail.de",
-    },
-    {
-      name:"Ben",
-      surname:"Ben",
-      eMail:"ben@mail.de",
-    },
-    {
-      name:"Herbert",
-      surname:"Herbert",
-      eMail:"herbert@mail.de",
-    },
-  ]
-  
-  userName:string = ""
-  reassembledList:string[]=[] 
-
-  searchedName:string = ""
-
-
-  sortByAlphabet(){
-
-    this.reassembledList.slice(0,0);
-
-    // search sorce-array for user names > add user names to reassembling list 
-    for (let index = 0; index < this.placeholders.length; index++) {
-      this.userName = String(this.placeholders[index].name);
-      this.reassembledList.splice(index, 0, this.userName);
-    }
-
-    // sort reassembling list alphabetically
-    this.reassembledList.sort();
-    console.log(this.reassembledList)
-
+  private db = inject(Supabase)
+    get contacts() {
+    return this.db.contacts()
   }
+
+  //placeholders:dummyList[]=[
+  //  {
+  //    name:"Helga",
+  //    surname:"Helga",
+  //    eMail:"helga@mail.de",
+  //  },
+  //  {
+  //    name:"Alex",
+  //    surname:"Alex",
+  //    eMail:"alex@mail.de",
+  //  },
+  //  {
+  //    name:"Maria",
+  //    surname:"Maria",
+  //    eMail:"maria@mail.de",
+  //  },
+  //  {
+  //    name:"Ben",
+  //    surname:"Ben",
+  //    eMail:"ben@mail.de",
+  //  },
+  //  {
+  //    name:"Herbert",
+  //    surname:"Herbert",
+  //    eMail:"herbert@mail.de",
+  //  },
+  //]
+  
+  //userName:string = ""
+  //reassembledList:string[]=[] 
+//
+  //searchedName:string = ""
+
+
+  //sortByAlphabet(){
+//
+  //  this.reassembledList.slice(0,0);
+  //  
+  //  // search sorce-array for user names > add user names to reassembling list 
+  //  for (let index = 0; index < this.placeholders.length; index++) {
+  //    this.userName = String(this.placeholders[index].name);
+  //    this.reassembledList.splice(index, 0, this.userName);
+  //  }
+//
+  //  // sort reassembling list alphabetically
+  //  this.reassembledList.sort();
+  //  console.log(this.reassembledList)
+//
+  //}
 }
