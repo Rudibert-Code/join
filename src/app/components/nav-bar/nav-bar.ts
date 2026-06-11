@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
+import { RouterLink } from "@angular/router";
 
 interface Functions{
   img:String,
   name:String,
-  id:string
+  id:string,
+  routlink:string
 }
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.scss',
 })
@@ -18,22 +20,26 @@ export class NavBar {
     {
       img:'/assets/UI/vector/icon_summary.svg',
       name:'Summary',
-      id:'summary'
+      id:'summary',
+      routlink:''
     },
     {
       img:'/assets/UI/vector/icon_add-task.svg',
       name:'Add Tasks',
-      id:'addtasks'
+      id:'addtasks',
+      routlink:''
     },
     {
       img:'/assets/UI/vector/icon_board.svg',
       name:'Board',
-      id:'board'
+      id:'board',
+      routlink:''
     },
     {
       img:'/assets/UI/icon_contacts.png',
       name:'Contacts',
-      id:'contacs'
+      id:'contacs',
+      routlink:''
     },
   ]
 
