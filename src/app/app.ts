@@ -17,5 +17,8 @@ export class App {
 
   ngOnInit(){
     this.dbService.getContacts()
+    //this.dbService.setContact({firstname:string, lastname:string, phone:string, email:string})
+    //this.dbService.updateContact({id:number})
+    //this.dbService.deleteContact({id:number})
   }
 }
