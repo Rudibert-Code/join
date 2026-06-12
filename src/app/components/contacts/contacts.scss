@@ -41,3 +41,17 @@
         color: var(--main_blue);
     }
 }
+.sorting_box{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    >p{
+        padding-left: 32px;
+    }
+}
+.separator{
+    width: 352px;
+    height: 2px;   
+    background-color: lab(0% 0 0 / 0.177);
+}
