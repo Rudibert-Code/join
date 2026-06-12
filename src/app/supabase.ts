@@ -19,12 +19,13 @@ export class Supabase {
 
   contacts = signal<Contact[]>([]);
 
-  // read all contacts and set it
+  /*
+   * this function read all contacts from the db and set it
+   */
   async getContacts() {
     const { data: contacts, error } = await this.supabase
       .from('contacts')
       .select('first_name, last_name, phone, email');
-
     if (error) {
       console.error('Supabase getContacts error', error);
       return;
@@ -38,7 +39,9 @@ export class Supabase {
     this.contacts.set(contacts);
   }
 
-  // create an contact
+  /*
+   * this function set the data in the Contactlist Component
+   */
   async setContact(newContact: Contact) {
     const { data, error } = await this.supabase.from('contacts').insert([newContact]).select();
     if (data) {
@@ -47,8 +50,11 @@ export class Supabase {
     return data;
   }
 
-  // update contacts
-
+  /*
+   * this function update the db with the form (edit)
+   *
+   * @param {number} id - This is the id you want to change the properties
+   */
   async updateContact(id: number) {
     const { data, error } = await this.supabase
       .from('contacts')
@@ -57,14 +63,18 @@ export class Supabase {
       .select();
   }
 
-  // delete contact
-
+  /*
+   * this function delete the id in the db
+   *
+   * @param {number} id - This is the id you want to delete
+   */
   async deleteContact(id: number) {
     const { error } = await this.supabase.from('contacts').delete().eq('id', id);
   }
 
-  // sort contact
-
+  /*
+   * this function sort the data in the Contactlist Component
+   */
   async sortContact() {
     const { data, error } = await this.supabase
       .from('contacts')
