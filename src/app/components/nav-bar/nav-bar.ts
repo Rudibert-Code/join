@@ -40,7 +40,7 @@ export class NavBar {
       img:'/assets/UI/icon_contacts.png',
       name:'Contacts',
       id:'contacs',
-      routlink:'',
+      routlink:'contact-list',
       trigger:''
     },
   ]
