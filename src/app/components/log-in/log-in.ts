@@ -5,6 +5,21 @@ import { RouterLink } from "@angular/router";
   selector: 'app-log-in',
   imports: [RouterLink],
   templateUrl: './log-in.html',
-  styleUrl: './log-in.scss',
+  styleUrls: ['./log-in.scss'],
 })
-export class LogIn {}
+export class LogIn {
+  iconSrc = 'assets/UI/icon_visibility-off.png';
+  private visibilityOnSrc = 'assets/UI/icon_visibility.png';
+  private visibilityOffSrc = 'assets/UI/icon_visibility-off.png';
+  showPassword() {
+    const password = document.getElementById("pwd") as HTMLInputElement | null;
+    if (!password) return;
+    if (password.type === "password") {
+      password.type = "text";
+      this.iconSrc = this.visibilityOnSrc;
+    } else {
+      password.type = "password";
+      this.iconSrc = this.visibilityOffSrc;
+    }
+  }
+}

@@ -8,33 +8,49 @@
       <div class="d-flex center">
         <div class="underline"></div>
       </div>
-      <div class="d-flex column">
-        <input
-          class="input-field"
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Email"
-          required
-        />
-        <input
-          class="input-field"
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Password"
-          required
-        />
+      <div class="d-flex column input-wrapper">
+        <div class="input-icon-wrapper">
+          <input
+            class="input-field"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <img
+            class="mail-icon"
+            src="assets/UI/icon_mail.png"
+            alt="mail icon"
+            (click)="showPassword()"
+          />
+        </div>
+        <div class="input-icon-wrapper">
+          <input
+            class="input-field"
+            type="password"
+            id="pwd"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <img
+            class="visibility-icon"
+            [src]="iconSrc"
+            alt="visibility icon"
+            (click)="showPassword()"
+          />
+        </div>
       </div>
     </div>
     <div class="d-flex column">
-        <button class="dark-btn">Log In</button>
-        <button class="white-btn">Guest Log In</button>
+      <button class="dark-btn">Log In</button>
+      <button class="white-btn">Guest Log In</button>
     </div>
   </section>
   <section class="d-flex center signup-wrapper">
     <p>Not a Member?</p>
-    <button class="dark-btn">Sign Up</button>
+    <button class="dark-btn-signup">Sign Up</button>
   </section>
   <footer class="d-flex center footer-wrapper">
     <a class="footer-links" routerLink="policy">Privacy Policy</a>
