@@ -1,0 +1,43 @@
+<main class="main-wrapper">
+  <header class="d-flex left-bound">
+    <img class="logo" src="assets/UI/logo_join.png" alt="company logo" />
+  </header>
+  <section class="d-flex column login-wrapper">
+    <div>
+      <h3 class="login">Log In</h3>
+      <div class="d-flex center">
+        <div class="underline"></div>
+      </div>
+      <div class="d-flex column">
+        <input
+          class="input-field"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
+        <input
+          class="input-field"
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+    </div>
+    <div class="d-flex column">
+        <button class="dark-btn">Log In</button>
+        <button class="white-btn">Guest Log In</button>
+    </div>
+  </section>
+  <section class="d-flex center signup-wrapper">
+    <p>Not a Member?</p>
+    <button class="dark-btn">Sign Up</button>
+  </section>
+  <footer class="d-flex center footer-wrapper">
+    <a class="footer-links" routerLink="policy">Privacy Policy</a>
+    <a class="footer-links" routerLink="legal">Legal Notice</a>
+  </footer>
+</main>
