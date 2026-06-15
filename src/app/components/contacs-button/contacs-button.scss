@@ -1,3 +1,5 @@
+@use '../../../styles/variables' as *;
+
 .contact-button_shape{
     cursor: pointer;
 
@@ -15,10 +17,10 @@
     height: 56px;
     border-radius: 100px;
 
-    background-color: var(--main_header);
+    background-color: $main_header;
     box-shadow: 0 8px 5px rgba(0, 0, 0, 0.177);
 
     &:hover{
-        background-color: var(--main_blue);
+        background-color: $main_blue;
     }
 }

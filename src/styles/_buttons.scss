@@ -1,0 +1,22 @@
+@use './variables' as *;
+
+button {
+  font-family: 'Inter_18pt-Regular', sans-serif;
+  font-size: 1.6rem;
+  color: $main_white;
+  padding: 10px 24px;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+a {
+  font-family: 'Inter_18pt-Regular', sans-serif;
+  font-size: 1.6rem;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

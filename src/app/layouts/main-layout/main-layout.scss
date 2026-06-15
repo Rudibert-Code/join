@@ -1,0 +1,35 @@
+.app-layout {
+    min-height: 100vh;
+}
+
+app-nav-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.app-content {
+    padding-bottom: 80px;
+}
+
+@media (min-width: 1024px) {
+    .app-layout {
+        display: grid;
+        grid-template-columns: 232px 1fr;
+    }
+
+    app-nav-bar {
+        display: block;
+        position: sticky;
+        top: 0;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        height: 100dvh;
+    }
+
+    .app-content {
+        padding-bottom: 0;
+    }
+}

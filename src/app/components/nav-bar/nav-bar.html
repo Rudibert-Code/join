@@ -1,10 +1,47 @@
-<footer>
-    <section>
-        @for (icons of function; track $index) {
-            <div (click)="selectOption(icons)" class="footer_icon" routerLink="{{icons.routlink}}" id="{{icons.id}}">
-                <img src="{{icons.img}}" alt="">
-                <p>{{icons.name}}</p>
-            </div>  
-        }
+<nav>
+  <img class="navbar__logo" src="/assets/UI/vector/logo_join-white.svg" alt="Join" />
+
+  <section class="navbar__links">
+    <section class="navbar__link">
+      <div class="navbar__icon">
+        <img src="/assets/UI/vector/icon_summary.svg" alt="Summery" />
+      </div>
+      <div class="navbar__name">
+        <a [routerLink]="['/summery']"><p>Summery</p></a>
+      </div>
     </section>
-</footer>
+    <section class="navbar__link">
+      <div class="navbar__icon">
+        <img src="/assets/UI/vector/icon_add-task.svg" alt="Add Task" />
+      </div>
+      <div class="navbar__name">
+        <a [routerLink]="['/add-task']"><p>Add Task</p></a>
+      </div>
+    </section>
+    <section class="navbar__link">
+      <div class="navbar__icon">
+        <img src="/assets/UI/vector/icon_board.svg" alt="Board" />
+      </div>
+      <div class="navbar__name">
+        <a [routerLink]="['/board']"><p>Board</p></a>
+      </div>
+    </section>
+    <section class="navbar__link">
+      <div class="navbar__icon">
+        <img src="/assets/UI/icon_contacts.png" alt="Contacts" />
+      </div>
+      <div class="navbar__name">
+        <a [routerLink]="['/contact-list']"><p>Contacts</p></a>
+      </div>
+    </section>
+  </section>
+
+  <section class="navbar__links--legals">
+    <div class="navbar__name">
+      <a [routerLink]="['/contact-list']"><p>Privacy Policy</p></a>
+    </div>
+    <div class="navbar__name">
+      <a [routerLink]="['/contact-list']"><p>Legal notice</p></a>
+    </div>
+  </section>
+</nav>

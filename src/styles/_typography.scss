@@ -1,0 +1,41 @@
+@use './variables' as *;
+
+@font-face {
+  font-family: 'Inter_18pt-Bold';
+  src: url('/assets/fonts/Inter_18pt-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Inter_18pt-Regular';
+  src: url('/assets/fonts/Inter_18pt-Regular.ttf');
+}
+
+h1 {
+  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-size: 6.4rem;
+  color: $main_black;
+}
+
+h2 {
+  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-size: 6.1rem;
+  color: $main_black;
+}
+
+h3 {
+  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-size: 4.7rem;
+  color: $main_blue;
+}
+
+p {
+  font-family: 'Inter_18pt-Regular', sans-serif;
+  font-size: 1.6rem;
+  color: $main_black;
+}
+
+span {
+  font-family: 'Inter_18pt-Regular', sans-serif;
+  font-size: 1.6rem;
+  color: $main_white;
+}
