@@ -14,30 +14,140 @@ export class Contacts {
     return this.db.contacts()
   }
 
-  testFunction(){
-    console.table(this.db.contacts());
+  sortNames(){
+    //console.table(this.db.contacts());
+    let contactList = this.db.contacts();
+
+    for (let index = 0; index < contactList.length; index++) { 
+      let targetID:string;  
+      let firstName = contactList[index].first_name;
+      let lastName = contactList[index].last_name;
+      let email = contactList[index].email;
+      let phone = contactList[index].phone;
+
+      let firstLetter = firstName.charAt(0);
+      let firstLetterB = lastName.charAt(0);
+
+      switch (firstLetter){
+          case "A":
+            targetID = 'a';
+            break;
+
+          case "B":
+            targetID = 'b';
+            break;
+
+          case "C":
+            targetID = 'c';
+            break;
+
+          case "D":
+            targetID = 'd';
+            break;
+
+          case "E":
+            targetID = 'e';
+            break;
+
+          case "F":
+            targetID = 'f';
+            break;
+
+          case "G":
+            targetID = 'g';
+            break;
+
+          case "H":
+            targetID = 'h';
+            break;
+
+          case "I":
+            targetID = 'i';
+            break;
+
+          case "J":
+            targetID = 'j';
+            break;
+
+          case "K":
+            targetID = 'k';
+            break;
+
+          case "L":
+            targetID = 'l';
+            break;
+
+          case "M":
+            targetID = 'm';
+            break;
+
+          case "N":
+            targetID = 'n';
+            break;
+
+          case "O":
+            targetID = 'o';
+            break;
+
+          case "P":
+            targetID = 'p';
+            break;
+
+          case "Q":
+            targetID = 'q';
+            break;
+
+          case "R":
+            targetID = 'r';
+            break;
+
+          case "S":
+            targetID = 's';
+            break;
+
+          case "T":
+            targetID = 't';
+            break;
+
+          case "U":
+            targetID = 'u';
+            break;
+
+          case "V":
+            targetID = 'v';
+            break;
+
+          case "W":
+            targetID = 'w';
+            break;
+
+          case "X":
+            targetID = 'x';
+            break;
+
+          case "Y":
+            targetID = 'y';
+            break;
+
+          case "Z":
+            targetID = 'z';
+            break;
+
+          default:
+            targetID = 'z';
+      }  
+
+    let targetContainer = document.getElementById(targetID) as HTMLDivElement;
+    targetContainer.style.display = 'flex';
+    targetContainer.innerHTML += `<section class="contact">
+                    <div class="contact-icon_base" id="">
+                        <p>${{firstLetter}}}${{firstLetterB}}</p>
+                    </div>
+                    <div class="contact_info">
+                        <p>${{firstName}}} ${{lastName}}</p>
+                        <p class="email">${{email}}</p>
+                    </div>
+                </section>`;
+    }
   }
-  
-  //userName:string = ""
-  //reassembledList:string[]=[] 
-//
-  //searchedName:string = ""
-
-
-  //sortByAlphabet(){
-//
-  //  this.reassembledList.slice(0, 0);
-  //  console.log("FIRST STEP" , this.reassembledList)
-//
-  //  // search sorce-array for user names > add user names to reassembling list 
-  //  for (let index = 0; index < this.placeholders.length; index++) {
-  //    this.userName = String(this.placeholders[index].name);
-  //    this.reassembledList.splice(index, 0, this.userName);
-  //  }
-//
-  //  // sort reassembling list alphabetically
-  //  this.reassembledList.sort();
-  //  console.log("SECOND STEP" , this.reassembledList)
-//
-  //}
 }
