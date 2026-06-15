@@ -12,6 +12,6 @@ export class ContacsButton {
    contactsService = inject(Contacts);
 
    assignNames(){
-    this.contactsService.sortNames
+    this.contactsService.sortNames();
    }
 }

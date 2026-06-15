@@ -1,5 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Supabase } from '../../supabase';
+import { Injectable, signal } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
 
 @Component({
   selector: 'app-contacts',
@@ -137,9 +142,12 @@ export class Contacts {
             targetID = 'z';
       }  
 
+    let targetBracket = document.getElementById("bracket_"+targetID) as HTMLDivElement;
+    console.log(firstName,lastName,email)
+    targetBracket.style.display="flex";
+    
     let targetContainer = document.getElementById(targetID) as HTMLDivElement;
-    targetContainer.style.display = 'flex';
-    targetContainer.innerHTML += `<section class="contact">
+    targetContainer.innerHTML += `<div class="contact">
                     <div class="contact-icon_base" id="">
                         <p>${{firstLetter}}}${{firstLetterB}}</p>
                     </div>
@@ -147,7 +155,7 @@ export class Contacts {
                         <p>${{firstName}}} ${{lastName}}</p>
                         <p class="email">${{email}}</p>
                     </div>
-                </section>`;
+                </div>`;
     }
   }
 }
