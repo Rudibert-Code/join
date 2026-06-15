@@ -25,7 +25,8 @@ export class Supabase {
   async getContacts() {
     const { data: contacts, error } = await this.supabase
       .from('contacts')
-      .select('first_name, last_name, phone, email');
+      .select('first_name, last_name, phone, email')
+      .order('first_name', { ascending: true });
     if (error) {
       console.error('Supabase getContacts error', error);
       return;
