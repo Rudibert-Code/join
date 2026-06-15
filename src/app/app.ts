@@ -11,10 +11,10 @@ import { JsonPipe } from '@angular/common';
 })
 export class App {
   protected readonly title = signal('join');
-  dbService = inject(Supabase)
+  dbService = inject(Supabase);
 
   ngOnInit(){
-    this.dbService.getContacts()
+    this.dbService.getContacts();
     //this.dbService.setContact({first_name:"string", last_name:"string", phone:"string", email:"string"})
     //this.dbService.updateContact({id:number})
     //this.dbService.deleteContact({id:number})

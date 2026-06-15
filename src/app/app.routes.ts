@@ -6,7 +6,9 @@ import { LogIn } from './components/log-in/log-in';
 export const routes: Routes = [
     {
         path:'',
-        component:Dummy
+        component: Dummy
+        //redirectTo: 'login',
+        //pathMatch: 'full'
     },
     {
         path:'contact-list',
