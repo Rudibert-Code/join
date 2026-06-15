@@ -16,11 +16,16 @@
     gap: 32px;
 }
 .contact{
+    width: 100%;
+
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 16px;
     padding-left: 32px;
+}
+.contact_bracket{
+    width: 100%;
 }
 .contact-icon_base{
     width: 52px;
@@ -40,6 +45,15 @@
     .email{
         color: var(--main_blue);
     }
+}
+.contactIcon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 42px;
+    height: 42px;
+    background-color: var(--user_pink);
 }
 .sorting_box{
     display: none;
