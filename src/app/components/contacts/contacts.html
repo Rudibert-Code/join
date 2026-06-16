@@ -1,15 +1,20 @@
-@for (group of groupedContacts(); track group[0]) {
-  <h3>{{ group[0] }}</h3>
-  @for (contact of group[1]; track contact.id) {
-    <div class="contact">
-      <div class="contact-icon">
-        {{ getInitials(contact) }}
-      </div>
+<section class="contact-base">
 
-      <div>
-        <p>{{ contact.first_name }} {{ contact.last_name }}</p>
-        <p>{{ contact.email }}</p>
+  @for (group of groupedContacts(); track group[0]) {
+    <p>{{ group[0] }}</p>
+    <div class="separator"></div>
+    @for (contact of group[1]; track contact.id) {
+      <div class="contact">
+        <div class="contact_icon">
+          {{ getInitials(contact) }}
+        </div>
+  
+        <div>
+          <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+          <p class="contact_email">{{ contact.email }}</p>
+        </div>
       </div>
-    </div>
+    }
   }
-}
+
+</section>
