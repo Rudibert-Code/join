@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
 
-  position: absolute;
+  position: sticky;
   top: 0;
   z-index: 2;
 
@@ -19,9 +19,11 @@
     padding-left: 16px;
   }
 }
+
 .user_icon_position {
   padding-right: 16px;
 }
+
 .user_icon {
   display: flex;
   justify-content: center;
@@ -38,5 +40,18 @@
   > p {
     color: $main_blue;
     font-weight: bold;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header_base {
+    > img {
+      display: none;
+    }
+  }
+  
+  .user_icon_position {
+    margin-left: auto;
+    padding-right: 32px;
   }
 }
