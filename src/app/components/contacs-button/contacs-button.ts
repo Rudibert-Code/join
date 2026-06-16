@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { Contacts } from '../contacts/contacts'
+import { Component } from '@angular/core';
 
 
 @Component({
@@ -9,9 +8,4 @@ import { Contacts } from '../contacts/contacts'
   styleUrl: './contacs-button.scss',
 })
 export class ContacsButton {
-   contactsService = inject(Contacts);
-
-   assignNames(){
-    this.contactsService.sortNames();
-   }
 }

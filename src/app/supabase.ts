@@ -1,8 +1,8 @@
-import { NgSwitchCase } from '@angular/common';
 import { Injectable, signal } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
 
-interface Contact {
+export interface Contact {
+  id: number;
   first_name: string;
   last_name: string;
   phone: string;
@@ -25,7 +25,7 @@ export class Supabase {
   async getContacts() {
     const { data: contacts, error } = await this.supabase
       .from('contacts')
-      .select('first_name, last_name, phone, email')
+      .select('id, first_name, last_name, phone, email')
       .order('first_name', { ascending: true });
     if (error) {
       console.error('Supabase getContacts error', error);
