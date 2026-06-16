@@ -24,23 +24,36 @@
     <section class="d-flex center">
       <div class="d-flex center">
         <div class="d-flex center middle-section">
-          <img class="icons" src="assets/UI/icon_urgent.png" alt="">
+          <img class="icons" src="assets/UI/icon_urgent.png" alt="" />
           <div>
             <h3 class="margin-corection black-txt">1</h3>
             <p class="margin-corection">Urgent</p>
           </div>
           <div class="middle-seperator"></div>
           <div>
-            <p><b><p>{{ deadline | date:'dd.MM.yyyy' }}</p></b></p>
+            <p>
+              <b
+                ><p>{{ deadline | date: 'dd. MMMM yyyy' }}</p></b
+              >
+            </p>
             <p>Upcoming Deadline</p>
           </div>
         </div>
       </div>
     </section>
-    <section>
-      <div></div>
-      <div></div>
-      <div></div>
+    <section class="d-flex center lower-section">
+      <div class="infobox-lower">
+        <h3 class="margin-corection black-txt">1</h3>
+        <p class="margin-corection">Tasks in Board</p>
+      </div>
+      <div class="infobox-lower">
+        <h3 class="margin-corection black-txt">1</h3>
+        <p class="margin-corection">Tasks in Progress</p>
+      </div>
+      <div class="infobox-lower">
+        <h3 class="margin-corection black-txt">1</h3>
+        <p class="margin-corection">Awaiting Feedback</p>
+      </div>
     </section>
   </main>
 </section>
