@@ -31,6 +31,6 @@ export class LogIn {
     let splash = document.getElementById('splash-container') as HTMLInputElement | null;
     setTimeout(() => {
       splash?.classList.add('init-done');
-    }, 100);
+    }, 150);
   }
 }
