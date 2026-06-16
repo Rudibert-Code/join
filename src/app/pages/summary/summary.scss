@@ -9,17 +9,31 @@
   align-items: center;
 }
 
+.align-column {
+  justify-content: space-around;
+}
+
+.reverse {
+  flex-direction: column-reverse;
+}
+
+.space-center {
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 .column {
   flex-direction: column;
   gap: 32px;
 }
 
 .upper-section {
-  gap: 50px;
+  gap: 15px;
 }
 
 .middle-section {
-  gap: 10px;
+  gap: 15px;
 }
 
 .lower-section {
@@ -51,16 +65,34 @@
 
 .infobox-up {
   padding: 5px;
-  width: 120px;
+  width: 140px;
   background-color: #ffffff;
   border-radius: 10px;
+  gap: 10px;
+  &:hover {
+    background-color: $main-header;
+    scale: (1.2);
+    p,
+    h3 {
+      color: $main-white;
+    }
+  }
 }
 
 .infobox-middle {
   padding: 5px;
-  width: 300px;
+  width: 100%;
   background-color: #ffffff;
   border-radius: 10px;
+  &:hover {
+    background-color: $main-header;
+    scale: (1.05);
+    transition: scale 0.2 ease-in;
+    p,
+    h3 {
+      color: $main-white;
+    }
+  }
 }
 
 .infobox-low {
@@ -68,6 +100,14 @@
   width: 80px;
   background-color: #ffffff;
   border-radius: 10px;
+  &:hover {
+    background-color: $main-header;
+    scale: (1.2);
+    p,
+    h3 {
+      color: $main-white;
+    }
+  }
 }
 
 .icons {
@@ -82,4 +122,82 @@
 
 .main-positioning {
   margin-top: 20px;
+}
+
+//media query between tablets and L phones
+
+@media (min-width: 620px) {
+  .main-wrapper {
+    padding: 100px 80px;
+  }
+
+  .infobox-low {
+    width: 120px;
+  }
+}
+
+//media query on S Laptop
+
+@media (min-width: 1024px) {
+  .main-wrapper {
+    padding: 100px 120px 0;
+  }
+
+  .reverse {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .header-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .separator {
+    height: 50px;
+    width: 2px;
+  }
+
+  .column {
+    gap: 48px;
+  }
+
+  .main-positioning {
+    margin-top: 120px;
+  }
+
+  .infobox-up {
+    padding: 10px;
+    width: 280px;
+  }
+
+  .infobox-low {
+    padding: 10px;
+    width: 180px;
+  }
+}
+
+// media query in Laptops
+
+@media (min-width: 1439px) {
+  .main-wrapper {
+    padding: 100px 180px;
+  }
+
+  .reverse {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .header-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .separator {
+    height: 50px;
+    width: 2px;
+  }
 }
