@@ -1,41 +1,50 @@
 @use './variables' as *;
 
 @font-face {
-  font-family: 'Inter_18pt-Bold';
-  src: url('/assets/fonts/Inter_18pt-Bold.ttf');
+  font-family: 'Inter';
+  src: url('../../public/assets/fonts/Inter-VariableFontt.ttf');
+  font-weight: 100 900;
+  font-style: normal;
 }
 
 @font-face {
-  font-family: 'Inter_18pt-Regular';
-  src: url('/assets/fonts/Inter_18pt-Regular.ttf');
+  font-family: 'Open Sans';
+  src: url('../../public/assets/fonts/OpenSans-VariableFont.ttf');
+  font-weight: 300 800;
+  font-style: normal;
 }
 
 h1 {
-  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 6.4rem;
   color: $main_black;
+  font-weight: 800;
 }
 
 h2 {
-  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 6.1rem;
   color: $main_black;
+  font-weight: 800;
 }
 
 h3 {
-  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 4.7rem;
   color: $main_blue;
+  font-weight: 800;
 }
 
 p {
-  font-family: 'Inter_18pt-Regular', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.6rem;
   color: $main_black;
+  font-weight: 400;
 }
 
 span {
-  font-family: 'Inter_18pt-Regular', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.6rem;
   color: $main_white;
+  font-weight: 400;
 }
