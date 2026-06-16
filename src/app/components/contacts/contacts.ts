@@ -126,9 +126,7 @@ export class Contacts {
 
     targetContainer.innerHTML += `<div class="contact">
                     <div class="contact-icon_base" id="">
-                      <div class="contactIcon">
                         <p>${firstLetter}${firstLetterB}</p>
-                      </div>  
                     </div>
                     <div class="contact_info">
                         <p>${firstName} ${lastName}</p>
