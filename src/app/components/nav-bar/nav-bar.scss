@@ -10,13 +10,9 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  height: 80px;
-  padding: 0 10px;
+  // height: 80px;
+  padding: 2px 10px;
   background-color: $main_header;
-}
-
-.navbar__link {
-  width: 30%;
 }
 
 .navbar__links {
@@ -26,22 +22,37 @@ nav {
   width: 100%;
 }
 
-.navbar__link,
-.navbar__link a {
+.navbar__link {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4px;
+  color: $main_white;
+  text-decoration: none;
 
-  p{
+  p {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
   }
 }
 
-.navbar__link a {
-  gap: 4px;
-}
+.navbar__link {
+  width: 30%;
+  padding-block: 16px;
+  transition: 0.3s all ease-in-out;
+
+  &:hover{
+    cursor: pointer;
+    background-color: rgba(9, 25, 49, 1);
+    border-radius: 20px;
+    text-decoration: none;
+  }
+
+  &:hover .navbar__name p{
+    color: white;
+  }
+} 
 
 .navbar__icon img {
   width: 24px;
@@ -49,10 +60,14 @@ nav {
   object-fit: contain;
 }
 
-.navbar__name p {
-  margin: 0;
-  color: $main_white;
-  font-size: 1.4rem;
+.navbar__name{
+  text-decoration: none;
+
+  p {
+    margin: 0;
+    color: $main_white;
+    font-size: 1.4rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -71,16 +86,36 @@ nav {
 
   .navbar__links--legals{
     display: block;
+    align-self: flex-start;
+    padding-left: 24px;
+
+    .navbar__name{
+      color: $main_white;
+      display: block;
+      margin-bottom: 10px;
+      text-decoration: none;
+      transition: 0.3s all ease-in-out;
+
+      &:hover p{
+        color: #fff;
+      }
+    }
   }
 
   .navbar__links {
     flex-direction: column;
-    gap: 16px;
     width: 100%;
   }
 
   .navbar__link {
     flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    padding-inline: 24px;
+
+    &:hover{
+      border-radius: 0;
+    }
   }
 
   .navbar__icon{
