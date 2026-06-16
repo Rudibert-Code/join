@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 import { ContactList } from './pages/contact-list/contact-list';
-import { Summery } from './pages/summery/summery';
 import { AddTask } from './pages/add-task/add-task';
 import { Board } from './pages/board/board';
 import { MainLayout } from './layouts/main-layout/main-layout';
 import { LogIn } from './pages/log-in/log-in';
 import { LegalNotice } from './pages/legal-notice/legal-notice';
 import { PrivacyPolicy } from './pages/privacy-policy/privacy-policy';
+import { Summary } from './pages/summary/summary';
 
 export const routes: Routes = [
   {
@@ -18,7 +18,7 @@ export const routes: Routes = [
     component: MainLayout,
     children: [
       { path: '', redirectTo: 'summery', pathMatch: 'full' },
-      { path: 'summery', component: Summery },
+      { path: 'summary', component: Summary },
       { path: 'add-task', component: AddTask },
       { path: 'board', component: Board },
       { path: 'contact-list', component: ContactList },

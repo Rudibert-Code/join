@@ -1,11 +1,17 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { NavBar } from "../../components/nav-bar/nav-bar";
-import { Header } from '../../components/header/header';
 
 @Component({
   selector: 'app-summary',
-  imports: [NavBar, Header],
   templateUrl: './summary.html',
   styleUrl: './summary.scss',
+  standalone: true,
+  imports: [DatePipe],
 })
-export class Summary {}
+export class Summary {
+  heute: Date = new Date();
+
+  constructor() {
+    this.heute.setDate(this.heute.getDate() + 5);
+  }
+}
