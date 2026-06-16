@@ -14,17 +14,26 @@
     flex-direction: column;
     justify-content: center;
     align-items: start;
+
+    overflow: scroll;
+
     width: 352px;
     gap: 32px;
 }
-.contact{
+.contact_bracket{
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    gap: 16px;
+    align-items: start;
+
+    width: 100%;
     padding-left: 32px;
 }
 .contact-icon_base{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     width: 52px;
     height: 52px;
     border-radius: 100px;
@@ -35,6 +44,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: start;
+
     gap: 8px;
     >p{
         margin: 0;
@@ -42,6 +52,26 @@
     .email{
         color: $main_blue;
     }
+}
+.contact{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    max-width: 352px;
+    gap: 8px;
+    padding-left: 32px;
+    margin: 16px 0;
+}
+.contactIcon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 42px;
+    height: 42px;
+    background-color: var(--user_pink);
 }
 .sorting_box{
     display: none;

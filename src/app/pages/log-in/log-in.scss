@@ -16,9 +16,12 @@
 }
 
 .left-bound {
+  position: relative;
   justify-content: flex-start;
   align-items: center;
   padding: 12px 0 12px 24px;
+  height: 84px;
+  z-index: 10000;
 }
 
 .space {
@@ -86,8 +89,17 @@
 }
 
 .logo {
-  height: 78px;
-  width: 64px;
+  width: 60px;
+  position: fixed;
+  padding: 5px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(2);
+  transition:
+    transform 0.8s ease-in-out,
+    top 0.8s ease-in-out,
+    left 0.8s ease-in-out,
+    width 0.8s ease-in-out;
 }
 
 .white-btn {
@@ -128,4 +140,31 @@
 
 .footer-links {
   color: $main-border;
+}
+
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--main_white);
+  z-index: 9999;
+  transition: opacity 0.5s ease-in-out;
+  transition-delay: 0.8s;
+}
+
+#splash-container {
+  &.init-done {
+    .splash-screen {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .logo {
+      top: 12px;
+      left: 24px;
+      transform: translate(0, 0) scale(1);
+    }
+  }
 }

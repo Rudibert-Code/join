@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Contacts } from '../contacts/contacts'
+
 
 @Component({
   selector: 'app-contacs-button',
@@ -6,4 +8,10 @@ import { Component } from '@angular/core';
   templateUrl: './contacs-button.html',
   styleUrl: './contacs-button.scss',
 })
-export class ContacsButton {}
+export class ContacsButton {
+   contactsService = inject(Contacts);
+
+   assignNames(){
+    this.contactsService.sortNames();
+   }
+}
