@@ -11,7 +11,7 @@
 
 .column {
   flex-direction: column;
-  gap: 50px;
+  gap: 32px;
 }
 
 .upper-section {
@@ -23,7 +23,7 @@
 }
 
 .lower-section {
-  gap: 10px;
+  gap: 15px;
 }
 
 .margin-corection {
@@ -49,14 +49,25 @@
   background-color: $main-border;
 }
 
-.infobox {
+.infobox-up {
+  padding: 5px;
   width: 120px;
   background-color: #ffffff;
+  border-radius: 10px;
 }
 
-.infobox-lower {
+.infobox-middle {
+  padding: 5px;
+  width: 300px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.infobox-low {
+  padding: 5px;
   width: 80px;
   background-color: #ffffff;
+  border-radius: 10px;
 }
 
 .icons {
@@ -64,6 +75,11 @@
 }
 
 .main-wrapper {
-  margin-top: 100px;
-  padding: 0 20px;
+  padding: 100px 20px;
+  background-color: $main-white;
+  height: 100%;
+}
+
+.main-positioning {
+  margin-top: 20px;
 }
