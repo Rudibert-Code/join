@@ -1,7 +1,8 @@
 @use './variables' as *;
+@use './typography';
 
 button {
-  font-family: 'Inter_18pt-Regular', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.6rem;
   color: $main_white;
   padding: 10px 24px;
@@ -13,7 +14,7 @@ button {
 }
 
 a {
-  font-family: 'Inter_18pt-Regular', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.6rem;
   text-decoration: none;
   &:hover {
