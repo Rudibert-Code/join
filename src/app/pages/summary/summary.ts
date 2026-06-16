@@ -9,9 +9,9 @@ import { Component } from '@angular/core';
   imports: [DatePipe],
 })
 export class Summary {
-  heute: Date = new Date();
+  deadline: Date = new Date();
 
   constructor() {
-    this.heute.setDate(this.heute.getDate() + 5);
+    this.deadline.setDate(this.deadline.getDate() + 5);
   }
 }
