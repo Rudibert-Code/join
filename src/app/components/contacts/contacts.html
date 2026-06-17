@@ -1,11 +1,16 @@
 <section class="main-container">
 
   <div>
-    <button>
+    <button (click)="openContactForm()">
       <p>Add new contact</p>
       <img src="assets/UI/vector/icon_add-user.svg" alt="">
     </button>
-  
+
+    <app-contact-form
+      *ngIf="showContactForm()"
+      (close)="closeContactForm()"
+    ></app-contact-form>
+
     @for (group of groupedContacts(); track group[0]) {
       <p>{{ group[0] }}</p>
       <div class="separator"></div>

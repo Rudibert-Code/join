@@ -1,0 +1,26 @@
+<div class="dialog-backdrop" (click)="close.emit()">
+  <section class="dialog-panel" (click)="$event.stopPropagation()">
+    <header class="dialog-header d-flex column">
+      <div class="d-flex right-bound">
+        <button class="dialog-close" type="button" (click)="close.emit()">X</button>
+      </div>
+      <div>
+        <h3 class="margin-correction black-txt">Add Contact</h3>
+        <p>Tasks are better in a team!</p>
+        <div class="separator"></div>
+      </div>
+    </header>
+    <form class="form-wrapper" action="">
+      <input type="text" placeholder="firstname" />
+      <input type="text" placeholder="lastname" />
+      <input type="email" placeholder="Email" />
+      <input type="number" placeholder="Phone" />
+    </form>
+    <div class="dialog-actions">
+      <button class="cancel-button" type="button" (click)="close.emit()">Cancel </button>
+      <button class="create-contact-button" type="button">
+        Create Contact <img src="assets/UI/icon_check.png" alt="check icon" />
+      </button>
+    </div>
+  </section>
+</div>
