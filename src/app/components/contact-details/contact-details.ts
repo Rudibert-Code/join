@@ -17,12 +17,12 @@ export class ContactDetails {
   userPhone:string="";
   userInitials:string="";
 
-  loadDetails(){
+  loadDetails(X:any){
     let testMeh = this.db.contacts();
-    this.userName = testMeh[0].first_name;
-    this.userSurName = testMeh[0].last_name;
-    this.userEmail = testMeh[0].email;
-    this.userPhone = testMeh[0].phone;
+    this.userName = testMeh[X].first_name;
+    this.userSurName = testMeh[X].last_name;
+    this.userEmail = testMeh[X].email;
+    this.userPhone = testMeh[X].phone;
     this.userInitials = (this.userName.charAt(0).toUpperCase())+(this.userSurName.charAt(0).toUpperCase());
   }
   

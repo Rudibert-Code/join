@@ -10,6 +10,7 @@ import { first } from 'rxjs';
 })
 export class Contacts {
   db = inject(Supabase);
+  cd = inject(ContactDetails);
 
   groupedContacts = computed(() => {
     const groups = new Map<string, Contact[]>();
@@ -34,8 +35,9 @@ export class Contacts {
     return firstNameLetter + lastNameLetter;
   }
 
-  openContactDetails(){
+  openContactDetails(id:Contact){
     let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
     detailsPopUp.classList.toggle('active')
+    this.cd.loadDetails(id);
   }
 }
