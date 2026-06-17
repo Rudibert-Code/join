@@ -14,10 +14,14 @@
   background-color: $main_white;
   box-shadow: 0 8px 5px rgba(0, 0, 0, 0.177);
 
-  > img {
+  >img {
     width: 32px;
     padding-left: 16px;
   }
+}
+
+.header__title {
+  display: none;
 }
 
 .user_icon_position {
@@ -37,7 +41,7 @@
   outline-style: solid;
   outline-color: $main_black;
 
-  > p {
+  >p {
     color: $main_blue;
     font-weight: bold;
   }
@@ -45,11 +49,16 @@
 
 @media (min-width: 1024px) {
   .header_base {
-    > img {
+    >img {
       display: none;
     }
   }
-  
+
+  .header__title {
+    display: block;
+    margin-left: 60px;
+  }
+
   .user_icon_position {
     margin-left: auto;
     padding-right: 32px;

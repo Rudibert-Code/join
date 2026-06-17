@@ -42,12 +42,14 @@ nav {
   padding-block: 16px;
   transition: 0.3s all ease-in-out;
 
-  &:hover{
+  &:hover,
+  &.active{
     cursor: pointer;
     background-color: rgba(9, 25, 49, 1);
     border-radius: 20px;
     text-decoration: none;
   }
+
 
   &:hover .navbar__name p{
     color: white;
@@ -111,9 +113,10 @@ nav {
     flex-direction: row;
     width: 100%;
     justify-content: flex-start;
-    padding-inline: 24px;
+    padding-inline: 40px;
 
-    &:hover{
+    &:hover,
+    &.active{
       border-radius: 0;
     }
   }

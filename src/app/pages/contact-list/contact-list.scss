@@ -1,0 +1,11 @@
+.screen{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    >app-contact-details{
+        height: calc(100vh - 80px);
+        flex: 1;
+        overflow: hidden;
+    }
+}
