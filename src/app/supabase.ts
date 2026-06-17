@@ -9,6 +9,13 @@ export interface Contact {
   email: string;
 }
 
+export interface newContact {
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -43,7 +50,7 @@ export class Supabase {
   /*
    * this function set the data in the Contactlist Component
    */
-  async setContact(newContact: Contact) {
+  async setContact(newContact: newContact) {
     const { data, error } = await this.supabase.from('contacts').insert([newContact]).select();
     if (data) {
       await this.getContacts();
