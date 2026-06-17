@@ -10,7 +10,7 @@
       <p>{{ group[0] }}</p>
       <div class="separator"></div>
       @for (contact of group[1]; track contact.id) {
-        <div class="contact">
+        <div (click)="openContactDetails()" class="contact">
           <div class="contact_icon">
             <p>{{ getInitials(contact) }}</p>
           </div>
