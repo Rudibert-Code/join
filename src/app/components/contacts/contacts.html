@@ -1,7 +1,6 @@
 <section class="main-container">
 
   <div>
-
     <button>
       <p>Add new contact</p>
       <img src="assets/UI/vector/icon_add-user.svg" alt="">
@@ -13,7 +12,7 @@
       @for (contact of group[1]; track contact.id) {
         <div class="contact">
           <div class="contact_icon">
-            {{ getInitials(contact) }}
+            <p>{{ getInitials(contact) }}</p>
           </div>
     
           <div>
@@ -23,7 +22,6 @@
         </div>
       }
     }
-
   </div>
 
 </section>
