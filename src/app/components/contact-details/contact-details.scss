@@ -10,12 +10,10 @@
 }
 .contact{
     height: 100%;
-
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    
     >p{
         font-size: 2.0rem;
     }
@@ -31,17 +29,30 @@
         background-color: $main_blue;
     }
 }
+.contact_option{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
 dialog{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     background-color: rgba(240, 248, 255, 0);
+    opacity: 0;
     border: 0;
     margin: 0;
     margin-top: 132px;
-    margin-left: 60%;
+    margin-left: calc(50% + 200px);
     z-index: 100;
+    &.active{
+        display: flex;
+        opacity: 1;
+        margin-left: calc(50% + 64px);
+        transition: 0.5s;
+    }
 }
 .icon{
     cursor: pointer;
@@ -56,13 +67,22 @@ dialog{
         .svg_color{
             fill: $main_header;
         }
+    &:hover{
+        >p{
+            color: $main_blue;
+        }
+        .svg_color{
+            fill: $main_blue;
+        }
+    }
 }
-.user_Icon{
+.user_details{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 32px;
-
+    margin-bottom: 16px;
     >div{
         display: flex;
         justify-content: center;
@@ -70,7 +90,45 @@ dialog{
     }
 }
 
-@media(max-width:1024px){
+.select{
+    cursor: pointer;
+}
+.email{
+    color: $main_blue;
+}
+
+.user_initials{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+.user_icon{
+    width: 120px;
+    height: 120px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: $user_purple;
+    border-radius: 100px;
+    margin-right: 16px;
+
+    >p{
+        font-size: 4.7rem;
+        color: $main_white;
+    }
+}
+.user_name{
+    font-size: 4.7rem;
+    margin: 0;
+}
+.contact_information{
+    margin-left: 32px;
+}
+
+@media(max-width:1190px){
     .contact-details_container{
         display: none;
     }

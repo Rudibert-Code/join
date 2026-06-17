@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contact, Supabase } from '../../supabase';
 import { ContactForm } from '../contact-form/contact-form';
+import { ContactDetails } from '../contact-details/contact-details'
 import { first } from 'rxjs';
 
 @Component({
@@ -22,6 +23,8 @@ export class Contacts {
   closeContactForm() {
     this.showContactForm.set(false);
   }
+  
+  cd = inject(ContactDetails);
 
   groupedContacts = computed(() => {
     const groups = new Map<string, Contact[]>();
@@ -44,5 +47,11 @@ export class Contacts {
     const lastNameLetter = contact.last_name.charAt(0).toUpperCase();
 
     return firstNameLetter + lastNameLetter;
+  }
+
+  openContactDetails(id:Contact){
+    let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
+    detailsPopUp.classList.toggle('active')
+    this.cd.loadDetails(id);
   }
 }
