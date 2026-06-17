@@ -1,8 +1,36 @@
 @use '../../../styles/variables' as *;
 
-.contact-base{
+button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 352px;
+    height: 56px;
+    border-radius: 8px;
+    gap: 16px;
+    margin: 32px 0;
+
+    background-color: $main_header;
+    border: none;
+    >p{
+        font-weight: bold;
+        color: $main_white;
+    }
+    &:hover{
+        background-color: $main_blue;
+        box-shadow: 0 3px 2px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.main-container{
+    display: flex;
+    flex-direction: column;
+    justify-self: start;
+    align-items: center;
+
     width: 424px;
-    height: calc(100% - 80px);
+    height: calc(100vh - 80px);
     overflow: scroll;
     overflow-x: hidden;
 
@@ -28,19 +56,19 @@
         width: 52px;
         height: 52px;
         border-radius: 100px;
-        background-color: $user_orange;
+        background-color: $user_purple;
     }
     &_email{
         color: $main_blue;
     }
     &:hover{
         width: 352px;
-        border-radius: 26px;
+        border-radius: 8px;
         background-color: $main_white;
     }
 }
 .separator{
-    width: 100%;
+    width: 352px;
     height: 2px;
     background-color: #2a36471e;
 }

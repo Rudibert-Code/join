@@ -1,20 +1,29 @@
-<section class="contact-base">
+<section class="main-container">
 
-  @for (group of groupedContacts(); track group[0]) {
-    <p>{{ group[0] }}</p>
-    <div class="separator"></div>
-    @for (contact of group[1]; track contact.id) {
-      <div class="contact">
-        <div class="contact_icon">
-          {{ getInitials(contact) }}
-        </div>
+  <div>
+
+    <button>
+      <p>Add new contact</p>
+      <img src="assets/UI/vector/icon_add-user.svg" alt="">
+    </button>
   
-        <div>
-          <p>{{ contact.first_name }} {{ contact.last_name }}</p>
-          <p class="contact_email">{{ contact.email }}</p>
+    @for (group of groupedContacts(); track group[0]) {
+      <p>{{ group[0] }}</p>
+      <div class="separator"></div>
+      @for (contact of group[1]; track contact.id) {
+        <div class="contact">
+          <div class="contact_icon">
+            {{ getInitials(contact) }}
+          </div>
+    
+          <div>
+            <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+            <p class="contact_email">{{ contact.email }}</p>
+          </div>
         </div>
-      </div>
+      }
     }
-  }
+
+  </div>
 
 </section>
