@@ -5,13 +5,20 @@
         <button class="dialog-close" type="button" (click)="close.emit()">X</button>
       </div>
       <div>
-        <h3 class="margin-correction black-txt">Add Contact</h3>
-        <p>Tasks are better in a team!</p>
+        <h3 class="margin-correction white-txt">Add Contact</h3>
+        <p class="white-txt">Tasks are better in a team!</p>
         <div class="separator"></div>
       </div>
     </header>
+    <section class="user-wrapper">
+      <div class="center d-flex">
+        <div class="user-bg center d-flex">
+          <img class="user-icon" src="assets/UI/icon_person.png" alt="user icon" />
+        </div>
+      </div>
+    </section>
     <form [formGroup]="contactForm" class="form-wrapper d-flex column" (ngSubmit)="onSubmit()">
-      <input formControlName="first_name" type="text" placeholder="firstname" />
+      <input formControlName="first_name" type="text" placeholder="Firstname" />
       <p class="contact-form__error margin-correction">
         <span
           *ngIf="
@@ -33,7 +40,7 @@
         </span>
       </p>
 
-      <input formControlName="last_name" type="text" placeholder="lastname" />
+      <input formControlName="last_name" type="text" placeholder="Lastname" />
       <p class="contact-form__error margin-correction">
         <span
           *ngIf="
@@ -43,6 +50,7 @@
         >
           Please type your lastname.
         </span>
+
       </p>
       <p class="contact-form__error margin-correction">
         <span
@@ -75,7 +83,13 @@
         </span>
       </p>
 
-      <input formControlName="phone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Phone" />
+      <input
+        formControlName="phone"
+        type="tel"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        placeholder="Phone"
+      />
       <p class="contact-form__error margin-correction">
         <span
           *ngIf="
@@ -96,17 +110,23 @@
       </p>
       <p class="contact-form__error margin-correction">
         <span
-          *ngIf="
-            contactForm.get('phone')?.hasError('pattern') && contactForm.get('phone')?.touched
-          "
+          *ngIf="contactForm.get('phone')?.hasError('pattern') && contactForm.get('phone')?.touched"
         >
           phonenumber may only contain digits
         </span>
       </p>
     </form>
-    <div class="dialog-actions">
-      <button class="cancel-button" type="button" (click)="close.emit()">Cancel</button>
-      <button class="create-contact-button" type="button" id="continue" (click)="onSubmit()" [disabled]="contactForm.invalid">
+    <div class="dialog-actions d-flex center">
+      <button class="cancel-button d-none center" type="button" (click)="close.emit()">
+        Cancel <img class="close" src="assets/UI/icon_cancle.png" alt="" />
+      </button>
+      <button
+        class="create-contact-button d-flex center"
+        type="button"
+        id="continue"
+        (click)="onSubmit()"
+        [disabled]="contactForm.invalid"
+      >
         Create Contact <img src="assets/UI/icon_check.png" alt="check icon" />
       </button>
     </div>

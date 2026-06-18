@@ -4,6 +4,10 @@
   display: flex;
 }
 
+.d-none {
+  display: none;
+}
+
 .column {
   flex-direction: column;
 }
@@ -23,8 +27,8 @@
   margin-block-end: 0.2rem;
 }
 
-.black-txt {
-  color: $main-black;
+.white-txt {
+  color: #ffffff;
 }
 
 .dialog-backdrop {
@@ -41,13 +45,12 @@
 
 .dialog-panel {
   position: relative;
-  top: -100px;
-  min-width: 310px;
+  top: -50px;
+  min-width: 280px;
   max-width: 1000px;
-  min-height: 80vh;
-  max-height: 90vh;
-  background-color: #ffffff;
-  border-radius: 24px 24px 16px 16px;
+  height: 600px;
+  background-color: $main-white;
+  border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
   overflow: hidden;
   transform: translateY(100%);
@@ -74,16 +77,17 @@
 
 .dialog-header {
   justify-content: space-between;
-  gap: 16px;
-  padding: 0 24px 12px;
+  padding: 0 24px 70px;
+  width: 100%;
+  background-color: $main-header;
 }
 
 .dialog-close {
   border: none;
   background-color: transparent;
-  color: $main-black;
   margin: 0;
-  font-size: 3rem;
+  font-size: 2rem;
+  padding: 10px 0 0 0;
 }
 
 .separator {
@@ -96,11 +100,12 @@
 .form-wrapper {
   padding: 0 24px 24px;
   min-width: 281px;
+  transform: translateY(-20px);
 }
 
 .form-wrapper input {
   width: 100%;
-  padding: 12px 16px;
+  padding: 10px 16px;
   border: 1px solid #d1d5db;
   border-radius: 12px;
   font-size: 1rem;
@@ -108,6 +113,8 @@
 
 .dialog-actions {
   padding: 0 24px 30px;
+  gap: 24px;
+  transform: translateY(-30px);
 }
 
 .create-contact-button {
@@ -118,6 +125,16 @@
   background-color: $main-header;
   color: $main-white;
   font-weight: 700;
+}
+
+.cancel-button {
+  min-width: 80px;
+  gap: 8px;
+  padding: 14px 10px;
+  border-radius: 12px;
+  background-color: transparent;
+  color: $main-black;
+  font-weight: 400;
 }
 
 .create-contact-button:disabled {
@@ -133,4 +150,31 @@
 .contact-form__error span {
   color: $requirement;
   font-size: 1.2rem;
+}
+
+.user-wrapper {
+  transform: translateY(-45px);
+}
+
+.user-bg {
+  height: 90px;
+  width: 90px;
+  background-color: #d1d5db;
+  overflow: hidden;
+  border: solid 3px #ffffff;
+  border-radius: 45px;
+}
+
+.user-icon {
+  height: 42px;
+}
+
+.close {
+  width: 17px;
+}
+@media (min-width: 380px) {
+  
+  h3{
+    font-size: 3rem;
+  }
 }
