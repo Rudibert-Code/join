@@ -20,6 +20,8 @@ import { Supabase, newContact } from '../../supabase';
 export class ContactForm {
   @Output() close = new EventEmitter<void>();
 
+  isClosing = false;
+
   router = inject(Router);
   db = inject(Supabase);
 
@@ -46,5 +48,43 @@ export class ContactForm {
     } else {
       this.contactForm.markAllAsTouched();
     }
+  }
+
+  private animationCloseTimer?: number;
+
+  requestClose() {
+    if (this.isClosing) {
+      return;
+    }
+
+    this.isClosing = true;
+
+    this.animationCloseTimer = window.setTimeout(() => {
+      this.emitClose();
+    }, 550);
+  }
+
+  onPanelAnimationEnd(event: AnimationEvent) {
+    if (!this.isClosing || event.target !== event.currentTarget) {
+      return;
+    }
+
+    if (event.animationName === 'slideDown' || event.animationName === 'slideOut') {
+      this.emitClose();
+    }
+  }
+
+  private emitClose() {
+    if (!this.isClosing) {
+      return;
+    }
+
+    this.isClosing = false;
+    if (this.animationCloseTimer) {
+      window.clearTimeout(this.animationCloseTimer);
+      this.animationCloseTimer = undefined;
+    }
+
+    this.close.emit();
   }
 }
