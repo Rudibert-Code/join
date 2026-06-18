@@ -4,13 +4,11 @@ button{
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 352px;
     height: 56px;
     border-radius: 8px;
     gap: 16px;
     margin: 32px 0;
-
     background-color: $main_header;
     border: none;
     >p{
@@ -28,12 +26,12 @@ button{
     flex-direction: column;
     justify-self: start;
     align-items: center;
-
     width: 424px;
     height: calc(100vh - 80px);
     overflow: scroll;
     overflow-x: hidden;
-
+    box-shadow: 8px 0 5px rgba(0, 0, 0, 0.177);
+    background-color: white;
     >p{
         padding-left: 36px;
     }
@@ -43,12 +41,12 @@ button{
 }
 .contact{
     cursor: pointer;
-
     display: flex;
     justify-content: start;
     align-items: center;
+    width: 352px;
+    border-radius: 8px;
     gap: 16px;
-
     &_icon{
         display: flex;
         justify-content: center;
@@ -57,14 +55,22 @@ button{
         height: 52px;
         border-radius: 100px;
         background-color: $user_purple;
+        >p{
+            color: $main_white;
+        }
+        &:active{
+            border-width: 2px;
+            border-color: $main_white;
+        }
     }
     &_email{
         color: $main_blue;
     }
     &:hover{
-        width: 352px;
-        border-radius: 8px;
         background-color: $main_white;
+    }
+    &:active{
+        background-color: $main_header;
     }
 }
 .separator{

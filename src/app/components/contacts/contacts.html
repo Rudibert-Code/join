@@ -1,19 +1,23 @@
 <section class="main-container">
 
   <div>
-
-    <button>
+    <button (click)="openContactForm()">
       <p>Add new contact</p>
       <img src="assets/UI/vector/icon_add-user.svg" alt="">
     </button>
-  
+
+    <app-contact-form
+      *ngIf="showContactForm()"
+      (close)="closeContactForm()"
+    ></app-contact-form>
+
     @for (group of groupedContacts(); track group[0]) {
       <p>{{ group[0] }}</p>
       <div class="separator"></div>
       @for (contact of group[1]; track contact.id) {
-        <div class="contact">
+        <div (click)="openContactDetails(contact)" class="contact">
           <div class="contact_icon">
-            {{ getInitials(contact) }}
+            <p>{{ getInitials(contact) }}</p>
           </div>
     
           <div>
@@ -23,7 +27,6 @@
         </div>
       }
     }
-
   </div>
 
 </section>

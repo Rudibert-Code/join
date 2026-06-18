@@ -1,14 +1,32 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Contact, Supabase } from '../../supabase';
+import { ContactForm } from '../contact-form/contact-form';
+import { ContactDetails } from '../contact-details/contact-details'
 import { first } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
+  standalone: true,
+  imports: [CommonModule, ContactForm],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
 export class Contacts {
+
   db = inject(Supabase);
+  
+  showContactForm = signal(false);
+
+  openContactForm() {
+    this.showContactForm.set(true);
+  }
+
+  closeContactForm() {
+    this.showContactForm.set(false);
+  }
+  
+  cd = inject(ContactDetails);
 
   groupedContacts = computed(() => {
     const groups = new Map<string, Contact[]>();
@@ -32,4 +50,22 @@ export class Contacts {
 
     return firstNameLetter + lastNameLetter;
   }
+
+
+
+@Output() contactSelected = new EventEmitter<Contact>();
+
+openContactDetails(contact: Contact) {
+  this.contactSelected.emit(contact);
+
+  let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
+  detailsPopUp.classList.toggle('active')
+  let contactID = Number(contact.id);
+  this.cd.loadDetails(contactID);
+}
+  //openContactDetails(contact:number) {
+  //  let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
+  //  detailsPopUp.classList.toggle('active')
+  //  this.cd.loadDetails(contact);
+  //}
 }

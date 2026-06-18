@@ -18,6 +18,13 @@ export interface newContact {
   color: string;
 }
 
+export interface newContact {
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })

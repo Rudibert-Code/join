@@ -1,0 +1,114 @@
+<div class="dialog-backdrop" (click)="close.emit()">
+  <section class="dialog-panel" (click)="$event.stopPropagation()">
+    <header class="dialog-header d-flex column">
+      <div class="d-flex right-bound">
+        <button class="dialog-close" type="button" (click)="close.emit()">X</button>
+      </div>
+      <div>
+        <h3 class="margin-correction black-txt">Add Contact</h3>
+        <p>Tasks are better in a team!</p>
+        <div class="separator"></div>
+      </div>
+    </header>
+    <form [formGroup]="contactForm" class="form-wrapper d-flex column" (ngSubmit)="onSubmit()">
+      <input formControlName="first_name" type="text" placeholder="firstname" />
+      <p class="contact-form__error margin-correction">
+        <span
+          *ngIf="
+            contactForm.get('first_name')?.hasError('required') &&
+            contactForm.get('first_name')?.touched
+          "
+        >
+          Please type your firstname.
+        </span>
+      </p>
+      <p class="contact-form__error margin-correction">
+        <span
+          *ngIf="
+            contactForm.get('first_name')?.hasError('minlength') &&
+            contactForm.get('first_name')?.touched
+          "
+        >
+          Firstname too short
+        </span>
+      </p>
+
+      <input formControlName="last_name" type="text" placeholder="lastname" />
+      <p class="contact-form__error margin-correction">
+        <span
+          *ngIf="
+            contactForm.get('last_name')?.hasError('required') &&
+            contactForm.get('last_name')?.touched
+          "
+        >
+          Please type your lastname.
+        </span>
+      </p>
+      <p class="contact-form__error margin-correction">
+        <span
+          *ngIf="
+            contactForm.get('last_name')?.hasError('minlength') &&
+            contactForm.get('last_name')?.touched
+          "
+        >
+          Lastname is too short
+        </span>
+      </p>
+
+      <input formControlName="email" type="email" placeholder="Email" />
+      <p class="contact-form__error margin-correction">
+        <span
+          *ngIf="
+            contactForm.get('email')?.hasError('required') && contactForm.get('email')?.touched
+          "
+        >
+          Please type your email.
+        </span>
+      </p>
+      <p class="contact-form__error margin-correction">
+        <span
+          *ngIf="
+            contactForm.get('email')?.hasError('missingAt') && contactForm.get('email')?.touched
+          "
+        >
+          missing @
+        </span>
+      </p>
+
+      <input formControlName="phone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Phone" />
+      <p class="contact-form__error margin-correction">
+        <span
+          *ngIf="
+            contactForm.get('phone')?.hasError('required') && contactForm.get('phone')?.touched
+          "
+        >
+          Please type your phonenumber
+        </span>
+      </p>
+      <p class="contact-form__error margin-correction">
+        <span
+          *ngIf="
+            contactForm.get('phone')?.hasError('minlength') && contactForm.get('phone')?.touched
+          "
+        >
+          phonenumber is too short
+        </span>
+      </p>
+      <p class="contact-form__error margin-correction">
+        <span
+          *ngIf="
+            contactForm.get('phone')?.hasError('pattern') && contactForm.get('phone')?.touched
+          "
+        >
+          phonenumber may only contain digits
+        </span>
+      </p>
+    </form>
+    <div class="dialog-actions">
+      <button class="cancel-button" type="button" (click)="close.emit()">Cancel</button>
+      <button class="create-contact-button" type="button" id="continue" (click)="onSubmit()" [disabled]="contactForm.invalid">
+        Create Contact <img src="assets/UI/icon_check.png" alt="check icon" />
+      </button>
+    </div>
+  </section>
+</div>
