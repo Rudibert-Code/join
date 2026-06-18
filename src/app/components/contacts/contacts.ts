@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Contact, Supabase } from '../../supabase';
 import { ContactForm } from '../contact-form/contact-form';
 import { ContactDetails } from '../contact-details/contact-details'
+import { ContacsButton } from "../contacs-button/contacs-button";
+//import { ContactList } from '../../pages/contact-list/contact-list'
 import { first } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [CommonModule, ContactForm],
+  imports: [CommonModule, ContactForm, ContacsButton],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
@@ -60,6 +62,10 @@ openContactDetails(contact: Contact) {
 
   let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
   detailsPopUp.classList.toggle('active')
+  if (screen.width >= 1024) {
+    let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
+    buttonMobile.src="assets/UI/vector/icon_edit-user.svg"
+  }
   let contactID = Number(contact.id);
   this.cd.loadDetails(contactID);
 }
