@@ -44,7 +44,7 @@ button{
     display: flex;
     justify-content: start;
     align-items: center;
-    width: 352px;
+    max-width: 352px;
     border-radius: 8px;
     gap: 16px;
     &_icon{
@@ -74,11 +74,14 @@ button{
     }
 }
 .separator{
-    width: 352px;
+    max-width: 352px;
     height: 2px;
     background-color: #2a36471e;
 }
 @media(max-width:1024px){
+    .contact_email{
+        font-size: 1.4rem;
+    }
     .contact-button{
         display: none;
     }
