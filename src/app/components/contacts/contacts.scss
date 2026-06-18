@@ -78,3 +78,14 @@ button{
     height: 2px;
     background-color: #2a36471e;
 }
+@media(max-width:1024px){
+    .contact-button{
+        display: none;
+    }
+}
+@media(max-width:1190px){
+    .main-container{
+        height: 100%;
+        width: 100%;
+    }
+}

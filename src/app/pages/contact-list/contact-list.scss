@@ -9,3 +9,14 @@
         overflow: hidden;
     }
 }
+@media(max-width:1190px){
+    .screen{
+        justify-content: center;
+        >app-contacts{
+            flex: 1;
+        }
+        >app-contact-details{
+            display: none;
+        }
+    }
+}

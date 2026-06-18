@@ -9,7 +9,7 @@
 
     z-index: 2;
 
-    position: absolute;
+    position: fixed;
     top: calc(100% - 152px);
     left: calc(100% - 72px);
 
@@ -25,7 +25,7 @@
     }
 }
 
-@media(min-width:1190px){
+@media(min-width:1024px){
     .contact-button_shape{
         display: none;
     }
