@@ -22,13 +22,14 @@ export class ContactDetails {
   userEmail:String="";
   userPhone:String="";
   userInitials:String="";
+  userColor:String="";
   selectedContactId: number | null = null;
   isEditModalOpen = false;
 
   loadDetails(contactId:number){
     let contact = this.db.contacts();
     let selectedContact = contact.find(contact => contact.id === contactId);
-
+    
     if (!selectedContact) {
       return;
     }
@@ -38,7 +39,11 @@ export class ContactDetails {
     this.userSurName = String(selectedContact.last_name);
     this.userEmail = String(selectedContact.email);
     this.userPhone = String(selectedContact.phone);
+    this.userColor = String(selectedContact.color);
     this.userInitials = (this.userName.charAt(0).toUpperCase())+(this.userSurName.charAt(0).toUpperCase());
+
+    let userIcon = document.getElementById('user_initials') as HTMLDivElement;
+    userIcon.style.backgroundColor = String(this.userColor);
   }
 
   openEditModal() {
