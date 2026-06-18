@@ -1,0 +1,47 @@
+<div class="edit-modal-overlay">
+  <div class="edit-modal">
+    <section class="edit-modal__header">
+      <button class="edit-modal__close" type="button">
+        <img src="assets/UI/vector/icon_close.svg" alt="Schließen" />
+      </button>
+
+      <div class="edit-modal__headline">
+        <h2>Edit contact</h2>
+      </div>
+    </section>
+
+    <section class="edit-modal__body">
+      <div class="edit-modal__avatar" [style.backgroundColor]="avatarColor">
+        <p>{{initalFirstname}}{{initalLastname}}</p>
+      </div>
+
+      <form class="edit-modal__form" [formGroup]="editContactForm" (ngSubmit)="saveContact()">
+        <div class="edit-modal__field">
+          <input class="" type="text" formControlName="firstname" />
+          <img src="assets/UI/vector/icon_user.svg" alt="Person Icon" />
+        </div>
+
+        <div class="edit-modal__field">
+          <input class="" type="text" formControlName="lastname" />
+          <img src="assets/UI/vector/icon_user.svg" alt="Person Icon" />
+        </div>
+
+        <div class="edit-modal__field">
+          <input type="email" formControlName="email" />
+          <img src="assets/UI/vector/icon_mail.svg" alt="Email Icon" />
+        </div>
+
+        <div class="edit-modal__field">
+          <input type="tel" formControlName="phone" />
+          <img src="assets/UI/vector/icon_call.svg" alt="Telefon Icon" />
+        </div>
+
+        <div class="edit-modal__actions">
+          <button class="edit-modal__delete" type="button">Delete</button>
+
+          <button class="edit-modal__save" type="submit">Save ✓</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

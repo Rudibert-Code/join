@@ -7,6 +7,15 @@ export interface Contact {
   last_name: string;
   phone: string;
   email: string;
+  color: string;
+}
+
+export interface newContact {
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
+  color: string;
 }
 
 @Injectable({
@@ -25,7 +34,7 @@ export class Supabase {
   async getContacts() {
     const { data: contacts, error } = await this.supabase
       .from('contacts')
-      .select('id, first_name, last_name, phone, email')
+      .select('id, first_name, last_name, phone, email, color')
       .order('first_name', { ascending: true });
     if (error) {
       console.error('Supabase getContacts error', error);
@@ -43,7 +52,7 @@ export class Supabase {
   /*
    * this function set the data in the Contactlist Component
    */
-  async setContact(newContact: Contact) {
+  async setContact(newContact: newContact) {
     const { data, error } = await this.supabase.from('contacts').insert([newContact]).select();
     if (data) {
       await this.getContacts();
@@ -56,12 +65,21 @@ export class Supabase {
    *
    * @param {number} id - This is the id you want to change the properties
    */
-  async updateContact(id: number) {
+  async updateContact(id: number, updatedContact: Partial<Contact>) {
     const { data, error } = await this.supabase
       .from('contacts')
-      .update({ first_name: '', last_name: '', phone: '', email: '' })
+      .update(updatedContact)
       .eq('id', id)
       .select();
+
+    if (error) {
+      console.error('Supabase updateContact error', error);
+      return;
+    }
+
+    await this.getContacts();
+
+    return data;
   }
 
   /*
@@ -81,5 +99,19 @@ export class Supabase {
       .from('contacts')
       .select('*')
       .order('first_name', { ascending: false });
+  }
+
+  async getContactById(contactId: number) {
+    const { data, error } = await this.supabase
+      .from('contacts')
+      .select('*')
+      .eq('id', contactId)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
   }
 }

@@ -17,7 +17,7 @@ export const routes: Routes = [
     path: '',
     component: MainLayout,
     children: [
-      { path: '', redirectTo: 'summery', pathMatch: 'full' },
+      { path: '', redirectTo: 'summary', pathMatch: 'full' },
       { path: 'summary', component: Summary },
       { path: 'add-task', component: AddTask },
       { path: 'board', component: Board },
