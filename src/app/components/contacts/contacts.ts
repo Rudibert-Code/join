@@ -1,21 +1,30 @@
 import { Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from "@angular/router";
 import { Contact, Supabase } from '../../supabase';
 import { ContactForm } from '../contact-form/contact-form';
 import { ContactDetails } from '../contact-details/contact-details'
 import { ContacsButton } from "../contacs-button/contacs-button";
-//import { ContactList } from '../../pages/contact-list/contact-list'
 import { first } from 'rxjs';
+import { RouterLink, RouterLinkActive } from "@angular/router";
+import { Router } from '@angular/router';
+
+let userInitials:string="";
+let userColor:String="";
+let userName:string="";
+let userSurName:string="";
+let userEmail:string="";
+let userPhone:string="";
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [CommonModule, ContactForm, ContacsButton],
+  imports: [CommonModule, ContactForm, ContacsButton, RouterLink, RouterLinkActive],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
 export class Contacts {
+
+  
 
   db = inject(Supabase);
   
@@ -30,6 +39,7 @@ export class Contacts {
   }
   
   cd = inject(ContactDetails);
+
 
   groupedContacts = computed(() => {
     const groups = new Map<string, Contact[]>();
@@ -54,6 +64,13 @@ export class Contacts {
     return firstNameLetter + lastNameLetter;
   }
 
+userInitials:string="";
+userColor:String="";
+userName:string="";
+userSurName:string="";
+userEmail:string="";
+userPhone:string="";
+
 constructor(private router: Router) {}
 
 @Output() contactSelected = new EventEmitter<Contact>();
@@ -61,11 +78,10 @@ constructor(private router: Router) {}
 openContactDetails(contact: Contact) {
   this.contactSelected.emit(contact);
 
-  if (screen.width <= 1189) {
-    //let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
-    //detailsPopUp.classList.toggle('active')
-    this.router.navigate(['/contact-list-mobile-details']);
-  } else{
+  let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
+  let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
+
+  if (screen.width >= 1190) {
     let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
     detailsPopUp.classList.toggle('active')
   }
@@ -75,6 +91,23 @@ openContactDetails(contact: Contact) {
 
   let contactID = Number(contact.id);
   this.cd.loadDetails(contactID);
+
+  if (screen.width <= 1189){
+    let array = this.db.contacts();
+    //this.color = array[contactID].color;
+    this.userName = array[contactID].first_name;
+    this.userSurName = array[contactID].last_name;
+    this.userInitials = this.userName.charAt(0).toUpperCase()+this.userSurName.charAt(0).toUpperCase(); 
+    this.userEmail = array[contactID].email;
+    this.userPhone = array[contactID].phone;
+
+    
+    contactContainer.style.display="none"
+    detailContainer.style.display="flex"
+  }
+}
+
+returnToContacts(){
 }
 
   //openRouterLink(){

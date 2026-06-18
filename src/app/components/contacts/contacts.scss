@@ -78,6 +78,95 @@ button{
     height: 2px;
     background-color: #2a36471e;
 }
+
+.contact-details-mobile{
+    height: 100vh;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+
+    padding-left: 32px;
+
+    display: none;
+    background-color: $main_white;
+}
+
+.return_button{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    &_icon{
+        cursor: pointer;
+        height: 50px;
+        padding-top: 8px;
+        padding-right: 32px;
+    }
+}
+.contact{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: 8px;
+    margin-bottom: 32px;
+    >h1{
+      margin: 0;  
+      margin-top: 16px;
+    }
+    >p{
+        margin: 0;  
+        margin-top: 8px;
+        font-size: 2.0rem;
+    }
+    &_second{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-self: start;
+        align-items: start;
+    }
+    &_line{
+        width: 59px;
+        height: 4px;
+        background-color: $main_blue;
+    }
+}
+.user{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 16px;
+
+    &_icon{
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $user_purple;
+        border-radius: 100px;
+        margin-right: 16px;
+        font-size: 4.7rem;
+        color: $main_white;
+        margin: 16px 0;
+        gap: 16px;
+    }
+    &_name{
+        font-size: 3.2rem;
+        color: $main_header; 
+    }
+    &_email{
+        color: $main_blue;
+    }
+}
+
+
+
 @media(max-width:1024px){
     .contact_email{
         font-size: 1.4rem;

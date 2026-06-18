@@ -1,6 +1,38 @@
-<section class="main-container">
+<div class="main-container">
 
-  <div>
+  <div class="contact-details-mobile" id="details_mobile">
+    <section (click)="returnToContacts()" class="return_button">
+      <img class="return_button_icon" src="assets/UI/icon_arrow.png" alt="">
+    </section>
+    <section class="contact">
+        <h1>Contacts</h1>
+        <div class="contact_second">
+          <p>Better with a team</p>
+          <div class="contact_line"></div>
+        </div>
+    </section>
+    
+    <section class="user">
+        <p class="user_icon">{{userInitials}}</p>
+        <p class="user_name">{{userName}} {{userSurName}}</p>
+    </section>
+
+    <section>
+      <p>Contact Information</p>
+      <div>
+        <p>Email</p>
+        <p class="user_email">{{userEmail}}</p>
+      </div>
+      <div>
+        <p>Phone</p>
+        <p>{{userPhone}}</p>
+      </div>
+    </section>
+    
+  </div>
+
+
+  <div class="no-scroll" id="contact_container">
     <button class="contact-button" (click)="openContactForm()">
       <p>Add new contact</p>
       <img src="assets/UI/vector/icon_add-user.svg" alt="">
@@ -30,4 +62,4 @@
     }
   </div>
 
-</section>
+</div>

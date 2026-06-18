@@ -126,7 +126,9 @@ dialog{
 .contact_information{
     margin-left: 32px;
 }
-
+.hide{
+    display: none;
+}
 @media(max-width:1190px){
     dialog{
         opacity: 1;
