@@ -1,10 +1,10 @@
-import { Injectable,Component, inject, ViewChild } from '@angular/core';
+import { Injectable,Component, inject } from '@angular/core';
 import { Supabase } from '../../supabase';
-import { Contacts } from '../../components/contacts/contacts';
+import { EditContactModal } from '../edit-contact-modal/edit-contact-modal';
 
 @Component({
   selector: 'app-contact-details',
-  imports: [],
+  imports: [EditContactModal],
   templateUrl: './contact-details.html',
   styleUrl: './contact-details.scss',
 })
@@ -22,14 +22,35 @@ export class ContactDetails {
   userEmail:String="";
   userPhone:String="";
   userInitials:String="";
+  selectedContactId: number | null = null;
+  isEditModalOpen = false;
 
-  loadDetails(X:number){
+  loadDetails(contactId:number){
     let contact = this.db.contacts();
-    this.userName = String(contact[X].first_name);
-    this.userSurName = String(contact[X].last_name);
-    this.userEmail = String(contact[X].email);
-    this.userPhone = String(contact[X].phone);
+    let selectedContact = contact.find(contact => contact.id === contactId);
+
+    if (!selectedContact) {
+      return;
+    }
+
+    this.selectedContactId = selectedContact.id;
+    this.userName = String(selectedContact.first_name);
+    this.userSurName = String(selectedContact.last_name);
+    this.userEmail = String(selectedContact.email);
+    this.userPhone = String(selectedContact.phone);
     this.userInitials = (this.userName.charAt(0).toUpperCase())+(this.userSurName.charAt(0).toUpperCase());
+  }
+
+  openEditModal() {
+    this.isEditModalOpen = true;
+  }
+
+  closeEditModal() {
+    this.isEditModalOpen = false;
+
+    if (this.selectedContactId !== null) {
+      this.loadDetails(this.selectedContactId);
+    }
   }
   
   test(){

@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Supabase } from '../../supabase';
 
@@ -14,6 +14,7 @@ export class EditContactModal {
   initalFirstname: string = '';
   initalLastname: string = '';
   @Input() contactId!: number;
+  @Output() close = new EventEmitter<void>();
 
   async ngOnInit() {
     const contact = await this.contacts.getContactById(this.contactId);
@@ -49,5 +50,6 @@ export class EditContactModal {
       phone: formValue.phone!,
     };
     await this.contacts.updateContact(this.contactId, updatedContact);
+    this.close.emit();
   }
 }
