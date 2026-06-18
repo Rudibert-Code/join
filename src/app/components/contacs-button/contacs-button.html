@@ -1,4 +1,5 @@
-<div class="contact-button_shape">
-    <!--<img (click)="assignNames()" src="assets/UI/vector/icon_add-user.svg" alt="">-->
+<div class="contact-button_shape" (click)="openContactForm()">
     <img src="assets/UI/vector/icon_add-user.svg" alt="">
 </div>
+
+<app-contact-form *ngIf="showContactForm()" (close)="closeContactForm()"></app-contact-form>
