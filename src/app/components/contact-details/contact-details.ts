@@ -52,8 +52,20 @@ export class ContactDetails {
       this.loadDetails(this.selectedContactId);
     }
   }
-  
-  test(){
-    console.log("SAY HI")
+
+  async deleteContact() {
+    if (this.selectedContactId === null) {
+      return;
+    }
+
+    await this.db.deleteContact(this.selectedContactId);
+
+    this.selectedContactId = null;
+    this.userName = "";
+    this.userSurName = "";
+    this.userEmail = "";
+    this.userPhone = "";
+    this.userInitials = "";
+    this.isEditModalOpen = false;
   }
 }
