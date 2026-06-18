@@ -1,6 +1,7 @@
 import { Injectable,Component, inject, ViewChild } from '@angular/core';
 import { Supabase } from '../../supabase';
 import { Contacts } from '../../components/contacts/contacts';
+
 @Component({
   selector: 'app-contact-details',
   imports: [],
@@ -29,16 +30,9 @@ export class ContactDetails {
     this.userEmail = String(contact[X].email);
     this.userPhone = String(contact[X].phone);
     this.userInitials = (this.userName.charAt(0).toUpperCase())+(this.userSurName.charAt(0).toUpperCase());
-
-    console.table([
-      this.userName,
-      this.userSurName, 
-      this.userEmail, 
-      this.userPhone, 
-      this.userInitials])
   }
   
   test(){
-    console.log("HI")
+    console.log("SAY HI")
   }
 }
