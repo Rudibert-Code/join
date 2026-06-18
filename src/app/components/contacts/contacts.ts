@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contact, Supabase } from '../../supabase';
 import { ContactForm } from '../contact-form/contact-form';
@@ -13,7 +13,9 @@ import { first } from 'rxjs';
   styleUrl: './contacts.scss',
 })
 export class Contacts {
+
   db = inject(Supabase);
+  
   showContactForm = signal(false);
 
   openContactForm() {
@@ -49,9 +51,16 @@ export class Contacts {
     return firstNameLetter + lastNameLetter;
   }
 
-  openContactDetails(id:Contact){
+
+
+  @Output() contactSelected = new EventEmitter<Contact>();
+
+  openContactDetails(contact: Contact) {
+    this.contactSelected.emit(contact);
+
     let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
     detailsPopUp.classList.toggle('active')
-    this.cd.loadDetails(id);
+    let contactID = Number(contact.id);
+    this.cd.loadDetails(contactID);
   }
 }

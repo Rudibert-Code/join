@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { Contacts } from '../../components/contacts/contacts';
 import { ContacsButton } from '../../components/contacs-button/contacs-button';
 import { App } from "../../app";
 
 import { ContactDetails } from '../../components/contact-details/contact-details'
+import { Contact } from '../../supabase';
 
 @Component({
   selector: 'app-contact-list',
@@ -11,4 +12,10 @@ import { ContactDetails } from '../../components/contact-details/contact-details
   templateUrl: './contact-list.html',
   styleUrl: './contact-list.scss',
 })
-export class ContactList {}
+export class ContactList {
+  @ViewChild(ContactDetails) detailsComponent?: ContactDetails;
+  
+  onContactSelected(contact: Contact) {
+    this.detailsComponent?.loadDetails(Number(contact.id));
+  }
+}
