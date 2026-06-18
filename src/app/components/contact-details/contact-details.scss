@@ -129,7 +129,7 @@ dialog{
 }
 
 @media(max-width:1190px){
-    .contact-details_container{
-        display: none;
+    dialog{
+        margin-left: calc(50% - 110px);
     }
 }

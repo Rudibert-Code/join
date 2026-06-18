@@ -9,6 +9,12 @@
         overflow: hidden;
     }
 }
+    .contacts{
+        display: flex;
+    }
+    .details{
+        display: flex;
+    }
 @media(max-width:1190px){
     .screen{
         justify-content: center;
@@ -16,7 +22,10 @@
             flex: 1;
         }
         >app-contact-details{
+            z-index: 100;
+        }
+        .details{
             display: none;
         }
-    }
+}
 }
