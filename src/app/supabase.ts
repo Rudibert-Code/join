@@ -96,6 +96,13 @@ export class Supabase {
    */
   async deleteContact(id: number) {
     const { error } = await this.supabase.from('contacts').delete().eq('id', id);
+
+    if (error) {
+      console.error('Supabase deleteContact error', error);
+      return;
+    }
+
+    await this.getContacts();
   }
 
   /*

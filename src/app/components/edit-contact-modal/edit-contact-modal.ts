@@ -52,4 +52,9 @@ export class EditContactModal {
     await this.contacts.updateContact(this.contactId, updatedContact);
     this.close.emit();
   }
+
+  async deleteContact() {
+    await this.contacts.deleteContact(this.contactId);
+    this.close.emit();
+  }
 }
