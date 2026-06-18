@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ContactList } from './pages/contact-list/contact-list';
+import { ContactLinksMobileDetails } from './pages/contact-links-mobile-details/contact-links-mobile-details';
 import { AddTask } from './pages/add-task/add-task';
 import { Board } from './pages/board/board';
 import { MainLayout } from './layouts/main-layout/main-layout';
@@ -22,6 +23,7 @@ export const routes: Routes = [
       { path: 'add-task', component: AddTask },
       { path: 'board', component: Board },
       { path: 'contact-list', component: ContactList },
+      { path: 'contact-list-mobile-details', component: ContactLinksMobileDetails },
       { path: 'legal-notice', component: LegalNotice },
       { path: 'privacy-police', component: PrivacyPolicy },
     ],

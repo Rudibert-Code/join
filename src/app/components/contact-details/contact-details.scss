@@ -48,7 +48,6 @@ dialog{
     margin-left: calc(50% + 200px);
     z-index: 100;
     &.active{
-        display: flex;
         opacity: 1;
         margin-left: calc(50% + 64px);
         transition: 0.5s;
@@ -130,6 +129,7 @@ dialog{
 
 @media(max-width:1190px){
     dialog{
+        opacity: 1;
         margin-left: calc(50% - 110px);
     }
 }

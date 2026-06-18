@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from "@angular/router";
 import { Contact, Supabase } from '../../supabase';
 import { ContactForm } from '../contact-form/contact-form';
 import { ContactDetails } from '../contact-details/contact-details'
@@ -53,22 +54,32 @@ export class Contacts {
     return firstNameLetter + lastNameLetter;
   }
 
-
+constructor(private router: Router) {}
 
 @Output() contactSelected = new EventEmitter<Contact>();
 
 openContactDetails(contact: Contact) {
   this.contactSelected.emit(contact);
 
-  let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
-  detailsPopUp.classList.toggle('active')
-  if (screen.width >= 1024) {
-    let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
-    buttonMobile.src="assets/UI/vector/icon_edit-user.svg"
+  if (screen.width <= 1189) {
+    //let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
+    //detailsPopUp.classList.toggle('active')
+    this.router.navigate(['/contact-list-mobile-details']);
+  } else{
+    let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
+    detailsPopUp.classList.toggle('active')
   }
+
+  let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
+  buttonMobile.src="assets/UI/vector/icon_edit-user.svg"
+
   let contactID = Number(contact.id);
   this.cd.loadDetails(contactID);
 }
+
+  //openRouterLink(){
+  //  this.router.navigate(['/contact-list-mobile-details']);
+  //}
   //openContactDetails(contact:number) {
   //  let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
   //  detailsPopUp.classList.toggle('active')
