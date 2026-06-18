@@ -24,3 +24,9 @@
         background-color: $main_blue;
     }
 }
+
+@media(min-width:1190px){
+    .contact-button_shape{
+        display: none;
+    }
+}

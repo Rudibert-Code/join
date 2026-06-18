@@ -53,14 +53,19 @@ export class Contacts {
 
 
 
-  @Output() contactSelected = new EventEmitter<Contact>();
+@Output() contactSelected = new EventEmitter<Contact>();
 
-  openContactDetails(contact: Contact) {
-    this.contactSelected.emit(contact);
+openContactDetails(contact: Contact) {
+  this.contactSelected.emit(contact);
 
-    let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
-    detailsPopUp.classList.toggle('active')
-    let contactID = Number(contact.id);
-    this.cd.loadDetails(contactID);
-  }
+  let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
+  detailsPopUp.classList.toggle('active')
+  let contactID = Number(contact.id);
+  this.cd.loadDetails(contactID);
+}
+  //openContactDetails(contact:number) {
+  //  let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
+  //  detailsPopUp.classList.toggle('active')
+  //  this.cd.loadDetails(contact);
+  //}
 }
