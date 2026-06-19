@@ -40,6 +40,10 @@ export class Contacts {
   
   cd = inject(ContactDetails);
 
+  // Zwischenspeicher für Contact Color
+  currentUserList:String[] = [];
+
+
 
   groupedContacts = computed(() => {
     const groups = new Map<string, Contact[]>();
@@ -52,8 +56,10 @@ export class Contacts {
       }
 
       groups.get(firstLetter)!.push(contact);
-    }
 
+      // fügt Contact Color-ID zu Zwischenspeicher Array hinzu
+      this.currentUserList.push(contact.color);
+    }
     return Array.from(groups.entries());
   });
 
@@ -94,14 +100,12 @@ openContactDetails(contact: Contact) {
 
   if (screen.width <= 1189){
     let array = this.db.contacts();
-    //this.color = array[contactID].color;
     this.userName = array[contactID].first_name;
     this.userSurName = array[contactID].last_name;
     this.userInitials = this.userName.charAt(0).toUpperCase()+this.userSurName.charAt(0).toUpperCase(); 
     this.userEmail = array[contactID].email;
     this.userPhone = array[contactID].phone;
 
-    
     contactContainer.style.display="none"
     detailContainer.style.display="flex"
   }
@@ -110,12 +114,27 @@ openContactDetails(contact: Contact) {
 returnToContacts(){
   let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
   let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
-
   let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
   buttonMobile.src="assets/UI/vector/icon_add-user.svg";
   contactContainer.style.display="flex";
   contactContainer.style.flexDirection="column";
   detailContainer.style.display="none";
+}
+
+
+
+// for-Schleife geht Zwischenspeicher Array durch, added class passend zur Color-ID zum entsprechenden component hinzu
+setUserIconColor(){
+
+  console.log(this.currentUserList)
+
+  for (let index = 0; index < this.currentUserList.length; index++) {  
+    let contactID = String(this.currentUserList[index]);
+    let colorClass = "bg-color_" + String(this.currentUserList[index]).slice(1);
+
+    let currenContact = document.getElementById(contactID);
+    currenContact?.classList.add(colorClass);
+  }
 }
 
   //openRouterLink(){
