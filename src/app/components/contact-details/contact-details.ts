@@ -1,6 +1,7 @@
 import { Injectable,Component, inject } from '@angular/core';
 import { Supabase } from '../../supabase';
 import { EditContactModal } from '../edit-contact-modal/edit-contact-modal';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-contact-details',
@@ -59,11 +60,15 @@ export class ContactDetails {
   }
 
   async deleteContact() {
+
     if (this.selectedContactId === null) {
       return;
     }
 
     await this.db.deleteContact(this.selectedContactId);
+
+    // Timeout : macht Update asynchron. Updates haben Fehler verursacht, da sie nach change detection ausgeführt wurden.
+    setTimeout(()=>{
 
     this.selectedContactId = null;
     this.userName = "";
@@ -72,5 +77,15 @@ export class ContactDetails {
     this.userPhone = "";
     this.userInitials = "";
     this.isEditModalOpen = false;
+
+    this.resetWindow();
+
+    },0)
+    
+  }
+
+  resetWindow(){
+    let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement; 
+    detailsPopUp.classList.toggle('active')
   }
 }
