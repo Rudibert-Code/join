@@ -108,6 +108,14 @@ openContactDetails(contact: Contact) {
 }
 
 returnToContacts(){
+  let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
+  let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
+
+  let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
+  buttonMobile.src="assets/UI/vector/icon_add-user.svg";
+  contactContainer.style.display="flex";
+  contactContainer.style.flexDirection="column";
+  detailContainer.style.display="none";
 }
 
   //openRouterLink(){
