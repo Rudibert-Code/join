@@ -1,0 +1,65 @@
+<h1>Add Task</h1>
+
+<form [formGroup]="taskForm">
+  <div class="add-task-form__columns">
+    <div class="add-task-form__left">
+      <div class="add-task-form__title">
+        <label for="title">Title<span class="red">*</span></label>
+        <input type="text" name="title" formControlName="title" placeholder="Enter a title" />
+      </div>
+      <div class="add-task-form__description">
+        <label for="description">Description</label>
+        <textarea
+          name="description"
+          formControlName="description"
+          placeholder="Enter a Description"
+        ></textarea>
+      </div>
+      <div class="add-task-form__due_date">
+        <label for="due_date">Due date*<span class="red">*</span></label>
+        <input type="date" name="due_date" formControlName="due_date" />
+      </div>
+    </div>
+
+    <div class="add-task-form__right">
+      <div class="priority-buttons">
+        <button
+          type="button"
+          [class.active]="taskForm.controls.priority.value === 'urgent'"
+          (click)="setPriority('urgent')"
+        >
+          Urgent
+        </button>
+
+        <button
+          type="button"
+          [class.active]="taskForm.controls.priority.value === 'medium'"
+          (click)="setPriority('medium')"
+        >
+          Medium
+        </button>
+
+        <button
+          type="button"
+          [class.active]="taskForm.controls.priority.value === 'low'"
+          (click)="setPriority('low')"
+        >
+          Low
+        </button>
+      </div>
+
+      <p>Selected priority: {{ taskForm.controls.priority.value }}</p>
+
+      <label>
+        Category*
+        <select formControlName="category">
+          <option value="">Select task category</option>
+          <option value="Technical Tasks">Technical Tasks</option>
+          <option value="User Story">User Story</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <button type="button">Create Task</button>
+</form>

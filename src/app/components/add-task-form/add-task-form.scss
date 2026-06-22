@@ -1,0 +1,18 @@
+.add-task-form__columns{
+    display: flex;
+    flex-direction: row;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+}
+
+.add-task-form__left,
+.add-task-form__right{
+    flex: 1;
+
+    label{
+        display: block;
+    }
+    .red{
+        color: rgba(255, 129, 144, 1);
+    }
+}
