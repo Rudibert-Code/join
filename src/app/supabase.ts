@@ -18,11 +18,13 @@ export interface newContact {
   color: string;
 }
 
-export interface newContact {
-  first_name: string;
-  last_name: string;
-  phone: string;
-  email: string;
+export interface Task {
+  id: number;
+  title: string;
+  description: string;
+  due_date: string;
+  priority: string;
+  category: string;
 }
 
 @Injectable({
@@ -33,6 +35,7 @@ export class Supabase {
   supabaseKey = 'sb_publishable_dtywlOnyxHoBjKZ9RHogMQ_xa3sIvBC';
   supabase = createClient(this.supabaseURL, this.supabaseKey);
 
+  tasks = signal<Task[]>([]);
   contacts = signal<Contact[]>([]);
 
   /*
@@ -127,5 +130,26 @@ export class Supabase {
     }
 
     return data;
+  }
+
+  async getTasks() {
+    const { data: tasks, error } = await this.supabase
+      .from('tasks')
+      .select('id, title, description, due_date, priority, category')
+      .order('title', { ascending: true });
+
+    if (error) {
+      console.error('Supabase getTasks error', error);
+      this.tasks.set([]);
+      return [];
+    }
+
+    if (!tasks) {
+      this.tasks.set([]);
+      return [];
+    }
+
+    this.tasks.set(tasks);
+    return tasks;
   }
 }

@@ -21,6 +21,7 @@
 .board-wrapper {
   height: 100%;
   width: 100%;
+  background-color: $main-white;
 }
 
 .header-wrapper,
@@ -72,4 +73,31 @@
 
 .empty-txt {
   color: #a8a8a8;
+}
+
+.todo-container,
+.progress-container,
+.feedback-container,
+.done-container {
+  overflow: scroll;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.task-card {
+  height: 260px;
+  width: 250px;
+  padding: 10px 12px;
+  border-radius: 15px;
+  background-color: #fff;
+  gap: 20px;
+  &__description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  &__title {
+    font-size: 1.6rem;
+  }
 }
