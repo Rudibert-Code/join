@@ -107,7 +107,6 @@
         border: none;
         outline: none;
         font-size: 16px;
-        font-family: inherit;
     }
 
     img {
@@ -161,7 +160,18 @@
     }
 }
 
+.edit-modal__close--desktopIMG{
+    display: none;
+}
+
 @media screen and (min-width: 1024px) {
+    .edit-modal__close--mobileIMG{
+        display: none;
+    }
+    .edit-modal__close--desktopIMG{
+        display: block;
+    }
+
     .edit-modal {
         width: initial;
         flex-direction: row;
