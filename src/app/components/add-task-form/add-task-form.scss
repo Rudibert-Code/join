@@ -1,18 +1,84 @@
-.add-task-form__columns{
+@use '../../../styles/variables' as *;
+
+
+.add-task-form__columns {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     font-family: 'Inter', sans-serif;
-    font-size: 20px;
+    font-size: 16px;
+    color: $main_header;
+
+    input,
+    textarea {
+        border: unset;
+        border: solid 1px $main-border;
+        border-radius: 8px;
+        padding: 8px 10px;
+        width: 100%;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+
+        &::placeholder {
+            color: #D1D1D1;
+            font-weight: 400;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+    }
+
+    textarea {
+        min-height: 88px;
+    }
+
+
 }
 
 .add-task-form__left,
-.add-task-form__right{
+.add-task-form__right {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 30px;
 
-    label{
+    label {
         display: block;
     }
-    .red{
+
+    .red {
         color: rgba(255, 129, 144, 1);
+    }
+}
+
+.priority-buttons__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2vw;
+
+    button {
+        flex: 1;
+        max-width: 130px;
+        background-color: #fff;
+        border: unset;
+        border-radius: 8px;
+        color: #000;
+        filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.1));
+    }
+}
+
+@media screen and (min-width: 500px) {
+    .priority-buttons__wrapper {
+        button {
+            max-width: inherit;
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .add-task-form__columns {
+        flex-direction: row;
+        gap: 5vw
     }
 }

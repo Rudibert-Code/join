@@ -16,13 +16,15 @@
         ></textarea>
       </div>
       <div class="add-task-form__due_date">
-        <label for="due_date">Due date*<span class="red">*</span></label>
+        <label for="due_date">Due date<span class="red">*</span></label>
         <input type="date" name="due_date" formControlName="due_date" />
       </div>
     </div>
 
     <div class="add-task-form__right">
       <div class="priority-buttons">
+        <label>Priority</label>
+        <div class="priority-buttons__wrapper">
         <button
           type="button"
           [class.active]="taskForm.controls.priority.value === 'urgent'"
@@ -30,7 +32,6 @@
         >
           Urgent
         </button>
-
         <button
           type="button"
           [class.active]="taskForm.controls.priority.value === 'medium'"
@@ -38,7 +39,6 @@
         >
           Medium
         </button>
-
         <button
           type="button"
           [class.active]="taskForm.controls.priority.value === 'low'"
@@ -46,18 +46,42 @@
         >
           Low
         </button>
+        </div>
       </div>
 
       <p>Selected priority: {{ taskForm.controls.priority.value }}</p>
 
-      <label>
-        Category*
-        <select formControlName="category">
-          <option value="">Select task category</option>
-          <option value="Technical Tasks">Technical Tasks</option>
-          <option value="User Story">User Story</option>
-        </select>
-      </label>
+      <label for="category">Category<span class="red">*</span></label>
+      <select name="category" formControlName="category">
+        <option value="">Select task category</option>
+        <option value="Technical Tasks">Technical Tasks</option>
+        <option value="User Story">User Story</option>
+      </select>
+
+      <div class="assigned-dropdown">
+        <label>Assigned to</label>
+
+        <button class="assigned-dropdown__trigger" type="button" (click)="toggleAssignedDropdown()">
+          Select contacts to assign
+        </button>
+
+        <div class="assigned-dropdown__menu" *ngIf="isAssignedDropdownOpen">
+          <button
+            class="assigned-dropdown__option"
+            type="button"
+            *ngFor="let contact of contacts()"
+            (click)="toggleContact(contact.id)"
+          >
+            <span class="assigned-dropdown__avatar" [style.background-color]="contact.color">
+              {{ contact.first_name[0] }}{{ contact.last_name[0] }}
+            </span>
+
+            <span> {{ contact.first_name }} {{ contact.last_name }} </span>
+
+            <input type="checkbox" [checked]="isContactSelected(contact.id)" tabindex="-1" />
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

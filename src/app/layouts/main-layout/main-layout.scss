@@ -1,3 +1,5 @@
+@use '../../../styles/variables' as *;
+
 .app-layout {
     min-height: 100vh;
 }
@@ -11,6 +13,12 @@ app-nav-bar {
 
 .app-content {
     padding-bottom: 90px;
+}
+
+.content {
+    padding: 16px;
+    background-color: $main-white;
+    min-height: calc(100vh - $header_height_mobile);
 }
 
 @media (min-width: 1024px) {

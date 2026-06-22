@@ -1,17 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormArray, ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Supabase } from '../../supabase';
 
 @Component({
   selector: 'app-add-task-form',
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-task-form.html',
   styleUrl: './add-task-form.scss',
 })
 export class AddTaskForm {
+  supabase = inject(Supabase);
+  contacts = this.supabase.contacts;
+
+  constructor() {
+    this.supabase.getContacts();
+  }
   // contacts = [
-  //   { id: 1, first_name: 'Anna', last_name: 'Müller' },
-  //   { id: 2, first_name: 'Max', last_name: 'Schneider' },
-  //   { id: 3, first_name: 'Lisa', last_name: 'Weber' },
+  //   { id: 1, first_name: 'Eva', last_name: 'Fischer', color: '#ff7a00' },
+  //   { id: 2, first_name: 'Emmanuel', last_name: 'Mauer', color: '#00bee8' },
+  //   { id: 3, first_name: 'Marcel', last_name: 'Bauer', color: '#6e52ff' },
   // ];
 
   taskForm = new FormGroup({
@@ -34,14 +42,36 @@ export class AddTaskForm {
       validators: [Validators.required],
     }),
 
-    // assignedContactIds: new FormControl<number[]>([], {
-    //   nonNullable: true,
-    // }),
+    assignedContactIds: new FormControl<number[]>([], {
+      nonNullable: true,
+    }),
 
     // subtasks: new FormArray<FormControl<string>>([]),
   });
 
   setPriority(priority: 'urgent' | 'medium' | 'low') {
     this.taskForm.controls.priority.setValue(priority);
+  }
+
+  isAssignedDropdownOpen = false;
+
+  toggleAssignedDropdown() {
+    this.isAssignedDropdownOpen = !this.isAssignedDropdownOpen;
+  }
+
+  toggleContact(contactId: number) {
+    const currentIds = this.taskForm.controls.assignedContactIds.value;
+
+    if (currentIds.includes(contactId)) {
+      this.taskForm.controls.assignedContactIds.setValue(
+        currentIds.filter((id) => id !== contactId),
+      );
+    } else {
+      this.taskForm.controls.assignedContactIds.setValue([...currentIds, contactId]);
+    }
+  }
+
+  isContactSelected(contactId: number) {
+    return this.taskForm.controls.assignedContactIds.value.includes(contactId);
   }
 }
