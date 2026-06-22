@@ -127,6 +127,15 @@ button{
         background-color: $main_header;
     }
 }
+.clicked{
+    background-color: $main_header;
+    .contact-full-name{
+        color: $main_white;
+    }
+    &:hover{
+        background-color: $main_header;
+    }
+}
 .user{
     width: 100%;
     display: flex;

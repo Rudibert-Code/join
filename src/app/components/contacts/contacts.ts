@@ -77,6 +77,11 @@ userSurName:string="";
 userEmail:string="";
 userPhone:string="";
 
+
+//kontakt details viewer status
+detailViewActive:Boolean = false;
+
+
 constructor(private router: Router) {}
 
 @Output() contactSelected = new EventEmitter<Contact>();
@@ -86,10 +91,12 @@ openContactDetails(contact: Contact) {
 
   let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
   let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
-
+  
   if (screen.width >= 1190) {
     let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
-    detailsPopUp.classList.toggle('active')
+    if (this.detailViewActive == false) {
+      detailsPopUp.classList.toggle('active') 
+    }
   }
 
   let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
@@ -109,6 +116,18 @@ openContactDetails(contact: Contact) {
     contactContainer.style.display="none"
     detailContainer.style.display="flex"
   }
+
+  // löscht active class aus Kontakt divs
+  for (let index = 0; index < this.db.contacts().length; index++) {
+    let currentContactID = this.db.contacts()[index].last_name;
+    let targetContactIcon = document.getElementById(currentContactID);
+    targetContactIcon?.classList.remove("clicked");
+    this.detailViewActive = true;
+  }
+
+  // ändere Contact-Feld zu active
+  let userIconID = document.getElementById(contact.last_name) as HTMLDivElement;
+  userIconID.classList.add("clicked"); 
 }
 
 returnToContacts(){
@@ -130,8 +149,8 @@ setUserIconColor(){
     let contactID = String(this.currentUserList[index]);
     let colorClass = "bg-color_" + String(this.currentUserList[index]).slice(1);
 
-    let currenContact = document.getElementById(contactID);
-    currenContact?.classList.add(colorClass);
+    let currentContact = document.getElementById(contactID) as HTMLDivElement;
+    currentContact?.classList.add(colorClass);
   }
 }
 
