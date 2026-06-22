@@ -86,7 +86,7 @@
 
 .task-card {
   height: 260px;
-  width: 250px;
+  min-width: 230px;
   padding: 10px 12px;
   border-radius: 15px;
   background-color: #fff;
@@ -99,5 +99,26 @@
   }
   &__title {
     font-size: 1.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+}
+
+.task-card--technical {
+  background-color: $label_technical;
+  padding: 5px 10px;
+  margin-bottom: 15px;
+  width: 140px;
+  border-radius: 10px;
+  color: $main-white;
+}
+
+.task-card--user {
+  background-color: $label_user;
+  padding: 5px 10px;
+  margin-bottom: 15px;
+  width: 100px;
+  border-radius: 10px;
+  color: $main-white;
 }

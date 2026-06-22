@@ -62,4 +62,9 @@ export class Board implements OnInit {
     }
     return 'todo';
   }
+
+  getTaskCardClass(category: string): string {
+    const categoryLower = category?.toLowerCase().trim() || '';
+    return categoryLower.includes('technical') ? 'task-card--technical' : 'task-card--user';
+  }
 }
