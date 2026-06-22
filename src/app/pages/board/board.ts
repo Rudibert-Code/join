@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Supabase, Task } from '../../supabase';
-import { RouterLink } from "@angular/router";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -26,7 +26,6 @@ export class Board implements OnInit {
 
   async loadTasks() {
     const tasks = await this.db.getTasks();
-    console.log('Board.loadTasks loaded', tasks.length, 'tasks', tasks);
   }
 
   get todoTasks() {
@@ -47,6 +46,10 @@ export class Board implements OnInit {
 
   private filterTasksByCategory(categoryKey: 'todo' | 'progress' | 'feedback' | 'done') {
     return this.tasks().filter((task) => this.getCategoryKey(task) === categoryKey);
+  }
+
+  getNormalizedPriority(priority: string): string {
+    return priority.replace(/^\$/, '').trim().toLowerCase();
   }
 
   private getCategoryKey(task: Task): 'todo' | 'progress' | 'feedback' | 'done' {

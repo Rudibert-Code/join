@@ -33,7 +33,7 @@
         </div>
         <div class="d-flex center-space">
           <p>User...</p>
-          <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+          <img [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'" alt="priority" />
         </div>
       </article>
     </div>
