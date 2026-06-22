@@ -1,11 +1,12 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Supabase, Task } from '../../supabase';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })
