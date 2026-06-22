@@ -107,7 +107,6 @@
         border: none;
         outline: none;
         font-size: 16px;
-        font-family: inherit;
     }
 
     img {
@@ -147,7 +146,32 @@
     font-weight: 700;
 }
 
+.edit-modal {
+    animation: slideInFromBottom 250ms ease-out;
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.edit-modal__close--desktopIMG{
+    display: none;
+}
+
 @media screen and (min-width: 1024px) {
+    .edit-modal__close--mobileIMG{
+        display: none;
+    }
+    .edit-modal__close--desktopIMG{
+        display: block;
+    }
+
     .edit-modal {
         width: initial;
         flex-direction: row;
@@ -169,6 +193,20 @@
         top: initial;
         left: initial;
         transform: translateX(0) translateY(-30px);
+    }
+
+    .edit-modal {
+        animation: slideInFromRight 250ms ease-out;
+    }
+
+    @keyframes slideInFromRight {
+        from {
+            transform: translateX(100%);
+        }
+
+        to {
+            transform: translateX(0);
+        }
     }
 
 }

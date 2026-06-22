@@ -126,8 +126,6 @@ returnToContacts(){
 // for-Schleife geht Zwischenspeicher Array durch, added class passend zur Color-ID zum entsprechenden component hinzu
 setUserIconColor(){
 
-  console.log(this.currentUserList)
-
   for (let index = 0; index < this.currentUserList.length; index++) {  
     let contactID = String(this.currentUserList[index]);
     let colorClass = "bg-color_" + String(this.currentUserList[index]).slice(1);

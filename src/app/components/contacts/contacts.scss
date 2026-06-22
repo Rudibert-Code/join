@@ -39,40 +39,6 @@ button{
         padding-left: 16px;
     }
 }
-.contact{
-    cursor: pointer;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    max-width: 352px;
-    border-radius: 8px;
-    gap: 16px;
-    &_icon{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 52px;
-        height: 52px;
-        border-radius: 100px;
-        background-color: $user_purple;
-        >p{
-            color: $main_white;
-        }
-        &:active{
-            border-width: 2px;
-            border-color: $main_white;
-        }
-    }
-    &_email{
-        color: $main_blue;
-    }
-    &:hover{
-        background-color: $main_white;
-    }
-    &:active{
-        background-color: $main_header;
-    }
-}
 .separator{
     max-width: 352px;
     height: 2px;
@@ -107,12 +73,13 @@ button{
 }
 .contact{
     width: 100%;
+    max-width: 352px;
     display: flex;
-    flex-direction: column;
     justify-content: start;
     align-items: start;
     gap: 8px;
     margin-bottom: 32px;
+    border-radius: 8px;
     >h1{
       margin: 0;  
       margin-top: 16px;
@@ -133,6 +100,31 @@ button{
         width: 59px;
         height: 4px;
         background-color: $main_blue;
+    }
+    &_icon{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 100px;
+        background-color: $user_purple;
+        >p{
+            color: $main_white;
+        }
+        &:active{
+            border-width: 2px;
+            border-color: $main_white;
+        }
+    }
+    &_email{
+        color: $main_blue;
+    }
+    &:hover{
+        background-color: $main_white;
+    }
+    &:active{
+        background-color: $main_header;
     }
 }
 .user{
