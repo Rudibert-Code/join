@@ -1,1 +1,52 @@
-<p>board works!</p>
+<main class="board-wrapper">
+  <header class="header-wrapper">
+    <section class="d-flex center-space">
+      <h2 class="margin-correction">Board</h2>
+      <button class="add-btn d-flex center">
+        <img class="add-icon" src="assets/UI/icon_add.png" alt="add icon" />
+      </button>
+    </section>
+    <div class="d-flex center">
+      <input type="text" name="search" id="search" placeholder="Find Task" />
+    </div>
+  </header>
+  <section class="task-wrapper">
+    <section class="todo-wrapper d-flex center-space">
+      <h4 class="margin-correction">To Do</h4>
+      <button class="add-btn-task d-flex center">
+        <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
+      </button>
+    </section>
+    <div class="todo-container" id="todo-container"></div>
+    <div class="empty-todo-container" id="empty-todo-container">
+        <p class="margin-correction empty-txt">No Tasks To do</p>
+    </div>
+    <section class="progress-wrapper d-flex center-space">
+      <h4 class="margin-correction">in Progress</h4>
+      <button class="add-btn-task d-flex center">
+        <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
+      </button>
+    </section>
+    <div class="progress-container" id="progress-container"></div>
+    <div class="empty-progress-container" id="empty-progress-container">
+        <p class="margin-correction empty-txt">No Tasks in Progress</p>
+    </div>
+    <section class="feedback-wrapper d-flex center-space">
+      <h4 class="margin-correction">Await Feedback</h4>
+      <button class="add-btn-task d-flex center">
+        <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
+      </button>
+    </section>
+    <div class="feedback-container" id="feedback-container"></div>
+    <div class="empty-feedback-container" id="empty-feedback-container">
+        <p class="margin-correction empty-txt">No Tasks await Feedback</p>
+    </div>
+    <section class="done-wrapper">
+      <h4 class="margin-correction">Done</h4>
+    </section>
+    <div class="done-container" id="done-container"></div>
+    <div class="empty-done-container" id="empty-done-container">
+        <p class="margin-correction empty-txt">No Tasks Done</p>
+    </div>
+  </section>
+</main>
