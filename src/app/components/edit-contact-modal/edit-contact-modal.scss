@@ -147,6 +147,20 @@
     font-weight: 700;
 }
 
+.edit-modal {
+    animation: slideInFromBottom 250ms ease-out;
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
 @media screen and (min-width: 1024px) {
     .edit-modal {
         width: initial;
@@ -169,6 +183,20 @@
         top: initial;
         left: initial;
         transform: translateX(0) translateY(-30px);
+    }
+
+    .edit-modal {
+        animation: slideInFromRight 250ms ease-out;
+    }
+
+    @keyframes slideInFromRight {
+        from {
+            transform: translateX(100%);
+        }
+
+        to {
+            transform: translateX(0);
+        }
     }
 
 }
