@@ -1,79 +1,108 @@
 <main class="board-wrapper">
-
-
   <!--Ticket Card-->
-<!--<dialog class="ticket" *ngFor="let task of todoTasks" id="ticket_card">-->
-<dialog class="ticket" id="ticket_card">
+  <!--<dialog class="ticket" *ngFor="let task of todoTasks" id="ticket_card">-->
+  <dialog class="ticket" id="ticket_card">
     <section class="header">
-        <div class="task-card__category">
-            <!--<p class="task-card__category margin-correction" [ngClass]="getTaskCardClass(task.category)">-->
-            <p class="ticket_category" id="ticket_category">
-              <!--{{ task.category }}-->
-            </p>
-        </div>
-        <button (click)="closeTicketCard()" class="exit_btn"></button>
+      <div class="task-card__category">
+        <!--<p class="task-card__category margin-correction" [ngClass]="getTaskCardClass(task.category)">-->
+        <p class="ticket_category" id="ticket_category">
+          <!--{{ task.category }}-->
+        </p>
+      </div>
+      <button (click)="closeTicketCard()" class="exit_btn"></button>
     </section>
     <!--<h2 class="title"> {{ task.title }} </h2>-->
     <h2 class="title" id="ticket_title"></h2>
     <section class="ticket_details">
-        <!--<p>{{ task.description }}</p>-->
-        <p id="ticket_description"></p>
+      <!--<p>{{ task.description }}</p>-->
+      <p id="ticket_description"></p>
+      <div class="data">
+        <p class="foreword">Due Date:</p>
+        <!--<p class="ticket_date"> {{ task.due_date }} </p>-->
+        <p class="ticket_date" id="ticket_due-date"></p>
+      </div>
+      <div class="data">
+        <p class="foreword">Priority:</p>
         <div class="data">
-            <p class="foreword">Due Date:</p>
-            <!--<p class="ticket_date"> {{ task.due_date }} </p>-->
-            <p class="ticket_date" id="ticket_due-date"></p>
+          <!--<p class="prio" id="prio-text">{{ task.priority }}</p>-->
+          <p class="prio" id="ticket_priority"></p>
+          <img src="" alt="" id="prio-icon" />
         </div>
-        <div class="data">
-            <p class="foreword">Priority:</p>
-            <div class="data">
-                <!--<p class="prio" id="prio-text">{{ task.priority }}</p>-->
-                <p class="prio" id="ticket_priority"></p>
-                <img src="" alt="" id="prio-icon">
-            </div>
-        </div>
+      </div>
     </section>
     <section class="ticket_details">
-        <p class="foreword">Assigned to:</p>
-        <!--@for (task of tasks(); track task.id) {
+      <p class="foreword">Assigned to:</p>
+      <!--@for (task of tasks(); track task.id) {
           <p> {{ task.due_date }} </p>
     }-->
     </section>
     <section class="ticket_details">
-        <p class="foreword">Subtasks:</p>
-        <!--@for (task of tasks(); track task.id) {
+      <p class="foreword">Subtasks:</p>
+      <!--@for (task of tasks(); track task.id) {
           <button><img src="assets/UI/checkbox_default.png" alt=""></button>
           <p> {{ task.description }} </p>
     }-->
     </section>
     <section class="footer">
-        <div [routerLink]="" class="footer_btn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <mask id="mask0_474855_4609" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-            <rect width="24" height="24" fill="#D9D9D9"/>
-            </mask>
-            <g mask="url(#mask0_474855_4609)">
-            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6C4.71667 6 4.47917 5.90417 4.2875 5.7125C4.09583 5.52083 4 5.28333 4 5C4 4.71667 4.09583 4.47917 4.2875 4.2875C4.47917 4.09583 4.71667 4 5 4H9C9 3.71667 9.09583 3.47917 9.2875 3.2875C9.47917 3.09583 9.71667 3 10 3H14C14.2833 3 14.5208 3.09583 14.7125 3.2875C14.9042 3.47917 15 3.71667 15 4H19C19.2833 4 19.5208 4.09583 19.7125 4.2875C19.9042 4.47917 20 4.71667 20 5C20 5.28333 19.9042 5.52083 19.7125 5.7125C19.5208 5.90417 19.2833 6 19 6V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM7 6V19H17V6H7ZM9 16C9 16.2833 9.09583 16.5208 9.2875 16.7125C9.47917 16.9042 9.71667 17 10 17C10.2833 17 10.5208 16.9042 10.7125 16.7125C10.9042 16.5208 11 16.2833 11 16V9C11 8.71667 10.9042 8.47917 10.7125 8.2875C10.5208 8.09583 10.2833 8 10 8C9.71667 8 9.47917 8.09583 9.2875 8.2875C9.09583 8.47917 9 8.71667 9 9V16ZM13 16C13 16.2833 13.0958 16.5208 13.2875 16.7125C13.4792 16.9042 13.7167 17 14 17C14.2833 17 14.5208 16.9042 14.7125 16.7125C14.9042 16.5208 15 16.2833 15 16V9C15 8.71667 14.9042 8.47917 14.7125 8.2875C14.5208 8.09583 14.2833 8 14 8C13.7167 8 13.4792 8.09583 13.2875 8.2875C13.0958 8.47917 13 8.71667 13 9V16Z" fill="#2a3647"/>
-            </g>
-            </svg>
-            <p>Delete</p>
-        </div>
-        <div class="separator"></div>
-        <div [routerLink]="" class="footer_btn">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <mask id="mask0_474855_6080" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
-            <rect width="32" height="32" fill="#D9D9D9"/>
-            </mask>
-            <g mask="url(#mask0_474855_6080)">
-            <path d="M6.66667 25.3332H8.53333L20.0333 13.8332L18.1667 11.9665L6.66667 23.4665V25.3332ZM25.7333 11.8998L20.0667 6.29984L21.9333 4.43317C22.4444 3.92206 23.0722 3.6665 23.8167 3.6665C24.5611 3.6665 25.1889 3.92206 25.7 4.43317L27.5667 6.29984C28.0778 6.81095 28.3444 7.42761 28.3667 8.14984C28.3889 8.87206 28.1444 9.48873 27.6333 9.99984L25.7333 11.8998ZM23.8 13.8665L9.66667 27.9998H4V22.3332L18.1333 8.19984L23.8 13.8665Z" fill="#2a3647"/>
-            </g>
-            </svg>
-            <p>Edit</p>
-        </div>
+      <div [routerLink]="" class="footer_btn">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <mask
+            id="mask0_474855_4609"
+            style="mask-type: alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="24"
+            height="24"
+          >
+            <rect width="24" height="24" fill="#D9D9D9" />
+          </mask>
+          <g mask="url(#mask0_474855_4609)">
+            <path
+              d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6C4.71667 6 4.47917 5.90417 4.2875 5.7125C4.09583 5.52083 4 5.28333 4 5C4 4.71667 4.09583 4.47917 4.2875 4.2875C4.47917 4.09583 4.71667 4 5 4H9C9 3.71667 9.09583 3.47917 9.2875 3.2875C9.47917 3.09583 9.71667 3 10 3H14C14.2833 3 14.5208 3.09583 14.7125 3.2875C14.9042 3.47917 15 3.71667 15 4H19C19.2833 4 19.5208 4.09583 19.7125 4.2875C19.9042 4.47917 20 4.71667 20 5C20 5.28333 19.9042 5.52083 19.7125 5.7125C19.5208 5.90417 19.2833 6 19 6V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM7 6V19H17V6H7ZM9 16C9 16.2833 9.09583 16.5208 9.2875 16.7125C9.47917 16.9042 9.71667 17 10 17C10.2833 17 10.5208 16.9042 10.7125 16.7125C10.9042 16.5208 11 16.2833 11 16V9C11 8.71667 10.9042 8.47917 10.7125 8.2875C10.5208 8.09583 10.2833 8 10 8C9.71667 8 9.47917 8.09583 9.2875 8.2875C9.09583 8.47917 9 8.71667 9 9V16ZM13 16C13 16.2833 13.0958 16.5208 13.2875 16.7125C13.4792 16.9042 13.7167 17 14 17C14.2833 17 14.5208 16.9042 14.7125 16.7125C14.9042 16.5208 15 16.2833 15 16V9C15 8.71667 14.9042 8.47917 14.7125 8.2875C14.5208 8.09583 14.2833 8 14 8C13.7167 8 13.4792 8.09583 13.2875 8.2875C13.0958 8.47917 13 8.71667 13 9V16Z"
+              fill="#2a3647"
+            />
+          </g>
+        </svg>
+        <p>Delete</p>
+      </div>
+      <div class="separator"></div>
+      <div [routerLink]="" class="footer_btn">
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <mask
+            id="mask0_474855_6080"
+            style="mask-type: alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="32"
+            height="32"
+          >
+            <rect width="32" height="32" fill="#D9D9D9" />
+          </mask>
+          <g mask="url(#mask0_474855_6080)">
+            <path
+              d="M6.66667 25.3332H8.53333L20.0333 13.8332L18.1667 11.9665L6.66667 23.4665V25.3332ZM25.7333 11.8998L20.0667 6.29984L21.9333 4.43317C22.4444 3.92206 23.0722 3.6665 23.8167 3.6665C24.5611 3.6665 25.1889 3.92206 25.7 4.43317L27.5667 6.29984C28.0778 6.81095 28.3444 7.42761 28.3667 8.14984C28.3889 8.87206 28.1444 9.48873 27.6333 9.99984L25.7333 11.8998ZM23.8 13.8665L9.66667 27.9998H4V22.3332L18.1333 8.19984L23.8 13.8665Z"
+              fill="#2a3647"
+            />
+          </g>
+        </svg>
+        <p>Edit</p>
+      </div>
     </section>
-</dialog>
-
-
-
+  </dialog>
 
   <header class="header-wrapper">
     <section class="d-flex center-space">
@@ -83,7 +112,14 @@
       </button>
     </section>
     <div class="d-flex center">
-      <input class="search-task" type="text" name="search" id="search" placeholder="Find Task" [(ngModel)]="searchQuery" />
+      <input
+        class="search-task"
+        type="text"
+        name="search"
+        id="search"
+        placeholder="Find Task"
+        [(ngModel)]="searchQuery"
+      />
     </div>
   </header>
   <section class="task-wrapper">
@@ -95,33 +131,30 @@
     </section>
     <div class="todo-container d-flex" id="todo-container" *ngIf="todoTasks.length > 0">
       <article class="task-card" *ngFor="let task of todoTasks">
-
-
         <!--Parent-Container für (click)-->
         <div (click)="openTicketCard(task.id)">
-
-
           <p
-          class="task-card__category margin-correction"
-          [ngClass]="getTaskCardClass(task.category)"
-        >
-          {{ task.category }}
+            class="task-card__category margin-correction"
+            [ngClass]="getTaskCardClass(task.category)"
+          >
+            {{ task.category }}
           </p>
           <h4 class="task-card__title margin-correction">{{ task.title }}</h4>
           <p class="task-card__description margin-correction">{{ task.description }}</p>
           <div class="d-flex center-space">
-          <progress></progress>
-          <p>0/0 Subtask</p>
+            <progress></progress>
+            <p>0/0 Subtask</p>
           </div>
           <div class="d-flex center-space">
             <p>User...</p>
-            <img [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'" alt="priority" />
+            <img
+              [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
+              alt="priority"
+            />
           </div>
 
-
-        <!--Parent-Container für (click)-->
+          <!--Parent-Container für (click)-->
         </div>
-
 
         <div class="d-flex center-space">
           <p>User...</p>
@@ -229,7 +262,7 @@
     </div>
   </section>
 
-  <section class="task-wrapper-desktop d-flex">
+  <section class="task-wrapper-desktop">
     <section class="todo-wrapper d-flex center-space">
       <h4 class="margin-desktop">To Do</h4>
       <button routerLink="/add-task" class="add-btn-task d-flex center">
@@ -253,7 +286,7 @@
     </section>
   </section>
   <section class="tasks-wrapper-desktop">
-  <div class="todo-container d-flex" id="todo-container" *ngIf="todoTasks.length > 0">
+    <div class="todo-container d-flex" id="todo-container" *ngIf="todoTasks.length > 0">
       <article class="task-card" *ngFor="let task of todoTasks">
         <p
           class="task-card__category margin-correction"
@@ -356,5 +389,5 @@
     <div class="empty-done-container" id="empty-done-container" *ngIf="doneTasks.length === 0">
       <p class="margin-correction empty-txt">No Tasks Done</p>
     </div>
-    </section>
+  </section>
 </main>
