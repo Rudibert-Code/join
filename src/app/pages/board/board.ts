@@ -1,12 +1,13 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Supabase, Task } from '../../supabase';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })
@@ -19,6 +20,7 @@ export class Board implements OnInit {
   taskLimitDate: string = '';
   taskPriority: string = '';
   taskCategory: string = '';
+  searchQuery: string = '';
 
   ngOnInit() {
     this.loadTasks();
@@ -45,7 +47,17 @@ export class Board implements OnInit {
   }
 
   private filterTasksByCategory(categoryKey: 'todo' | 'progress' | 'feedback' | 'done') {
-    return this.tasks().filter((task) => this.getCategoryKey(task) === categoryKey);
+    let filtered = this.tasks().filter((task) => this.getCategoryKey(task) === categoryKey);
+    
+    if (this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase();
+      filtered = filtered.filter((task) => 
+        task.title?.toLowerCase().includes(query) || 
+        task.description?.toLowerCase().includes(query)
+      );
+    }
+    
+    return filtered;
   }
 
   getNormalizedPriority(priority: string): string {

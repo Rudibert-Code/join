@@ -124,6 +124,9 @@
   color: $main-white;
 }
 
+.search-task {
+}
+
 @media (min-width: 1023px) {
   .task-wrapper {
     display: none;
@@ -162,6 +165,7 @@
     margin-right: 25px;
     width: 260px;
     height: 45px;
+    overflow: hidden;
   }
 
   .margin-desktop {
