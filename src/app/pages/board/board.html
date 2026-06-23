@@ -155,14 +155,6 @@
 
           <!--Parent-Container für (click)-->
         </div>
-
-        <div class="d-flex center-space">
-          <p>User...</p>
-          <img
-            [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
-            alt="priority"
-          />
-        </div>
       </article>
     </div>
     <div class="empty-todo-container" id="empty-todo-container" *ngIf="todoTasks.length === 0">
