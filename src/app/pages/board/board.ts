@@ -83,4 +83,75 @@ export class Board implements OnInit {
     const categoryLower = category?.toLowerCase().trim() || '';
     return categoryLower.includes('technical') ? 'task-card--technical' : 'task-card--user';
   }
+
+
+
+
+  //Open Ticket Card
+  openTicketCard(id: number) {
+    const dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
+    const ticketTitle = document.getElementById('ticket_title') as HTMLHeadingElement;
+    const ticketDescription = document.getElementById('ticket_description') as HTMLParagraphElement;
+    const ticketDueDate = document.getElementById('ticket_due-date') as HTMLParagraphElement;
+    const ticketPriority = document.getElementById('ticket_priority') as HTMLParagraphElement;
+    const ticketCategory = document.getElementById('ticket_category') as HTMLParagraphElement;
+
+    for (let index = 0; index < this.tasks().length; index++) {
+      if (this.tasks()[index].id == id) {
+        ticketTitle.textContent = this.tasks()[index].title;
+        ticketDescription.innerHTML = this.tasks()[index].description;
+        ticketDueDate.innerHTML = String(this.setTicketDueDate(this.tasks()[index].due_date));
+        ticketPriority.innerHTML = this.tasks()[index].priority;
+        this.setTicketPrioIcon(this.tasks()[index].priority);
+        ticketCategory.innerHTML = this.tasks()[index].category;
+        this.setTicketCatClass(this.tasks()[index].category);
+      }
+    }  
+
+    dialogWindow.showModal();
+  }
+
+  setTicketCatClass(cat:string){
+    let className:string = "";
+    let targetParagraph = document.getElementById('ticket_category') as HTMLParagraphElement;
+    targetParagraph.classList.remove("task-card--technical","task-card--user");
+    switch (cat) {
+      case 'Technical Tasks':
+        className = "task-card--technical"
+        break;
+
+      default:
+        className = "task-card--user"
+        break;
+    }
+    targetParagraph.classList.add(className);
+  }
+
+  setTicketDueDate(date:string){
+    return date.replaceAll('-','/');
+  }
+
+  setTicketPrioIcon(prio:string){
+    let ticketPrioIcon = document.getElementById('prio-icon') as HTMLImageElement;
+    let iconURL:string = ""; 
+    switch (prio) {
+      case 'urgent':
+        iconURL = "assets/UI/icon_prio-urgent.png";
+        break;
+
+      case 'low':
+        iconURL = "assets/UI/icon_prio-low.png";
+        break;
+    
+      default:
+        iconURL = "assets/UI/icon_prio-medium.png";
+        break;
+    }
+    ticketPrioIcon.src = iconURL;
+  }
+
+  closeTicketCard(){
+    let dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
+    dialogWindow.close();
+  }
 }

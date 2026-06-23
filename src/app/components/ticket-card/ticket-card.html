@@ -1,0 +1,41 @@
+<dialog class="ticket">
+    <section class="header">
+        <div class="header_type">
+            <p>Placeholder Type</p>
+        </div>
+        <button class="exit_btn">X</button>
+    </section>
+    <h2 class="title">Placeholder Title</h2>
+    <section>
+        <p class="description">Placeholder description</p>
+        <div class="due_date">
+            <p>Due Date:</p>
+            <p class="ticket_date">xx/xx/xxxx</p>
+        </div>
+        <div class="ticket_prio">
+            <p>Priority:</p>
+            <div>
+                <p class="prio" id="prio-text">Placeholder</p>
+                <img src="" alt="" id="prio-icon">
+            </div>
+        </div>
+    </section>
+    <section class="assigned_users">
+        <p>Assigned to:</p>
+        <!-- @for (item of items; track $index) { user-icon + user name } -->
+    </section>
+    <section class="subtasks">
+        <p>Subtasks:</p>
+        <!-- @for (item of items; track $index) { checkboxes + description } -->
+    </section>
+    <section class="footer">
+        <div class="footer_btn">
+            <!--svg edit icon-->
+            <p>Edit</p>
+        </div>
+        <div class="footer_btn">
+            <!--svg edit icon-->
+            <p>Edit</p>
+        </div>
+    </section>
+</dialog>
