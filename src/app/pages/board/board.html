@@ -33,7 +33,10 @@
         </div>
         <div class="d-flex center-space">
           <p>User...</p>
-          <img [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'" alt="priority" />
+          <img
+            [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
+            alt="priority"
+          />
         </div>
       </article>
     </div>
@@ -133,4 +136,133 @@
       <p class="margin-correction empty-txt">No Tasks Done</p>
     </div>
   </section>
+
+  <section class="task-wrapper-desktop d-flex">
+    <section class="todo-wrapper d-flex center-space">
+      <h4 class="margin-desktop">To Do</h4>
+      <button routerLink="/add-task" class="add-btn-task d-flex center">
+        <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
+      </button>
+    </section>
+    <section class="progress-wrapper d-flex center-space">
+      <h4 class="margin-desktop">in Progress</h4>
+      <button routerLink="/add-task" class="add-btn-task d-flex center">
+        <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
+      </button>
+    </section>
+    <section class="feedback-wrapper d-flex center-space">
+      <h4 class="margin-desktop">Await Feedback</h4>
+      <button routerLink="/add-task" class="add-btn-task d-flex center">
+        <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
+      </button>
+    </section>
+    <section class="done-wrapper">
+      <h4 class="margin-desktop">Done</h4>
+    </section>
+  </section>
+  <section class="tasks-wrapper-desktop">
+  <div class="todo-container d-flex" id="todo-container" *ngIf="todoTasks.length > 0">
+      <article class="task-card" *ngFor="let task of todoTasks">
+        <p
+          class="task-card__category margin-correction"
+          [ngClass]="getTaskCardClass(task.category)"
+        >
+          {{ task.category }}
+        </p>
+        <h4 class="task-card__title margin-correction">{{ task.title }}</h4>
+        <p class="task-card__description margin-correction">{{ task.description }}</p>
+        <div class="d-flex center-space">
+          <progress></progress>
+          <p>0/0 Subtask</p>
+        </div>
+        <div class="d-flex center-space">
+          <p>User...</p>
+          <img
+            [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
+            alt="priority"
+          />
+        </div>
+      </article>
+    </div>
+    <div class="empty-todo-container" id="empty-todo-container" *ngIf="todoTasks.length === 0">
+      <p class="margin-correction empty-txt">No Tasks To do</p>
+    </div>
+    <div class="progress-container" id="progress" *ngIf="progressTasks.length > 0">
+      <article class="task-card" *ngFor="let task of progressTasks">
+        <p
+          class="task-card__category margin-correction"
+          [ngClass]="getTaskCardClass(task.category)"
+        >
+          {{ task.category }}
+        </p>
+        <h4 class="task-card__title">{{ task.title }}</h4>
+        <p class="task-card__description">{{ task.description }}</p>
+        <div class="d-flex center-space">
+          <progress></progress>
+          <p>0/0 Subtask</p>
+        </div>
+        <div class="d-flex center-space">
+          <p>User...</p>
+          <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+        </div>
+      </article>
+    </div>
+    <div
+      class="empty-progress-container"
+      id="empty-progress-container"
+      *ngIf="progressTasks.length === 0"
+    >
+      <p class="margin-correction empty-txt">No Tasks in Progress</p>
+    </div>
+    <div class="feedback-container" id="feedback" *ngIf="feedbackTasks.length > 0">
+      <article class="task-card" *ngFor="let task of feedbackTasks">
+        <p
+          class="task-card__category margin-correction"
+          [ngClass]="getTaskCardClass(task.category)"
+        >
+          {{ task.category }}
+        </p>
+        <h4 class="task-card__title">{{ task.title }}</h4>
+        <p class="task-card__description">{{ task.description }}</p>
+        <div class="d-flex center-space">
+          <progress></progress>
+          <p>0/0 Subtask</p>
+        </div>
+        <div class="d-flex center-space">
+          <p>User...</p>
+          <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+        </div>
+      </article>
+    </div>
+    <div
+      class="empty-feedback-container"
+      id="empty-feedback-container"
+      *ngIf="feedbackTasks.length === 0"
+    >
+      <p class="margin-correction empty-txt">No Tasks await Feedback</p>
+    </div>
+    <div class="done-container" id="done" *ngIf="doneTasks.length > 0">
+      <article class="task-card" *ngFor="let task of doneTasks">
+        <p
+          class="task-card__category margin-correction"
+          [ngClass]="getTaskCardClass(task.category)"
+        >
+          {{ task.category }}
+        </p>
+        <h4 class="task-card__title">{{ task.title }}</h4>
+        <p class="task-card__description">{{ task.description }}</p>
+        <div class="d-flex center-space">
+          <progress></progress>
+          <p>0/0 Subtask</p>
+        </div>
+        <div class="d-flex center-space">
+          <p>User...</p>
+          <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+        </div>
+      </article>
+    </div>
+    <div class="empty-done-container" id="empty-done-container" *ngIf="doneTasks.length === 0">
+      <p class="margin-correction empty-txt">No Tasks Done</p>
+    </div>
+    </section>
 </main>

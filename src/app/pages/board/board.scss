@@ -87,6 +87,7 @@
 .task-card {
   height: 260px;
   min-width: 230px;
+  max-width: 260px;
   padding: 10px 12px;
   border-radius: 15px;
   background-color: #fff;
@@ -121,4 +122,54 @@
   width: 100px;
   border-radius: 10px;
   color: $main-white;
+}
+
+@media (min-width: 1023px) {
+  .task-wrapper {
+    display: none;
+  }
+
+  .task-wrapper-desktop {
+    align-items: center;
+    width: calc(100% - 30px);
+    margin-left: 30px;
+  }
+
+  .todo-wrapper,
+  .progress-wrapper,
+  .feedback-wrapper,
+  .done-wrapper {
+    display: flex;
+    gap: 10px;
+    width: 260px;
+    margin-right: 25px;
+  }
+
+  .todo-container,
+  .progress-container,
+  .feedback-container,
+  .done-container {
+    display: flex;
+    flex-direction: column;
+    margin-right: 25px;
+    margin-left: 30px;
+  }
+
+  .empty-todo-container,
+  .empty-progress-container,
+  .empty-feedback-container,
+  .empty-done-container {
+    margin-right: 25px;
+    width: 260px;
+    height: 45px;
+  }
+
+  .margin-desktop {
+    font-size: 2rem;
+  }
+
+  .tasks-wrapper-desktop {
+    display: flex;
+    width: 100%;
+  }
 }
