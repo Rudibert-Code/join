@@ -25,38 +25,42 @@
       <div class="priority-buttons">
         <label>Priority</label>
         <div class="priority-buttons__wrapper">
-        <button
-          type="button"
-          [class.active]="taskForm.controls.priority.value === 'urgent'"
-          (click)="setPriority('urgent')"
-        >
-          Urgent
-        </button>
-        <button
-          type="button"
-          [class.active]="taskForm.controls.priority.value === 'medium'"
-          (click)="setPriority('medium')"
-        >
-          Medium
-        </button>
-        <button
-          type="button"
-          [class.active]="taskForm.controls.priority.value === 'low'"
-          (click)="setPriority('low')"
-        >
-          Low
-        </button>
+          <button
+            class="priority-btn urgent"
+            type="button"
+            [class.active]="taskForm.controls.priority.value === 'urgent'"
+            (click)="setPriority('urgent')"
+          >
+            Urgent
+          </button>
+          <button
+            class="priority-btn medium"
+            type="button"
+            [class.active]="taskForm.controls.priority.value === 'medium'"
+            (click)="setPriority('medium')"
+          >
+            Medium
+          </button>
+          <button
+            class="priority-btn low"
+            type="button"
+            [class.active]="taskForm.controls.priority.value === 'low'"
+            (click)="setPriority('low')"
+          >
+            Low
+          </button>
         </div>
       </div>
 
       <p>Selected priority: {{ taskForm.controls.priority.value }}</p>
-
-      <label for="category">Category<span class="red">*</span></label>
-      <select name="category" formControlName="category">
-        <option value="">Select task category</option>
-        <option value="Technical Tasks">Technical Tasks</option>
-        <option value="User Story">User Story</option>
-      </select>
+      <div class="dropdown-caregory">
+        <label for="category">Category<span class="red">*</span></label>
+        <select name="category" formControlName="category">
+          <option value="">Select task category</option>
+          <option value="Technical Tasks">Technical Tasks</option>
+          <option value="User Story">User Story</option>
+        </select>
+      </div>
 
       <div class="assigned-dropdown">
         <label>Assigned to</label>
