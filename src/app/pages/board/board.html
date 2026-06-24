@@ -180,6 +180,8 @@
     </section>
     <div class="progress-container" id="progress" *ngIf="progressTasks.length > 0">
       <article class="task-card" *ngFor="let task of progressTasks">
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
         <p
           class="task-card__category margin-correction"
           [ngClass]="getTaskCardClass(task.category)"
@@ -195,6 +197,8 @@
         <div class="d-flex center-space">
           <p>User...</p>
           <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+        </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -213,6 +217,8 @@
     </section>
     <div class="feedback-container" id="feedback" *ngIf="feedbackTasks.length > 0">
       <article class="task-card" *ngFor="let task of feedbackTasks">
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
         <p
           class="task-card__category margin-correction"
           [ngClass]="getTaskCardClass(task.category)"
@@ -228,6 +234,8 @@
         <div class="d-flex center-space">
           <p>User...</p>
           <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+        </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -243,6 +251,8 @@
     </section>
     <div class="done-container" id="done" *ngIf="doneTasks.length > 0">
       <article class="task-card" *ngFor="let task of doneTasks">
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
         <p
           class="task-card__category margin-correction"
           [ngClass]="getTaskCardClass(task.category)"
@@ -258,6 +268,8 @@
         <div class="d-flex center-space">
           <p>User...</p>
           <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+        </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -292,6 +304,8 @@
   <section class="tasks-wrapper-desktop">
     <div class="todo-container d-flex" id="todo-container" *ngIf="todoTasks.length > 0">
       <article class="task-card" *ngFor="let task of todoTasks">
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
         <p
           class="task-card__category margin-correction"
           [ngClass]="getTaskCardClass(task.category)"
@@ -311,6 +325,8 @@
             alt="priority"
           />
         </div>
+          <!--Parent-Container für (click)-->
+        </div>
       </article>
     </div>
     <div class="empty-todo-container" id="empty-todo-container" *ngIf="todoTasks.length === 0">
@@ -318,6 +334,8 @@
     </div>
     <div class="progress-container" id="progress" *ngIf="progressTasks.length > 0">
       <article class="task-card" *ngFor="let task of progressTasks">
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
         <p
           class="task-card__category margin-correction"
           [ngClass]="getTaskCardClass(task.category)"
@@ -333,6 +351,8 @@
         <div class="d-flex center-space">
           <p>User...</p>
           <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+        </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -345,6 +365,8 @@
     </div>
     <div class="feedback-container" id="feedback" *ngIf="feedbackTasks.length > 0">
       <article class="task-card" *ngFor="let task of feedbackTasks">
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
         <p
           class="task-card__category margin-correction"
           [ngClass]="getTaskCardClass(task.category)"
@@ -360,6 +382,8 @@
         <div class="d-flex center-space">
           <p>User...</p>
           <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+        </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -372,6 +396,8 @@
     </div>
     <div class="done-container" id="done" *ngIf="doneTasks.length > 0">
       <article class="task-card" *ngFor="let task of doneTasks">
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
         <p
           class="task-card__category margin-correction"
           [ngClass]="getTaskCardClass(task.category)"
@@ -387,6 +413,8 @@
         <div class="d-flex center-space">
           <p>User...</p>
           <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+        </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>

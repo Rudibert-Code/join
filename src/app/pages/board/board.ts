@@ -189,6 +189,10 @@ export class Board implements OnInit {
     let checkBoxID = String(x.id);
     let currentButton = document.getElementById(checkBoxID) as HTMLImageElement;
     
+    if (currentButton.classList.contains("subtasks_btn_true")) {
+      currentButton.classList.add("subtasks_btn_false");
+    }
+
     currentButton.classList.toggle("subtasks_btn_true");
   }
 }
