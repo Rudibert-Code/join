@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Supabase } from '../../supabase';
+import { Contact, Supabase } from '../../supabase';
 
 @Component({
   selector: 'app-add-task-form',
@@ -73,5 +73,11 @@ export class AddTaskForm {
 
   isContactSelected(contactId: number) {
     return this.taskForm.controls.assignedContactIds.value.includes(contactId);
+  }
+
+  selectedContacts(): Contact[] {
+    const selectedIds = this.taskForm.controls.assignedContactIds.value;
+
+    return this.contacts().filter((contact) => selectedIds.includes(contact.id));
   }
 }
