@@ -114,6 +114,9 @@ openContactDetails(contact: Contact) {
         this.userInitials = this.userName.charAt(0).toUpperCase()+this.userSurName.charAt(0).toUpperCase(); 
         this.userEmail = array[index].email;
         this.userPhone = array[index].phone;
+        this.userColor = array[index].color;
+        let userIcon = document.getElementById('user_icon') as HTMLParagraphElement;
+        userIcon.style.backgroundColor = String(this.userColor);
       }      
     }
 
