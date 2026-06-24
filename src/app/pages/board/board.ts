@@ -1,8 +1,14 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Supabase, Task } from '../../supabase';
+import { Supabase, Task, Subtask } from '../../supabase';
 import { RouterLink } from '@angular/router';
+
+interface subTask{
+  title:String,
+  is_Done:String,
+  id:number
+}
 
 @Component({
   selector: 'app-board',
@@ -14,6 +20,7 @@ import { RouterLink } from '@angular/router';
 export class Board implements OnInit {
   db = inject(Supabase);
   tasks = computed(() => this.db.tasks());
+  subtasks = computed(() => this.db.subtasks());
 
   taskTitle: string = '';
   taskDescr: string = '';
@@ -28,6 +35,7 @@ export class Board implements OnInit {
 
   async loadTasks() {
     const tasks = await this.db.getTasks();
+    const subtasks = await this.db.getSubtasks();
   }
 
   get todoTasks() {
@@ -108,13 +116,34 @@ export class Board implements OnInit {
       }
     }  
 
+    this.getSubTasks(id);
     dialogWindow.showModal();
+  }
+
+  //subtasksCache:string[] = [];
+  subtasksCache:subTask[] = [];
+
+  async getSubTasks(id:any){
+    this.subtasksCache = [];
+
+    for (let index = 0; index < this.subtasks().length; index++) {
+
+      if (this.subtasks()[index].task_id == id) {
+        //this.subtasksCache.unshift((this.subtasks()[index].title));
+        this.subtasksCache.push({
+          title:this.subtasks()[index].title,
+          is_Done:this.subtasks()[index].is_done,
+          id:this.subtasks()[index].id
+          })
+      }
+    }
   }
 
   setTicketCatClass(cat:string){
     let className:string = "";
     let targetParagraph = document.getElementById('ticket_category') as HTMLParagraphElement;
     targetParagraph.classList.remove("task-card--technical","task-card--user");
+
     switch (cat) {
       case 'Technical Tasks':
         className = "task-card--technical"
@@ -134,6 +163,7 @@ export class Board implements OnInit {
   setTicketPrioIcon(prio:string){
     let ticketPrioIcon = document.getElementById('prio-icon') as HTMLImageElement;
     let iconURL:string = ""; 
+
     switch (prio) {
       case 'urgent':
         iconURL = "assets/UI/icon_prio-urgent.png";
@@ -153,5 +183,12 @@ export class Board implements OnInit {
   closeTicketCard(){
     let dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
     dialogWindow.close();
+  }
+
+  checkBox(x:subTask){
+    let checkBoxID = String(x.id);
+    let currentButton = document.getElementById(checkBoxID) as HTMLImageElement;
+    
+    currentButton.classList.toggle("subtasks_btn_true");
   }
 }

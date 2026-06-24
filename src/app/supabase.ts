@@ -27,6 +27,14 @@ export interface Task {
   category: string;
 }
 
+export interface Subtask {
+  id: number;
+  task_id: number;
+  title: string;
+  is_done: string;
+  created_at: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -36,6 +44,7 @@ export class Supabase {
   supabase = createClient(this.supabaseURL, this.supabaseKey);
 
   tasks = signal<Task[]>([]);
+  subtasks = signal<Subtask[]>([]);
   contacts = signal<Contact[]>([]);
 
   /*
@@ -151,5 +160,26 @@ export class Supabase {
 
     this.tasks.set(tasks);
     return tasks;
+  }
+
+    async getSubtasks() {
+    const { data: subtasks, error } = await this.supabase
+      .from('subtasks')
+      .select('id,task_id,title,is_done,created_at')
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      console.error('Supabase getSubtasks error', error);
+      this.subtasks.set([]);
+      return [];
+    }
+
+    if (!subtasks) {
+      this.subtasks.set([]);
+      return [];
+    }
+
+    this.subtasks.set(subtasks);
+    return subtasks;
   }
 }

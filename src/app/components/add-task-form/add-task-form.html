@@ -72,18 +72,32 @@
         <div class="assigned-dropdown__menu" *ngIf="isAssignedDropdownOpen">
           <button
             class="assigned-dropdown__option"
+            [class.selected]="isContactSelected(contact.id)"
             type="button"
             *ngFor="let contact of contacts()"
             (click)="toggleContact(contact.id)"
           >
-            <span class="assigned-dropdown__avatar" [style.background-color]="contact.color">
-              {{ contact.first_name[0] }}{{ contact.last_name[0] }}
-            </span>
+            <div class="assigned-dropdown__avatar__wrapper">
+              <span class="assigned-dropdown__avatar" [style.background-color]="contact.color">
+                {{ contact.first_name[0] }}{{ contact.last_name[0] }}
+              </span>
 
-            <span> {{ contact.first_name }} {{ contact.last_name }} </span>
+              <span> {{ contact.first_name }} {{ contact.last_name }} </span>
+            </div>
 
             <input type="checkbox" [checked]="isContactSelected(contact.id)" tabindex="-1" />
           </button>
+        </div>
+
+        <div class="assigned-dropdown__selected" *ngIf="selectedContacts().length > 0">
+          <span
+            class="assigned-dropdown__selected-avatar"
+            *ngFor="let contact of selectedContacts()"
+            [style.background-color]="contact.color"
+            [title]="contact.first_name + ' ' + contact.last_name"
+          >
+            {{ contact.first_name[0] }}{{ contact.last_name[0] }}
+          </span>
         </div>
       </div>
     </div>

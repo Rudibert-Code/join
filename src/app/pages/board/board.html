@@ -37,11 +37,18 @@
     }-->
     </section>
     <section class="ticket_details">
-      <p class="foreword">Subtasks:</p>
-      <!--@for (task of tasks(); track task.id) {
-          <button><img src="assets/UI/checkbox_default.png" alt=""></button>
-          <p> {{ task.description }} </p>
-    }-->
+        <p class="foreword">Subtasks:</p>
+        <div>
+          <!--Generate subtasks here-->
+
+          @for (subtask of subtasksCache; track $index){
+            <div class="subtasks">
+              <button (click)="checkBox(subtask)" class="subtasks_btn_{{subtask.is_Done}}" id="{{subtask.id}}"></button>
+              <p> {{subtask.title}} </p>
+            </div>
+          }
+
+        </div>
     </section>
     <section class="footer">
       <div [routerLink]="" class="footer_btn">
