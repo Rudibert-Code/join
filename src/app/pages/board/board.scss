@@ -85,11 +85,8 @@
 }
 
 .task-card {
-
-
   //cursor effect
   cursor: pointer;
-
 
   height: 260px;
   min-width: 230px;
@@ -130,9 +127,8 @@
   color: $main-white;
 }
 
-
 // Dialog
-dialog{
+dialog {
   width: 396px;
   max-height: 724px;
   border-radius: 32px;
@@ -142,22 +138,22 @@ dialog{
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.355);
 }
-.header{
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 16px;
 }
-.ticket_category{
+.ticket_category {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.title{
+.title {
   font-size: 3.2rem;
   padding: 0 16px;
 }
-.exit_btn{
+.exit_btn {
   width: 24px;
   height: 24px;
   background-image: url(/assets/UI/icon_cancle.png);
@@ -168,7 +164,7 @@ dialog::backdrop {
   outline: none;
   padding: 0;
 }
-.ticket_details{
+.ticket_details {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -176,11 +172,11 @@ dialog::backdrop {
   align-items: start;
   padding: 0 16px;
 }
-.foreword{
+.foreword {
   font-weight: bold;
-  color: #42526E;
+  color: #42526e;
 }
-.data{
+.data {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -188,19 +184,19 @@ dialog::backdrop {
   width: 100%;
   gap: 16px;
 }
-.footer{
+.footer {
   width: 100%;
   display: flex;
   justify-content: end;
   align-items: center;
   gap: 16px;
   padding: 0 16px;
-  .separator{
+  .separator {
     width: 1px;
     height: 16px;
     background-color: #42526e3c;
   }
-  &_btn{
+  &_btn {
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -208,10 +204,10 @@ dialog::backdrop {
     padding: 2px 4px;
     border-radius: 8px;
     gap: 8px;
-    >p{
+    > p {
       margin: 0;
     }
-    &:hover{
+    &:hover {
       background-color: $main_white;
     }
   }
@@ -239,14 +235,24 @@ dialog::backdrop {
     background-color: #42526e00;
     background-size: contain;
   }
-}
-svg{
+} 
+svg {
   width: 24px;
   height: 24px;
   fill: $main_header;
 }
 
 .search-task {
+  border: 1px solid $main_grey;
+  border-radius: 12px;
+  padding: 10px 15px;
+}
+
+@media (max-width: 1023px) {
+  .tasks-wrapper-desktop,
+  .task-wrapper-desktop {
+    display: none;
+  }
 }
 
 @media (min-width: 1023px) {
@@ -255,6 +261,7 @@ svg{
   }
 
   .task-wrapper-desktop {
+    display: flex;
     align-items: center;
     width: calc(100% - 30px);
     margin-left: 30px;
@@ -278,6 +285,7 @@ svg{
     flex-direction: column;
     margin-right: 25px;
     margin-left: 30px;
+    overflow: hidden;
   }
 
   .empty-todo-container,
@@ -287,7 +295,6 @@ svg{
     margin-right: 25px;
     width: 260px;
     height: 45px;
-    overflow: hidden;
   }
 
   .margin-desktop {
