@@ -85,9 +85,7 @@
 }
 
 .task-card {
-  //cursor effect
   cursor: pointer;
-
   height: 260px;
   min-width: 230px;
   max-width: 260px;
@@ -135,24 +133,29 @@ dialog {
   border: none;
   z-index: 10;
 }
+
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.355);
 }
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 16px;
 }
+
 .ticket_category {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .title {
   font-size: 3.2rem;
   padding: 0 16px;
 }
+
 .exit_btn {
   width: 24px;
   height: 24px;
@@ -164,6 +167,7 @@ dialog::backdrop {
   outline: none;
   padding: 0;
 }
+
 .ticket_details {
   width: 100%;
   display: flex;
@@ -173,10 +177,12 @@ dialog::backdrop {
   padding: 0 16px;
   padding-bottom: 16px;
 }
+
 .foreword {
   font-weight: bold;
   color: #42526e;
 }
+
 .data {
   display: flex;
   justify-content: start;
@@ -185,6 +191,7 @@ dialog::backdrop {
   width: 100%;
   gap: 16px;
 }
+
 .footer {
   width: 100%;
   display: flex;
@@ -213,6 +220,7 @@ dialog::backdrop {
     }
   }
 }
+
 .subtasks{
   width: 100%;
   display: flex;
@@ -244,9 +252,40 @@ svg {
 }
 
 .search-task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 380px;
   border: 1px solid $main_grey;
   border-radius: 12px;
   padding: 10px 15px;
+}
+
+.search-task input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.seperator {
+  height: 25px;
+  width: 1px;
+  border-radius: 1px;
+  background-color: $main_grey;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar img {
+  display: block;
+  width: 20px;
 }
 
 @media (max-width: 1023px) {

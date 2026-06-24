@@ -119,14 +119,19 @@
       </button>
     </section>
     <div class="d-flex center">
-      <input
-        class="search-task"
-        type="text"
-        name="search"
-        id="search"
-        placeholder="Find Task"
-        [(ngModel)]="searchQuery"
-      />
+      <div class="search-task d-flex center">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          placeholder="Find Task"
+          [(ngModel)]="searchQuery"
+        />
+        <div class="d-flex center search-bar">
+          <div class="seperator"></div>
+          <img src="assets/UI/icon_search.png" alt="search icon" />
+        </div>
+      </div>
     </div>
   </header>
   <section class="task-wrapper">
