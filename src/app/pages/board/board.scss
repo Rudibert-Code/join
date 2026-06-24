@@ -216,11 +216,36 @@ dialog::backdrop {
     }
   }
 }
+.subtasks{
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  &_btn_false{
+    padding: 0, 4px;
+    border: none;
+    outline: none;
+    background-image: url(/assets/UI/checkbox_default.png);
+    background-repeat: no-repeat;
+    background-color: #42526e00;
+    background-size: contain;
+  }
+  &_btn_true{
+    padding: 0, 4px;
+    border: none;
+    outline: none;
+    background-image: url(/assets/UI/checkbox_selected.png);
+    background-repeat: no-repeat;
+    background-color: #42526e00;
+    background-size: contain;
+  }
+}
 svg{
   width: 24px;
   height: 24px;
   fill: $main_header;
 }
+
 .search-task {
 }
 
