@@ -17,7 +17,7 @@
       </div>
       <div class="add-task-form__due_date">
         <label for="due_date">Due date<span class="red">*</span></label>
-        <input type="date" name="due_date" formControlName="due_date" />
+        <input type="date" name="due_date" formControlName="due_date" [min]="today" />
       </div>
     </div>
 
@@ -52,7 +52,6 @@
         </div>
       </div>
 
-      <p>Selected priority: {{ taskForm.controls.priority.value }}</p>
       <div class="dropdown-caregory">
         <label for="category">Category<span class="red">*</span></label>
         <select name="category" formControlName="category">
@@ -69,37 +68,67 @@
           Select contacts to assign
         </button>
 
-        <div class="assigned-dropdown__menu" *ngIf="isAssignedDropdownOpen">
-          <button
-            class="assigned-dropdown__option"
-            [class.selected]="isContactSelected(contact.id)"
-            type="button"
-            *ngFor="let contact of contacts()"
-            (click)="toggleContact(contact.id)"
-          >
-            <div class="assigned-dropdown__avatar__wrapper">
-              <span class="assigned-dropdown__avatar" [style.background-color]="contact.color">
+        @if (isAssignedDropdownOpen) {
+          <div class="assigned-dropdown__menu">
+            @for (contact of contacts(); track contact.id) {
+              <button
+                class="assigned-dropdown__option"
+                type="button"
+                [class.selected]="isContactSelected(contact.id)"
+                (click)="toggleContact(contact.id)"
+              >
+                <div class="assigned-dropdown__avatar__wrapper">
+                  <span class="assigned-dropdown__avatar" [style.background-color]="contact.color">
+                    {{ contact.first_name[0] }}{{ contact.last_name[0] }}
+                  </span>
+
+                  <span> {{ contact.first_name }} {{ contact.last_name }} </span>
+                </div>
+
+                <input type="checkbox" [checked]="isContactSelected(contact.id)" tabindex="-1" />
+              </button>
+            }
+          </div>
+        }
+
+        @if (selectedContacts().length > 0) {
+          <div class="assigned-dropdown__selected">
+            @for (contact of selectedContacts(); track contact.id) {
+              <span
+                class="assigned-dropdown__selected-avatar"
+                [style.background-color]="contact.color"
+                [title]="contact.first_name + ' ' + contact.last_name"
+              >
                 {{ contact.first_name[0] }}{{ contact.last_name[0] }}
               </span>
+            }
+          </div>
+        }
+      </div>
 
-              <span> {{ contact.first_name }} {{ contact.last_name }} </span>
-            </div>
+      <div class="subtasks">
+        <label for="subtask">Subtasks</label>
 
-            <input type="checkbox" [checked]="isContactSelected(contact.id)" tabindex="-1" />
-          </button>
-        </div>
+        <div class="subtasks__input">
+          <input
+            id="subtask"
+            type="text"
+            placeholder="Add new subtask"
+            [formControl]="subtaskInput"
+          />
 
-        <div class="assigned-dropdown__selected" *ngIf="selectedContacts().length > 0">
-          <span
-            class="assigned-dropdown__selected-avatar"
-            *ngFor="let contact of selectedContacts()"
-            [style.background-color]="contact.color"
-            [title]="contact.first_name + ' ' + contact.last_name"
-          >
-            {{ contact.first_name[0] }}{{ contact.last_name[0] }}
-          </span>
+          <button type="button" (click)="addSubtask()">+</button>
         </div>
       </div>
+      @if (subtasks.controls.length > 0) {
+        <ul class="subtasks__list">
+          @for (subtask of subtasks.controls; track $index) {
+            <li class="subtasks__item">
+              {{ subtask.value }}
+            </li>
+          }
+        </ul>
+      }
     </div>
   </div>
 

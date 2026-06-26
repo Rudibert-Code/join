@@ -12,15 +12,12 @@ import { Contact, Supabase } from '../../supabase';
 export class AddTaskForm {
   supabase = inject(Supabase);
   contacts = this.supabase.contacts;
+  today = new Date().toISOString().split('T')[0];
+  isAssignedDropdownOpen = false;
 
-  constructor() {
-    this.supabase.getContacts();
-  }
-  // contacts = [
-  //   { id: 1, first_name: 'Eva', last_name: 'Fischer', color: '#ff7a00' },
-  //   { id: 2, first_name: 'Emmanuel', last_name: 'Mauer', color: '#00bee8' },
-  //   { id: 3, first_name: 'Marcel', last_name: 'Bauer', color: '#6e52ff' },
-  // ];
+  subtaskInput = new FormControl('', {
+    nonNullable: true,
+  });
 
   taskForm = new FormGroup({
     title: new FormControl('', {
@@ -46,14 +43,16 @@ export class AddTaskForm {
       nonNullable: true,
     }),
 
-    // subtasks: new FormArray<FormControl<string>>([]),
+    subtasks: new FormArray<FormControl<string>>([]),
   });
+
+  constructor() {
+    this.supabase.getContacts();
+  }
 
   setPriority(priority: 'urgent' | 'medium' | 'low') {
     this.taskForm.controls.priority.setValue(priority);
   }
-
-  isAssignedDropdownOpen = false;
 
   toggleAssignedDropdown() {
     this.isAssignedDropdownOpen = !this.isAssignedDropdownOpen;
@@ -79,5 +78,25 @@ export class AddTaskForm {
     const selectedIds = this.taskForm.controls.assignedContactIds.value;
 
     return this.contacts().filter((contact) => selectedIds.includes(contact.id));
+  }
+
+  get subtasks() {
+    return this.taskForm.controls.subtasks;
+  }
+
+  addSubtask() {
+    const title = this.subtaskInput.value.trim();
+
+    if (!title) {
+      return;
+    }
+
+    this.subtasks.push(
+      new FormControl(title, {
+        nonNullable: true,
+      }),
+    );
+
+    this.subtaskInput.setValue('');
   }
 }
