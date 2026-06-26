@@ -25,6 +25,7 @@ export interface Task {
   due_date: string;
   priority: string;
   category: string;
+  status: string;
 }
 
 export interface Subtask {
@@ -150,7 +151,7 @@ export class Supabase {
   async getTasks() {
     const { data: tasks, error } = await this.supabase
       .from('tasks')
-      .select('id, title, description, due_date, priority, category')
+      .select('id, title, description, due_date, priority, category, status')
       .order('title', { ascending: true });
 
     if (error) {
@@ -208,4 +209,18 @@ async getTaskToContacts() {
     this.task_contacts.set(task_contacts);
     return task_contacts;
 }
+  async updateTaskStatus(id: number, status: string) {
+    const { data, error } = await this.supabase
+      .from('tasks')
+      .update({ status })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase updateTaskStatus error', error);
+      return;
+    }
+
+    return data;
+  }
 }
