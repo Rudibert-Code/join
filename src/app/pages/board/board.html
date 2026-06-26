@@ -32,9 +32,16 @@
     </section>
     <section class="ticket_details">
       <p class="foreword">Assigned to:</p>
-      <!--@for (task of tasks(); track task.id) {
-          <p> {{ task.due_date }} </p>
-    }-->
+      <div>
+
+        @for (contact of contactsCache; track $index) {
+          <div class="contacts">
+            <p class="contacts_icon_{{ contact.color }}">{{ contact.initials }}</p>
+            <p class="contacts">{{ contact.name }} {{ contact.surname }}</p>
+          </div>
+        }
+
+      </div>
     </section>
     <section class="ticket_details">
         <p class="foreword">Subtasks:</p>

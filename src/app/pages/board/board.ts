@@ -1,13 +1,20 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Supabase, Task, Subtask } from '../../supabase';
+import { Supabase, Task, Subtask, TaskContacts } from '../../supabase';
 import { RouterLink } from '@angular/router';
 
 interface subTask{
   title:String,
   is_Done:String,
   id:number
+}
+
+interface contacts{
+  name:string,
+  surname:string,
+  initials:string,
+  color:string
 }
 
 @Component({
@@ -19,8 +26,10 @@ interface subTask{
 })
 export class Board implements OnInit {
   db = inject(Supabase);
+  contacts = computed(() => this.db.contacts());
   tasks = computed(() => this.db.tasks());
   subtasks = computed(() => this.db.subtasks());
+  task_contacts = computed(() => this.db.task_contacts());
 
   taskTitle: string = '';
   taskDescr: string = '';
@@ -34,8 +43,10 @@ export class Board implements OnInit {
   }
 
   async loadTasks() {
+    const contact = await this.db.getContacts();
     const tasks = await this.db.getTasks();
     const subtasks = await this.db.getSubtasks();
+    const task_contacts = await this.db.getTaskToContacts();
   }
 
   get todoTasks() {
@@ -116,11 +127,39 @@ export class Board implements OnInit {
       }
     }  
 
+    this.getContacts(id);
     this.getSubTasks(id);
     dialogWindow.showModal();
   }
 
-  //subtasksCache:string[] = [];
+  contactsCache:contacts[] = [];
+
+  async getContacts(id: number) {
+    this.contactsCache = [];
+
+    const linkedContacts = this.contacts();
+
+    for (const relation of this.task_contacts()) {
+      if (relation.task_id !== id) {
+        continue;
+      }
+
+      const matchingContact = linkedContacts.find((contact) => contact.id === relation.contact_id);
+
+      if (!matchingContact) {
+        continue;
+      }
+
+      this.contactsCache.push({
+        name: String(matchingContact.first_name),
+        surname: String(matchingContact.last_name),
+        initials: `${matchingContact.first_name.charAt(0).toUpperCase()}${matchingContact.last_name.charAt(0).toUpperCase()}`,
+        color: String(matchingContact.color.slice(1)),
+      });
+    }
+  }
+
+
   subtasksCache:subTask[] = [];
 
   async getSubTasks(id:any){

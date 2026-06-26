@@ -288,6 +288,41 @@ svg {
   width: 20px;
 }
 
+.contacts{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  >p{
+    margin: 0;
+    margin-bottom: 16px;
+  }
+}
+
+.contacts_icon{
+  width: 42px;
+  height: 42px;
+  border-radius: 100px;
+
+  &_ffa35e{
+    background-color: $user_orange;
+  }
+  &_ff5eb3{
+    background-color: $user_pink;
+  }
+  &_6e52ff{
+    background-color: $user_blue;
+  }
+  &_9327ff{
+    background-color: $user_purple;
+  }
+  &_00bee8{
+    background-color: $user_lightblue;
+  }
+  &_ff745e{
+    background-color: $user_red;
+  }
+}
+
 @media (max-width: 1023px) {
   .tasks-wrapper-desktop,
   .task-wrapper-desktop {

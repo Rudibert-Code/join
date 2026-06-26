@@ -95,7 +95,6 @@ openContactDetails(contact: Contact) {
   if (screen.width >= 1190 && this.detailViewActive == false) {
     let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
     detailsPopUp.classList.toggle('active') 
-    this.detailViewActive = true;
   }
 
   let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
@@ -120,9 +119,9 @@ openContactDetails(contact: Contact) {
       }      
     }
 
-    this.detailViewActive = true;
     contactContainer.style.display="none"
     detailContainer.style.display="flex"
+    this.detailViewActive = true;
   }
 
   // löscht active class aus Kontakt divs
