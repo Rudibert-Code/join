@@ -182,22 +182,26 @@
       </button>
     </section>
     <div class="progress-container" id="progress" *ngIf="progressTasks.length > 0">
-      <article class="task-card" *ngFor="let task of progressTasks" draggable="true">
-        <p
-          class="task-card__category margin-correction"
-          [ngClass]="getTaskCardClass(task.category)"
-        >
-          {{ task.category }}
-        </p>
-        <h4 class="task-card__title">{{ task.title }}</h4>
-        <p class="task-card__description">{{ task.description }}</p>
-        <div class="d-flex center-space">
-          <progress></progress>
-          <p>0/0 Subtask</p>
-        </div>
-        <div class="d-flex center-space">
-          <p>User...</p>
-          <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+      <article class="task-card" *ngFor="let task of progressTasks">
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
+          <p
+            class="task-card__category margin-correction"
+            [ngClass]="getTaskCardClass(task.category)"
+          >
+            {{ task.category }}
+          </p>
+          <h4 class="task-card__title">{{ task.title }}</h4>
+          <p class="task-card__description">{{ task.description }}</p>
+          <div class="d-flex center-space">
+            <progress></progress>
+            <p>0/0 Subtask</p>
+          </div>
+          <div class="d-flex center-space">
+            <p>User...</p>
+            <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+          </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -215,22 +219,26 @@
       </button>
     </section>
     <div class="feedback-container" id="feedback" *ngIf="feedbackTasks.length > 0">
-      <article class="task-card" *ngFor="let task of feedbackTasks" draggable="true">
-        <p
-          class="task-card__category margin-correction"
-          [ngClass]="getTaskCardClass(task.category)"
-        >
-          {{ task.category }}
-        </p>
-        <h4 class="task-card__title">{{ task.title }}</h4>
-        <p class="task-card__description">{{ task.description }}</p>
-        <div class="d-flex center-space">
-          <progress></progress>
-          <p>0/0 Subtask</p>
-        </div>
-        <div class="d-flex center-space">
-          <p>User...</p>
-          <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+      <article class="task-card" *ngFor="let task of feedbackTasks">
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
+          <p
+            class="task-card__category margin-correction"
+            [ngClass]="getTaskCardClass(task.category)"
+          >
+            {{ task.category }}
+          </p>
+          <h4 class="task-card__title">{{ task.title }}</h4>
+          <p class="task-card__description">{{ task.description }}</p>
+          <div class="d-flex center-space">
+            <progress></progress>
+            <p>0/0 Subtask</p>
+          </div>
+          <div class="d-flex center-space">
+            <p>User...</p>
+            <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+          </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -245,22 +253,26 @@
       <h4 class="margin-correction">Done</h4>
     </section>
     <div class="done-container" id="done" *ngIf="doneTasks.length > 0">
-      <article class="task-card" *ngFor="let task of doneTasks" draggable="true">
-        <p
-          class="task-card__category margin-correction"
-          [ngClass]="getTaskCardClass(task.category)"
-        >
-          {{ task.category }}
-        </p>
-        <h4 class="task-card__title">{{ task.title }}</h4>
-        <p class="task-card__description">{{ task.description }}</p>
-        <div class="d-flex center-space">
-          <progress></progress>
-          <p>0/0 Subtask</p>
-        </div>
-        <div class="d-flex center-space">
-          <p>User...</p>
-          <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+      <article class="task-card" *ngFor="let task of doneTasks">
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
+          <p
+            class="task-card__category margin-correction"
+            [ngClass]="getTaskCardClass(task.category)"
+          >
+            {{ task.category }}
+          </p>
+          <h4 class="task-card__title">{{ task.title }}</h4>
+          <p class="task-card__description">{{ task.description }}</p>
+          <div class="d-flex center-space">
+            <progress></progress>
+            <p>0/0 Subtask</p>
+          </div>
+          <div class="d-flex center-space">
+            <p>User...</p>
+            <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+          </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -307,26 +319,30 @@
         (dragover)="$event.preventDefault()"
         *ngFor="let task of todoTasks"
       >
-        <p
-          class="task-card__category margin-correction"
-          [ngClass]="getTaskCardClass(task.category)"
-        >
-          {{ task.category }}
-        </p>
-        <h4 class="task-card__title margin-correction">{{ task.title }}</h4>
-        <p class="task-card__description margin-correction">
-          {{ task.description }}
-        </p>
-        <div class="d-flex center-space">
-          <progress></progress>
-          <p>0/0 Subtask</p>
-        </div>
-        <div class="d-flex center-space">
-          <p>User...</p>
-          <img
-            [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
-            alt="priority"
-          />
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
+          <p
+            class="task-card__category margin-correction"
+            [ngClass]="getTaskCardClass(task.category)"
+          >
+            {{ task.category }}
+          </p>
+          <h4 class="task-card__title margin-correction">{{ task.title }}</h4>
+          <p class="task-card__description margin-correction">
+            {{ task.description }}
+          </p>
+          <div class="d-flex center-space">
+            <progress></progress>
+            <p>0/0 Subtask</p>
+          </div>
+          <div class="d-flex center-space">
+            <p>User...</p>
+            <img
+              [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
+              alt="priority"
+            />
+          </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -353,24 +369,28 @@
         (dragover)="$event.preventDefault()"
         *ngFor="let task of progressTasks"
       >
-        <p
-          class="task-card__category margin-correction"
-          [ngClass]="getTaskCardClass(task.category)"
-        >
-          {{ task.category }}
-        </p>
-        <h4 class="task-card__title">{{ task.title }}</h4>
-        <p class="task-card__description">{{ task.description }}</p>
-        <div class="d-flex center-space">
-          <progress></progress>
-          <p>0/0 Subtask</p>
-        </div>
-        <div class="d-flex center-space">
-          <p>User...</p>
-          <img
-            [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
-            alt="priority"
-          />
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
+          <p
+            class="task-card__category margin-correction"
+            [ngClass]="getTaskCardClass(task.category)"
+          >
+            {{ task.category }}
+          </p>
+          <h4 class="task-card__title">{{ task.title }}</h4>
+          <p class="task-card__description">{{ task.description }}</p>
+          <div class="d-flex center-space">
+            <progress></progress>
+            <p>0/0 Subtask</p>
+          </div>
+          <div class="d-flex center-space">
+            <p>User...</p>
+            <img
+              [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
+              alt="priority"
+            />
+          </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -397,24 +417,28 @@
         (dragover)="$event.preventDefault()"
         *ngFor="let task of feedbackTasks"
       >
-        <p
-          class="task-card__category margin-correction"
-          [ngClass]="getTaskCardClass(task.category)"
-        >
-          {{ task.category }}
-        </p>
-        <h4 class="task-card__title">{{ task.title }}</h4>
-        <p class="task-card__description">{{ task.description }}</p>
-        <div class="d-flex center-space">
-          <progress></progress>
-          <p>0/0 Subtask</p>
-        </div>
-        <div class="d-flex center-space">
-          <p>User...</p>
-          <img
-            [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
-            alt="priority"
-          />
+        <!--Parent-Container für (click)-->
+        <div (click)="openTicketCard(task.id)">
+          <p
+            class="task-card__category margin-correction"
+            [ngClass]="getTaskCardClass(task.category)"
+          >
+            {{ task.category }}
+          </p>
+          <h4 class="task-card__title">{{ task.title }}</h4>
+          <p class="task-card__description">{{ task.description }}</p>
+          <div class="d-flex center-space">
+            <progress></progress>
+            <p>0/0 Subtask</p>
+          </div>
+          <div class="d-flex center-space">
+            <p>User...</p>
+            <img
+              [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
+              alt="priority"
+            />
+          </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>
@@ -441,24 +465,27 @@
         (dragover)="$event.preventDefault()"
         *ngFor="let task of doneTasks"
       >
-        <p
-          class="task-card__category margin-correction"
-          [ngClass]="getTaskCardClass(task.category)"
-        >
-          {{ task.category }}
-        </p>
-        <h4 class="task-card__title">{{ task.title }}</h4>
-        <p class="task-card__description">{{ task.description }}</p>
-        <div class="d-flex center-space">
-          <progress></progress>
-          <p>0/0 Subtask</p>
-        </div>
-        <div class="d-flex center-space">
-          <p>User...</p>
-          <img
-            [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
-            alt="priority"
-          />
+        <div (click)="openTicketCard(task.id)">
+          <p
+            class="task-card__category margin-correction"
+            [ngClass]="getTaskCardClass(task.category)"
+          >
+            {{ task.category }}
+          </p>
+          <h4 class="task-card__title">{{ task.title }}</h4>
+          <p class="task-card__description">{{ task.description }}</p>
+          <div class="d-flex center-space">
+            <progress></progress>
+            <p>0/0 Subtask</p>
+          </div>
+          <div class="d-flex center-space">
+            <p>User...</p>
+            <img
+              [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
+              alt="priority"
+            />
+          </div>
+          <!--Parent-Container für (click)-->
         </div>
       </article>
     </div>

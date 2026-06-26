@@ -89,30 +89,38 @@ constructor(private router: Router) {}
 openContactDetails(contact: Contact) {
   this.contactSelected.emit(contact);
 
-  let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
-  let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
+  //let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
+  //let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
   
-  if (screen.width >= 1190) {
+  if (screen.width >= 1190 && this.detailViewActive == false) {
     let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
-    if (this.detailViewActive == false) {
-      detailsPopUp.classList.toggle('active') 
-    }
+    detailsPopUp.classList.toggle('active') 
+    this.detailViewActive = true;
   }
 
   let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
   buttonMobile.src="assets/UI/vector/icon_edit-user.svg"
 
-  let contactID = Number(contact.id);
-  this.cd.loadDetails(contactID);
-
-  if (screen.width <= 1189){
+  if (screen.width <= 1189 && this.detailViewActive == false){
+    let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
+    let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
+    let contactID = Number(contact.id);
     let array = this.db.contacts();
-    this.userName = array[contactID].first_name;
-    this.userSurName = array[contactID].last_name;
-    this.userInitials = this.userName.charAt(0).toUpperCase()+this.userSurName.charAt(0).toUpperCase(); 
-    this.userEmail = array[contactID].email;
-    this.userPhone = array[contactID].phone;
 
+    for (let index = 0; index < array.length; index++) {
+      if (array[index].id == contactID) {
+        this.userName = array[index].first_name;
+        this.userSurName = array[index].last_name;
+        this.userInitials = this.userName.charAt(0).toUpperCase()+this.userSurName.charAt(0).toUpperCase(); 
+        this.userEmail = array[index].email;
+        this.userPhone = array[index].phone;
+        this.userColor = array[index].color;
+        let userIcon = document.getElementById('user_icon') as HTMLParagraphElement;
+        userIcon.style.backgroundColor = String(this.userColor);
+      }      
+    }
+
+    this.detailViewActive = true;
     contactContainer.style.display="none"
     detailContainer.style.display="flex"
   }
@@ -138,6 +146,7 @@ returnToContacts(){
   contactContainer.style.display="flex";
   contactContainer.style.flexDirection="column";
   detailContainer.style.display="none";
+  this.detailViewActive = false;
 }
 
 
