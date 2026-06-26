@@ -82,10 +82,17 @@
   overflow: scroll;
   justify-content: space-between;
   gap: 25px;
+  transition: background-color 0.2s ease;
+}
+
+.drop-target {
+  background-color: rgba(67, 160, 255, 0.1);
+  border: 2px dashed $main-header;
+  border-radius: 16px;
 }
 
 .task-card {
-  cursor: pointer;
+  cursor: grab;
   height: 260px;
   min-width: 230px;
   max-width: 260px;
@@ -93,18 +100,29 @@
   border-radius: 15px;
   background-color: #fff;
   gap: 20px;
-  &__description {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-  }
-  &__title {
-    font-size: 1.6rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.task-card.dragging {
+  opacity: 0.5;
+  transform: scale(0.98);
+  rotate: -4deg;
+}
+
+.task-card__description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.task-card__title {
+  font-size: 1.6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task-card--technical {
@@ -220,12 +238,12 @@ dialog::backdrop {
   }
 }
 
-.subtasks{
+.subtasks {
   width: 100%;
   display: flex;
   justify-content: start;
   align-items: center;
-  &_btn_false{
+  &_btn_false {
     padding: 0, 4px;
     border: none;
     outline: none;
@@ -234,7 +252,7 @@ dialog::backdrop {
     background-color: #42526e00;
     background-size: contain;
   }
-  &_btn_true{
+  &_btn_true {
     padding: 0, 4px;
     border: none;
     outline: none;
@@ -243,7 +261,7 @@ dialog::backdrop {
     background-color: #42526e00;
     background-size: contain;
   }
-} 
+}
 svg {
   width: 24px;
   height: 24px;
@@ -302,8 +320,9 @@ svg {
   .task-wrapper-desktop {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: calc(100% - 30px);
-    margin-left: 30px;
+    gap: 30px;
   }
 
   .todo-wrapper,
@@ -311,9 +330,8 @@ svg {
   .feedback-wrapper,
   .done-wrapper {
     display: flex;
-    gap: 10px;
     width: 260px;
-    margin-right: 25px;
+    margin-left: 25px;
   }
 
   .todo-container,
@@ -322,8 +340,8 @@ svg {
   .done-container {
     display: flex;
     flex-direction: column;
-    margin-right: 25px;
-    margin-left: 30px;
+    flex: 1;
+    margin-left: 25px;
     overflow: hidden;
   }
 

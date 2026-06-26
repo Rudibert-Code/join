@@ -4,10 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { Supabase, Task, Subtask } from '../../supabase';
 import { RouterLink } from '@angular/router';
 
-interface subTask{
-  title:String,
-  is_Done:String,
-  id:number
+interface subTask {
+  title: String;
+  is_Done: String;
+  id: number;
 }
 
 @Component({
@@ -19,7 +19,7 @@ interface subTask{
 })
 export class Board implements OnInit {
   db = inject(Supabase);
-  tasks = computed(() => this.db.tasks());
+  tasks = this.db.tasks;
   subtasks = computed(() => this.db.subtasks());
 
   taskTitle: string = '';
@@ -39,32 +39,33 @@ export class Board implements OnInit {
   }
 
   get todoTasks() {
-    return this.filterTasksByCategory('todo');
+    return this.filterTasksByCategory('to_do');
   }
 
   get progressTasks() {
-    return this.filterTasksByCategory('progress');
+    return this.filterTasksByCategory('in_progress');
   }
 
   get feedbackTasks() {
-    return this.filterTasksByCategory('feedback');
+    return this.filterTasksByCategory('await_feedback');
   }
 
   get doneTasks() {
     return this.filterTasksByCategory('done');
   }
 
-  private filterTasksByCategory(categoryKey: 'todo' | 'progress' | 'feedback' | 'done') {
+  private filterTasksByCategory(categoryKey: 'to_do' | 'in_progress' | 'await_feedback' | 'done') {
     let filtered = this.tasks().filter((task) => this.getCategoryKey(task) === categoryKey);
-    
+
     if (this.searchQuery.trim()) {
       const query = this.searchQuery.toLowerCase();
-      filtered = filtered.filter((task) => 
-        task.title?.toLowerCase().includes(query) || 
-        task.description?.toLowerCase().includes(query)
+      filtered = filtered.filter(
+        (task) =>
+          task.title?.toLowerCase().includes(query) ||
+          task.description?.toLowerCase().includes(query),
       );
     }
-    
+
     return filtered;
   }
 
@@ -72,28 +73,41 @@ export class Board implements OnInit {
     return priority.replace(/^\$/, '').trim().toLowerCase();
   }
 
-  private getCategoryKey(task: Task): 'todo' | 'progress' | 'feedback' | 'done' {
-    const category = task.category?.toLowerCase().trim() || '';
+  private getCategoryKey(task: Task): 'to_do' | 'in_progress' | 'await_feedback' | 'done' {
+    const status = task.status?.toLowerCase().trim() || '';
 
-    if (category.includes('progress')) {
-      return 'progress';
+    if (status === 'in_progress') {
+      return 'in_progress';
     }
-    if (category.includes('feedback')) {
-      return 'feedback';
+    if (status === 'await_feedback') {
+      return 'await_feedback';
     }
-    if (category.includes('done')) {
+    if (status === 'done') {
       return 'done';
     }
-    return 'todo';
+    return 'to_do';
+  }
+
+  startDragging(id: number, event: DragEvent) {
+    event.dataTransfer?.setData('text/plain', id.toString());
+  }
+
+  async moveToStatus(status: string, event: DragEvent) {
+    event.preventDefault();
+    const idStr = event.dataTransfer?.getData('text/plain');
+
+    if (idStr) {
+      const id = parseInt(idStr, 10);
+      await this.db.updateTaskStatus(id, status);
+      this.loadTasks();
+      console.log('Verschiebe Task mit ID:', id, 'zu Status:', status);
+    }
   }
 
   getTaskCardClass(category: string): string {
     const categoryLower = category?.toLowerCase().trim() || '';
     return categoryLower.includes('technical') ? 'task-card--technical' : 'task-card--user';
   }
-
-
-
 
   //Open Ticket Card
   openTicketCard(id: number) {
@@ -114,81 +128,80 @@ export class Board implements OnInit {
         ticketCategory.innerHTML = this.tasks()[index].category;
         this.setTicketCatClass(this.tasks()[index].category);
       }
-    }  
+    }
 
     this.getSubTasks(id);
     dialogWindow.showModal();
   }
 
   //subtasksCache:string[] = [];
-  subtasksCache:subTask[] = [];
+  subtasksCache: subTask[] = [];
 
-  async getSubTasks(id:any){
+  async getSubTasks(id: any) {
     this.subtasksCache = [];
 
     for (let index = 0; index < this.subtasks().length; index++) {
-
       if (this.subtasks()[index].task_id == id) {
         //this.subtasksCache.unshift((this.subtasks()[index].title));
         this.subtasksCache.push({
-          title:this.subtasks()[index].title,
-          is_Done:this.subtasks()[index].is_done,
-          id:this.subtasks()[index].id
-          })
+          title: this.subtasks()[index].title,
+          is_Done: this.subtasks()[index].is_done,
+          id: this.subtasks()[index].id,
+        });
       }
     }
   }
 
-  setTicketCatClass(cat:string){
-    let className:string = "";
+  setTicketCatClass(cat: string) {
+    let className: string = '';
     let targetParagraph = document.getElementById('ticket_category') as HTMLParagraphElement;
-    targetParagraph.classList.remove("task-card--technical","task-card--user");
+    targetParagraph.classList.remove('task-card--technical', 'task-card--user');
 
     switch (cat) {
       case 'Technical Tasks':
-        className = "task-card--technical"
+        className = 'task-card--technical';
         break;
 
       default:
-        className = "task-card--user"
+        className = 'task-card--user';
         break;
     }
     targetParagraph.classList.add(className);
   }
 
-  setTicketDueDate(date:string){
-    return date.replaceAll('-','/');
+  setTicketDueDate(date: string) {
+    return date.replaceAll('-', '/');
   }
 
-  setTicketPrioIcon(prio:string){
+  setTicketPrioIcon(prio: string) {
     let ticketPrioIcon = document.getElementById('prio-icon') as HTMLImageElement;
-    let iconURL:string = ""; 
+    let iconURL: string = '';
 
     switch (prio) {
       case 'urgent':
-        iconURL = "assets/UI/icon_prio-urgent.png";
+        iconURL = 'assets/UI/icon_prio-urgent.png';
         break;
 
       case 'low':
-        iconURL = "assets/UI/icon_prio-low.png";
+        iconURL = 'assets/UI/icon_prio-low.png';
         break;
-    
+
       default:
-        iconURL = "assets/UI/icon_prio-medium.png";
+        iconURL = 'assets/UI/icon_prio-medium.png';
         break;
     }
     ticketPrioIcon.src = iconURL;
   }
 
-  closeTicketCard(){
+  closeTicketCard() {
     let dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
     dialogWindow.close();
   }
 
-  checkBox(x:subTask){
+  checkBox(x: subTask) {
     let checkBoxID = String(x.id);
     let currentButton = document.getElementById(checkBoxID) as HTMLImageElement;
-    
-    currentButton.classList.toggle("subtasks_btn_true");
+
+    currentButton.classList.toggle('subtasks_btn_true');
   }
 }
