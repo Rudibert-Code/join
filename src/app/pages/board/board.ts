@@ -111,9 +111,16 @@ export class Board implements OnInit {
       const id = parseInt(idStr, 10);
       await this.db.updateTaskStatus(id, status);
       this.loadTasks();
-      console.log('Verschiebe Task mit ID:', id, 'zu Status:', status);
     }
   }
+
+  async mobileMoveToStatus(id: number, status: string) {
+  await this.db.updateTaskStatus(id, status);
+  
+  this.loadTasks();
+  
+  console.log('Move Task ID:', id, 'to status:', status);
+}
 
   getTaskCardClass(category: string): string {
     const categoryLower = category?.toLowerCase().trim() || '';

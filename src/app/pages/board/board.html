@@ -33,14 +33,12 @@
     <section class="ticket_details">
       <p class="foreword">Assigned to:</p>
       <div>
-
         @for (contact of contactsCache; track $index) {
           <div class="contacts">
             <p class="contacts_icon_{{ contact.color }}">{{ contact.initials }}</p>
             <p class="contacts">{{ contact.name }} {{ contact.surname }}</p>
           </div>
         }
-
       </div>
     </section>
     <section class="ticket_details">
@@ -152,9 +150,14 @@
       </button>
     </section>
     <div class="todo-container d-flex" id="todo-container" *ngIf="todoTasks.length > 0">
-      <article class="task-card" *ngFor="let task of todoTasks" draggable="true">
+      <article class="task-card" *ngFor="let task of todoTasks">
         <!--Parent-Container für (click)-->
         <div (click)="openTicketCard(task.id)">
+          <div class="invisibile-button-section">
+            <button class="direction-btn">
+              <img class="up-arrow" src="assets/UI/icon_mobile_arrow.png" alt="arrow" />
+            </button>
+          </div>
           <p
             class="task-card__category margin-correction"
             [ngClass]="getTaskCardClass(task.category)"
@@ -174,8 +177,12 @@
               alt="priority"
             />
           </div>
-
           <!--Parent-Container für (click)-->
+        </div>
+        <div class="d-flex center">
+          <button class="direction-btn" (click)="mobileMoveToStatus(task.id, 'in_progress')">
+            <img class="down-arrow" src="assets/UI/icon_mobile_arrow.png" alt="arrow" />
+          </button>
         </div>
       </article>
     </div>
@@ -188,10 +195,15 @@
         <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
       </button>
     </section>
-    <div class="progress-container" id="progress" *ngIf="progressTasks.length > 0">
+    <div class="progress-container d-flex" id="progress" *ngIf="progressTasks.length > 0">
       <article class="task-card" *ngFor="let task of progressTasks">
-        <!--Parent-Container für (click)-->
+        <div class="d-flex center">
+          <button class="direction-btn" (click)="mobileMoveToStatus(task.id, 'to_do')">
+            <img class="up-arrow" src="assets/UI/icon_mobile_arrow.png" alt="arrow" />
+          </button>
+        </div>
         <div (click)="openTicketCard(task.id)">
+          <!--Parent-Container für (click)-->
           <p
             class="task-card__category margin-correction"
             [ngClass]="getTaskCardClass(task.category)"
@@ -206,9 +218,17 @@
           </div>
           <div class="d-flex center-space">
             <p>User...</p>
-            <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+            <img
+              [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
+              alt="priority"
+            />
           </div>
           <!--Parent-Container für (click)-->
+        </div>
+        <div class="d-flex center">
+          <button class="direction-btn" (click)="mobileMoveToStatus(task.id, 'await_feedback')">
+            <img class="down-arrow" src="assets/UI/icon_mobile_arrow.png" alt="arrow" />
+          </button>
         </div>
       </article>
     </div>
@@ -225,8 +245,13 @@
         <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
       </button>
     </section>
-    <div class="feedback-container" id="feedback" *ngIf="feedbackTasks.length > 0">
+    <div class="feedback-container d-flex" id="feedback" *ngIf="feedbackTasks.length > 0">
       <article class="task-card" *ngFor="let task of feedbackTasks">
+        <div class="d-flex center">
+          <button class="direction-btn" (click)="mobileMoveToStatus(task.id, 'in_progress')">
+            <img class="up-arrow" src="assets/UI/icon_mobile_arrow.png" alt="arrow" />
+          </button>
+        </div>
         <!--Parent-Container für (click)-->
         <div (click)="openTicketCard(task.id)">
           <p
@@ -243,9 +268,17 @@
           </div>
           <div class="d-flex center-space">
             <p>User...</p>
-            <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+            <img
+              [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
+              alt="priority"
+            />
           </div>
           <!--Parent-Container für (click)-->
+        </div>
+        <div class="d-flex center">
+          <button class="direction-btn" (click)="mobileMoveToStatus(task.id, 'done')">
+            <img class="down-arrow" src="assets/UI/icon_mobile_arrow.png" alt="arrow" />
+          </button>
         </div>
       </article>
     </div>
@@ -259,8 +292,13 @@
     <section class="done-wrapper">
       <h4 class="margin-correction">Done</h4>
     </section>
-    <div class="done-container" id="done" *ngIf="doneTasks.length > 0">
+    <div class="done-container d-flex" id="done" *ngIf="doneTasks.length > 0">
       <article class="task-card" *ngFor="let task of doneTasks">
+        <div class="d-flex center">
+          <button class="direction-btn" (click)="mobileMoveToStatus(task.id, 'await_feedback')">
+            <img class="up-arrow" src="assets/UI/icon_mobile_arrow.png" alt="arrow" />
+          </button>
+        </div>
         <!--Parent-Container für (click)-->
         <div (click)="openTicketCard(task.id)">
           <p
@@ -277,7 +315,15 @@
           </div>
           <div class="d-flex center-space">
             <p>User...</p>
-            <p class="task-card__meta margin-correction">Priority: {{ task.priority }}</p>
+            <img
+              [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
+              alt="priority"
+            />
+          </div>
+          <div class="invisibile-button-section">
+            <button class="direction-btn">
+              <img class="down-arrow" src="assets/UI/icon_mobile_arrow.png" alt="arrow" />
+            </button>
           </div>
           <!--Parent-Container für (click)-->
         </div>
