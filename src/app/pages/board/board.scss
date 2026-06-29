@@ -79,8 +79,8 @@
 .progress-container,
 .feedback-container,
 .done-container {
-  overflow: scroll;
-  justify-content: space-between;
+  overflow-x: scroll;
+  overflow-y: hidden;
   gap: 25px;
   transition: background-color 0.2s ease;
 }
@@ -93,10 +93,10 @@
 
 .task-card {
   cursor: grab;
-  height: 260px;
+  height: 340px;
   min-width: 230px;
   max-width: 260px;
-  padding: 10px 12px;
+  padding: 10px 12px 0;
   border-radius: 15px;
   background-color: #fff;
   gap: 20px;
@@ -116,6 +116,28 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
+}
+
+.invisibile-button-section{
+  visibility: hidden;
+}
+
+.direction-btn{
+  padding: 5px 15px;
+}
+
+.up-arrow{
+  height: 15px;
+}
+
+.down-arrow{
+  height: 15px;
+  rotate: 180deg;
+}
+
+.direction-btn {
+  border: none;
+  background-color: #fff;
 }
 
 .task-card__title {
@@ -306,37 +328,37 @@ svg {
   width: 20px;
 }
 
-.contacts{
+.contacts {
   display: flex;
   justify-content: start;
   align-items: center;
-  >p{
+  > p {
     margin: 0;
     margin-bottom: 16px;
   }
 }
 
-.contacts_icon{
+.contacts_icon {
   width: 42px;
   height: 42px;
   border-radius: 100px;
 
-  &_ffa35e{
+  &_ffa35e {
     background-color: $user_orange;
   }
-  &_ff5eb3{
+  &_ff5eb3 {
     background-color: $user_pink;
   }
-  &_6e52ff{
+  &_6e52ff {
     background-color: $user_blue;
   }
-  &_9327ff{
+  &_9327ff {
     background-color: $user_purple;
   }
-  &_00bee8{
+  &_00bee8 {
     background-color: $user_lightblue;
   }
-  &_ff745e{
+  &_ff745e {
     background-color: $user_red;
   }
 }
@@ -352,6 +374,10 @@ svg {
   .task-wrapper {
     display: none;
   }
+
+  .task-card {
+  height: 260px;
+}
 
   .task-wrapper-desktop {
     display: flex;
