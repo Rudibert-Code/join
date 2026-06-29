@@ -199,6 +199,9 @@ dialog::backdrop {
 .foreword {
   font-weight: bold;
   color: #42526e;
+  padding: 0;
+  margin: 0;
+  padding-bottom: 16px;
 }
 
 .data {
@@ -244,6 +247,10 @@ dialog::backdrop {
   display: flex;
   justify-content: start;
   align-items: center;
+  >p{
+    margin: 0;
+    margin-bottom: 16px;
+  }
   &_btn_false {
     padding: 0, 4px;
     border: none;
@@ -310,6 +317,8 @@ svg {
   display: flex;
   justify-content: start;
   align-items: center;
+  gap: 8px;
+
   >p{
     margin: 0;
     margin-bottom: 16px;
@@ -319,25 +328,42 @@ svg {
 .contacts_icon{
   width: 42px;
   height: 42px;
-  border-radius: 100px;
 
   &_ffa35e{
+    border-radius: 100px;
+    padding: 4px;
     background-color: $user_orange;
+    color: $main_white;
   }
   &_ff5eb3{
+    border-radius: 100px;
+    padding: 4px;
     background-color: $user_pink;
+    color: $main_white;
   }
   &_6e52ff{
+    border-radius: 100px;
+    padding: 4px;
     background-color: $user_blue;
+    color: $main_white;
   }
   &_9327ff{
+    border-radius: 100px;
+    padding: 4px;
     background-color: $user_purple;
+    color: $main_white;
   }
   &_00bee8{
+    border-radius: 100px;
+    padding: 4px;
     background-color: $user_lightblue;
+    color: $main_white;
   }
   &_ff745e{
+    border-radius: 100px;
+    padding: 4px;
     background-color: $user_red;
+    color: $main_white;
   }
 }
 
