@@ -28,12 +28,27 @@ export interface Task {
   status: string;
 }
 
+export interface NewTask {
+  title: string;
+  description: string | null;
+  due_date: string;
+  priority: string;
+  category: string;
+  status: string;
+}
+
 export interface Subtask {
   id: number;
   task_id: number;
   title: string;
   is_done: string;
   created_at: string;
+}
+
+export interface NewSubtask {
+  task_id: number;
+  title: string;
+  is_done: boolean;
 }
 
 export interface TaskContacts {
@@ -190,10 +205,10 @@ export class Supabase {
     return subtasks;
   }
 
-async getTaskToContacts() {
+  async getTaskToContacts() {
     const { data: task_contacts, error } = await this.supabase
       .from('task_contacts')
-      .select('task_id,contact_id')
+      .select('task_id,contact_id');
 
     if (error) {
       console.error('Supabase getTaskToContacts error', error);
@@ -208,7 +223,50 @@ async getTaskToContacts() {
 
     this.task_contacts.set(task_contacts);
     return task_contacts;
-}
+  }
+
+  async addTaskContacts(taskContacts: TaskContacts[]) {
+    if (taskContacts.length === 0) {
+      return [];
+    }
+
+    const { data, error } = await this.supabase.from('task_contacts').insert(taskContacts).select();
+
+    if (error) {
+      console.error('Supabase addTaskContacts error', error);
+      return;
+    }
+
+    await this.getTaskToContacts();
+    return data;
+  }
+
+  async addTask(newTask: NewTask) {
+    const { data, error } = await this.supabase.from('tasks').insert([newTask]).select().single();
+
+    if (error) {
+      console.error('Supabase addTask error', error);
+      return;
+    }
+
+    await this.getTasks();
+    return data;
+  }
+
+  async addSubtasks(newSubtasks: NewSubtask[]) {
+    if (newSubtasks.length === 0) {
+      return [];
+    }
+    const { data, error } = await this.supabase.from('subtasks').insert(newSubtasks).select();
+
+    if (error) {
+      console.error('Supabase addSubtasks error', error);
+      return;
+    }
+    await this.getSubtasks();
+    return data;
+  }
+
   async updateTaskStatus(id: number, status: string) {
     const { data, error } = await this.supabase
       .from('tasks')

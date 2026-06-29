@@ -150,4 +150,42 @@ export class AddTaskForm {
     this.cancelNewSubtask();
     this.editingSubtaskIndex = null;
   }
+
+  async createTask() {
+    if (this.taskForm.invalid) {
+      this.taskForm.markAllAsTouched();
+      return;
+    }
+    const formValue = this.taskForm.getRawValue();
+    const newTask = {
+      title: formValue.title.trim(),
+      description: formValue.description?.trim() || null,
+      due_date: formValue.due_date,
+      priority: formValue.priority,
+      category: formValue.category,
+      status: 'to_do',
+    };
+    const createdTask = await this.supabase.addTask(newTask);
+    if (!createdTask) {
+      return;
+    }
+    const newSubtasks = formValue.subtasks
+      .map((title) => ({
+        task_id: createdTask.id,
+        title: title.trim(),
+        is_done: false,
+      }))
+      .filter((subtask) => subtask.title);
+
+    await this.supabase.addSubtasks(newSubtasks);
+
+    const taskContacts = formValue.assignedContactIds.map((contactId) => ({
+      task_id: createdTask.id,
+      contact_id: contactId,
+    }));
+
+    await this.supabase.addTaskContacts(taskContacts);
+
+    this.clearTaskForm();
+  }
 }
