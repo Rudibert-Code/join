@@ -10,11 +10,11 @@ interface subTask {
   id: number;
 }
 
-interface contacts{
-  name:string,
-  surname:string,
-  initials:string,
-  color:string
+interface contacts {
+  name: string;
+  surname: string;
+  initials: string;
+  color: string;
 }
 
 @Component({
@@ -38,7 +38,7 @@ export class Board implements OnInit {
   taskCategory: string = '';
   searchQuery: string = '';
 
-  openTicketID:number = 0;
+  openTicketID: number = 0;
 
   ngOnInit() {
     this.loadTasks();
@@ -110,19 +110,19 @@ export class Board implements OnInit {
     const idStr = event.dataTransfer?.getData('text/plain');
 
     if (idStr) {
-      const id = parseInt(idStr, 10);
+      const id = parseInt(idStr, 100);
       await this.db.updateTaskStatus(id, status);
       this.loadTasks();
     }
   }
 
   async mobileMoveToStatus(id: number, status: string) {
-  await this.db.updateTaskStatus(id, status);
-  
-  this.loadTasks();
-  
-  console.log('Move Task ID:', id, 'to status:', status);
-}
+    await this.db.updateTaskStatus(id, status);
+
+    this.loadTasks();
+
+    console.log('Move Task ID:', id, 'to status:', status);
+  }
 
   getTaskCardClass(category: string): string {
     const categoryLower = category?.toLowerCase().trim() || '';
@@ -158,7 +158,7 @@ export class Board implements OnInit {
     dialogWindow.showModal();
   }
 
-  contactsCache:contacts[] = [];
+  contactsCache: contacts[] = [];
 
   async getContacts(id: number) {
     this.contactsCache = [];
@@ -185,8 +185,7 @@ export class Board implements OnInit {
     }
   }
 
-
-  subtasksCache:subTask[] = [];
+  subtasksCache: subTask[] = [];
 
   async getSubTasks(id: any) {
     this.subtasksCache = [];
@@ -249,7 +248,7 @@ export class Board implements OnInit {
     dialogWindow.close();
   }
 
-  deleteTicket(){
+  deleteTicket() {
     this.closeTicketCard();
     for (let index = 0; index < this.subtasks().length; index++) {
       if (this.subtasks()[index].task_id == this.openTicketID) {
@@ -261,17 +260,35 @@ export class Board implements OnInit {
 
   checkBox(x: subTask) {
     let checkBoxID = String(x.id);
-    let subTaskState:boolean = true;
+    let subTaskState: boolean = true;
     let currentButton = document.getElementById(checkBoxID) as HTMLImageElement;
-    
-    if (currentButton.classList.contains("subtasks_btn_true")) {
-      currentButton.classList.add("subtasks_btn_false");
+
+    if (currentButton.classList.contains('subtasks_btn_true')) {
+      currentButton.classList.add('subtasks_btn_false');
       subTaskState = false;
     }
 
-    currentButton.classList.toggle("subtasks_btn_true");
-
+    currentButton.classList.toggle('subtasks_btn_true');
 
     this.db.updateSubtasks(x.id, subTaskState);
+  }
+
+  getSubtaskAmount(taskId: number): Subtask[] {
+    return this.subtasks().filter((subtask) => subtask.task_id === taskId);
+  }
+
+  getCompletedSubtasksAmount(taskId: number): number {
+    const taskSubtasks = this.getSubtaskAmount(taskId);
+    return taskSubtasks.filter((subtask) => subtask.is_done).length;
+  }
+
+  getProgress(taskId: number): number {
+    const taskSubtasks = this.getSubtaskAmount(taskId);
+    const total = taskSubtasks.length;
+
+    if (total === 0) return 0;
+
+    const completed = taskSubtasks.filter((subtask) => subtask.is_done).length;
+    return (completed / total) * 100;
   }
 }

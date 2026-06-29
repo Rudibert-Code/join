@@ -107,8 +107,8 @@
 
 .task-card.dragging {
   opacity: 0.5;
-  transform: scale(0.98);
-  rotate: -4deg;
+  transform: scale(0.9);
+  rotate: -10deg;
 }
 
 .task-card__description {
@@ -118,19 +118,19 @@
   overflow: hidden;
 }
 
-.invisibile-button-section{
+.invisibile-button-section {
   visibility: hidden;
 }
 
-.direction-btn{
+.direction-btn {
   padding: 5px 15px;
 }
 
-.up-arrow{
+.up-arrow {
   height: 15px;
 }
 
-.down-arrow{
+.down-arrow {
   height: 15px;
   rotate: 180deg;
 }
@@ -270,7 +270,7 @@ dialog::backdrop {
   justify-content: start;
   align-items: center;
   margin-bottom: 8px;
-  >p{
+  > p {
     margin: 0;
   }
   &_btn_false {
@@ -341,7 +341,7 @@ svg {
   align-items: center;
   gap: 8px;
 
-  >p{
+  > p {
     margin: 0;
     margin-bottom: 16px;
   }
@@ -351,42 +351,72 @@ svg {
   width: 42px;
   height: 42px;
 
-  &_ffa35e{
+  &_ffa35e {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_orange;
     color: $main_white;
   }
-  &_ff5eb3{
+  &_ff5eb3 {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_pink;
     color: $main_white;
   }
-  &_6e52ff{
+  &_6e52ff {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_blue;
     color: $main_white;
   }
-  &_9327ff{
+  &_9327ff {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_purple;
     color: $main_white;
   }
-  &_00bee8{
+  &_00bee8 {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_lightblue;
     color: $main_white;
   }
-  &_ff745e{
+  &_ff745e {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_red;
     color: $main_white;
   }
+}
+
+.subtask-progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100px;
+}
+
+.progressbar-track {
+  flex: 1;
+  height: 8px;
+  max-width: 80px;
+  background-color: $main-grey;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressbar-fill {
+  height: 100%;
+  max-width: 80px;
+  background-color: $label_user;
+  border-radius: 4px;
+  transition: width 2.5s ease-in-out;
+}
+
+.subtask-text {
+  white-space: nowrap;
+  margin: 0;
 }
 
 @media (max-width: 1023px) {
@@ -402,8 +432,8 @@ svg {
   }
 
   .task-card {
-  height: 270px;
-}
+    height: 270px;
+  }
 
   .task-wrapper-desktop {
     display: flex;
@@ -450,4 +480,16 @@ svg {
     display: flex;
     width: 100%;
   }
+
+  .subtask-progress-container {
+  width: 130px;
+}
+
+.progressbar-track {
+  max-width: 100px;
+}
+
+.progressbar-fill {
+  max-width: 100px;
+}
 }

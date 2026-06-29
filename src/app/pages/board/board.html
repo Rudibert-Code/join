@@ -167,8 +167,15 @@
           <h4 class="task-card__title margin-correction">{{ task.title }}</h4>
           <p class="task-card__description margin-correction">{{ task.description }}</p>
           <div class="d-flex center-space">
-            <progress></progress>
-            <p>0/0 Subtask</p>
+            <div class="subtask-progress-container">
+              <div class="progressbar-track">
+                <div class="progressbar-fill" [style.width.%]="getProgress(task.id)"></div>
+              </div>
+            </div>
+            <p>
+              {{ getCompletedSubtasksAmount(task.id) }}/{{ getSubtaskAmount(task.id).length }}
+              Subtasks
+            </p>
           </div>
           <div class="d-flex center-space">
             <p>User...</p>
@@ -213,8 +220,15 @@
           <h4 class="task-card__title">{{ task.title }}</h4>
           <p class="task-card__description">{{ task.description }}</p>
           <div class="d-flex center-space">
-            <progress></progress>
-            <p>0/0 Subtask</p>
+            <div class="subtask-progress-container">
+              <div class="progressbar-track">
+                <div class="progressbar-fill" [style.width.%]="getProgress(task.id)"></div>
+              </div>
+            </div>
+            <p>
+              {{ getCompletedSubtasksAmount(task.id) }}/{{ getSubtaskAmount(task.id).length }}
+              Subtasks
+            </p>
           </div>
           <div class="d-flex center-space">
             <p>User...</p>
@@ -263,8 +277,15 @@
           <h4 class="task-card__title">{{ task.title }}</h4>
           <p class="task-card__description">{{ task.description }}</p>
           <div class="d-flex center-space">
-            <progress></progress>
-            <p>0/0 Subtask</p>
+            <div class="subtask-progress-container">
+              <div class="progressbar-track">
+                <div class="progressbar-fill" [style.width.%]="getProgress(task.id)"></div>
+              </div>
+            </div>
+            <p>
+              {{ getCompletedSubtasksAmount(task.id) }}/{{ getSubtaskAmount(task.id).length }}
+              Subtasks
+            </p>
           </div>
           <div class="d-flex center-space">
             <p>User...</p>
@@ -310,8 +331,15 @@
           <h4 class="task-card__title">{{ task.title }}</h4>
           <p class="task-card__description">{{ task.description }}</p>
           <div class="d-flex center-space">
-            <progress></progress>
-            <p>0/0 Subtask</p>
+            <div class="subtask-progress-container">
+              <div class="progressbar-track">
+                <div class="progressbar-fill" [style.width.%]="getProgress(task.id)"></div>
+              </div>
+            </div>
+            <p>
+              {{ getCompletedSubtasksAmount(task.id) }}/{{ getSubtaskAmount(task.id).length }}
+              Subtasks
+            </p>
           </div>
           <div class="d-flex center-space">
             <p>User...</p>
@@ -385,11 +413,18 @@
             {{ task.description }}
           </p>
           <div class="d-flex center-space">
-            <progress></progress>
-            <p>0/0 Subtask</p>
+            <div class="subtask-progress-container">
+              <div class="progressbar-track">
+                <div class="progressbar-fill" [style.width.%]="getProgress(task.id)"></div>
+              </div>
+            </div>
+            <p>
+              {{ getCompletedSubtasksAmount(task.id) }}/{{ getSubtaskAmount(task.id).length }}
+              Subtasks
+            </p>
           </div>
           <div class="d-flex center-space">
-            <p>User...</p>
+            <p>user...</p>
             <img
               [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
               alt="priority"
@@ -433,8 +468,15 @@
           <h4 class="task-card__title">{{ task.title }}</h4>
           <p class="task-card__description">{{ task.description }}</p>
           <div class="d-flex center-space">
-            <progress></progress>
-            <p>0/0 Subtask</p>
+            <div class="subtask-progress-container">
+              <div class="progressbar-track">
+                <div class="progressbar-fill" [style.width.%]="getProgress(task.id)"></div>
+              </div>
+            </div>
+            <p>
+              {{ getCompletedSubtasksAmount(task.id) }}/{{ getSubtaskAmount(task.id).length }}
+              Subtasks
+            </p>
           </div>
           <div class="d-flex center-space">
             <p>User...</p>
@@ -481,8 +523,15 @@
           <h4 class="task-card__title">{{ task.title }}</h4>
           <p class="task-card__description">{{ task.description }}</p>
           <div class="d-flex center-space">
-            <progress></progress>
-            <p>0/0 Subtask</p>
+            <div class="subtask-progress-container">
+              <div class="progressbar-track">
+                <div class="progressbar-fill" [style.width.%]="getProgress(task.id)"></div>
+              </div>
+            </div>
+            <p>
+              {{ getCompletedSubtasksAmount(task.id) }}/{{ getSubtaskAmount(task.id).length }}
+              Subtasks
+            </p>
           </div>
           <div class="d-flex center-space">
             <p>User...</p>
@@ -528,8 +577,15 @@
           <h4 class="task-card__title">{{ task.title }}</h4>
           <p class="task-card__description">{{ task.description }}</p>
           <div class="d-flex center-space">
-            <progress></progress>
-            <p>0/0 Subtask</p>
+            <div class="subtask-progress-container">
+              <div class="progressbar-track">
+                <div class="progressbar-fill" [style.width.%]="getProgress(task.id)"></div>
+              </div>
+            </div>
+            <p class="subtask-text">
+              {{ getCompletedSubtasksAmount(task.id) }}/{{ getSubtaskAmount(task.id).length }}
+              Subtasks
+            </p>
           </div>
           <div class="d-flex center-space">
             <p>User...</p>

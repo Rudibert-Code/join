@@ -37,7 +37,7 @@
               contactForm.get('first_name')?.touched
             "
           >
-            Please type your firstname.
+            Please enter your firstname.
           </span>
         </p>
         <p class="contact-form__error margin-correction">
@@ -47,7 +47,7 @@
               contactForm.get('first_name')?.touched
             "
           >
-            Firstname too short
+            Your Firstname must have at least 3 characters.
           </span>
         </p>
 
@@ -59,7 +59,7 @@
               contactForm.get('last_name')?.touched
             "
           >
-            Please type your lastname.
+            Please enter your lastname.
           </span>
         </p>
         <p class="contact-form__error margin-correction">
@@ -69,7 +69,7 @@
               contactForm.get('last_name')?.touched
             "
           >
-            Lastname is too short
+            Your Lastname must have at least 3 characters.
           </span>
         </p>
 
@@ -89,7 +89,7 @@
               contactForm.get('email')?.hasError('missingAt') && contactForm.get('email')?.touched
             "
           >
-            missing @
+            This email is unavaiable.
           </span>
         </p>
 
@@ -115,7 +115,7 @@
               contactForm.get('phone')?.hasError('minlength') && contactForm.get('phone')?.touched
             "
           >
-            phonenumber is too short
+            Your phone number must have at least 5 numbers.
           </span>
         </p>
         <p class="contact-form__error margin-correction">
@@ -124,7 +124,7 @@
               contactForm.get('phone')?.hasError('pattern') && contactForm.get('phone')?.touched
             "
           >
-            phonenumber may only contain digits
+            Your phone number may only contain digits.
           </span>
         </p>
       </form>
