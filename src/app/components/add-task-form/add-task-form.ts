@@ -14,6 +14,8 @@ export class AddTaskForm {
   contacts = this.supabase.contacts;
   today = new Date().toISOString().split('T')[0];
   isAssignedDropdownOpen = false;
+  isSubtaskInputActive = false;
+  editingSubtaskIndex: number | null = null;
 
   subtaskInput = new FormControl('', {
     nonNullable: true,
@@ -88,6 +90,7 @@ export class AddTaskForm {
     const title = this.subtaskInput.value.trim();
 
     if (!title) {
+      this.cancelNewSubtask();
       return;
     }
 
@@ -98,5 +101,39 @@ export class AddTaskForm {
     );
 
     this.subtaskInput.setValue('');
+    this.isSubtaskInputActive = false;
+  }
+
+  showSubtaskInputActions() {
+    this.isSubtaskInputActive = true;
+  }
+
+  cancelNewSubtask() {
+    this.subtaskInput.setValue('');
+    this.isSubtaskInputActive = false;
+  }
+
+  startEditSubtask(index: number) {
+    this.editingSubtaskIndex = index;
+  }
+
+  confirmSubtask(index: number) {
+    const title = this.subtasks.at(index).value.trim();
+
+    if (!title) {
+      this.deleteSubtask(index);
+      return;
+    }
+
+    this.subtasks.at(index).setValue(title);
+    this.editingSubtaskIndex = null;
+  }
+
+  deleteSubtask(index: number) {
+    this.subtasks.removeAt(index);
+
+    if (this.editingSubtaskIndex === index) {
+      this.editingSubtaskIndex = null;
+    }
   }
 }

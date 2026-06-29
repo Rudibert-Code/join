@@ -109,26 +109,92 @@
       <div class="subtasks">
         <label for="subtask">Subtasks</label>
 
-        <div class="subtasks__input">
+        <div
+          class="subtasks__input"
+          [class.subtasks__input--active]="isSubtaskInputActive"
+        >
           <input
             id="subtask"
             type="text"
             placeholder="Add new subtask"
             [formControl]="subtaskInput"
+            (focus)="showSubtaskInputActions()"
           />
 
-          <button type="button" (click)="addSubtask()">+</button>
-        </div>
-      </div>
-      @if (subtasks.controls.length > 0) {
-        <ul class="subtasks__list">
-          @for (subtask of subtasks.controls; track $index) {
-            <li class="subtasks__item">
-              {{ subtask.value }}
-            </li>
+          @if (isSubtaskInputActive) {
+            <div class="subtasks__actions">
+              <button
+                class="subtasks__action subtasks__action--cancel"
+                type="button"
+                aria-label="Cancel subtask"
+                (click)="cancelNewSubtask()"
+              ></button>
+
+              <button
+                class="subtasks__action subtasks__action--check"
+                type="button"
+                aria-label="Add subtask"
+                (click)="addSubtask()"
+              ></button>
+            </div>
           }
-        </ul>
-      }
+        </div>
+
+        @if (subtasks.controls.length > 0) {
+          <ul class="subtasks__list">
+            @for (subtask of subtasks.controls; track $index) {
+              <li
+                class="subtasks__item"
+                [class.subtasks__item--editing]="editingSubtaskIndex === $index"
+              >
+                @if (editingSubtaskIndex === $index) {
+                  <input type="text" [formControl]="subtask" />
+
+                  <div class="subtasks__actions">
+                    <button
+                      class="subtasks__action subtasks__action--delete"
+                      type="button"
+                      aria-label="Delete subtask"
+                      (click)="deleteSubtask($index)"
+                    ></button>
+
+                    <button
+                      class="subtasks__action subtasks__action--check"
+                      type="button"
+                      aria-label="Confirm subtask"
+                      (click)="confirmSubtask($index)"
+                    ></button>
+                  </div>
+                } @else {
+                  <button
+                    class="subtasks__title"
+                    type="button"
+                    (click)="startEditSubtask($index)"
+                  >
+                    {{ subtask.value }}
+                  </button>
+
+                  <div class="subtasks__actions subtasks__actions--hover">
+                    <button
+                      class="subtasks__action subtasks__action--edit"
+                      type="button"
+                      aria-label="Edit subtask"
+                      (click)="startEditSubtask($index)"
+                    ></button>
+
+                    <button
+                      class="subtasks__action subtasks__action--delete"
+                      type="button"
+                      aria-label="Delete subtask"
+                      (click)="deleteSubtask($index)"
+                    ></button>
+                  </div>
+                }
+              </li>
+            }
+          </ul>
+        }
+      </div>
     </div>
   </div>
 
