@@ -385,6 +385,72 @@
     background-image: url("../../../../public/assets/UI/vector/icon_check_dark.svg");
 }
 
+.add-task-form__buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.add-task-form__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 43px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1;
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease,
+        box-shadow 150ms ease;
+
+    &::after {
+        display: inline-block;
+        font-size: 20px;
+        line-height: 1;
+    }
+}
+
+.add-task-form__button--clear {
+    border: 1px solid $main_header;
+    background-color: #fff;
+    color: $main_header;
+    padding: 10px 12px;
+
+    &::after {
+        content: '×';
+    }
+
+    &:hover {
+        border-color: #29abe2;
+        color: #29abe2;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.add-task-form__button--create {
+    border: 1px solid $main_header;
+    background-color: $main_header;
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 14px;
+
+    &::after {
+        content: '✓';
+        font-weight: 400;
+    }
+
+    &:hover {
+        border-color: #29abe2;
+        background-color: #29abe2;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+}
+
 @media screen and (min-width: 500px) {
     .priority-buttons__wrapper {
         button {

@@ -198,5 +198,13 @@
     </div>
   </div>
 
-  <button type="button">Create Task</button>
+  <div class="add-task-form__buttons">
+    <button class="add-task-form__button add-task-form__button--clear" type="button" (click)="clearTaskForm()">
+      Clear
+    </button>
+
+    <button class="add-task-form__button add-task-form__button--create" type="button">
+      Create Task
+    </button>
+  </div>
 </form>

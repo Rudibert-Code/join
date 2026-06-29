@@ -136,4 +136,18 @@ export class AddTaskForm {
       this.editingSubtaskIndex = null;
     }
   }
+
+  clearTaskForm() {
+    this.taskForm.reset({
+      title: '',
+      description: '',
+      due_date: '',
+      priority: 'medium',
+      category: '',
+      assignedContactIds: [],
+    });
+    this.subtasks.clear();
+    this.cancelNewSubtask();
+    this.editingSubtaskIndex = null;
+  }
 }
