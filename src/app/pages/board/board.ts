@@ -38,6 +38,8 @@ export class Board implements OnInit {
   taskCategory: string = '';
   searchQuery: string = '';
 
+  openTicketID:number = 0;
+
   ngOnInit() {
     this.loadTasks();
   }
@@ -128,6 +130,7 @@ export class Board implements OnInit {
   }
 
   //Open Ticket Card
+
   openTicketCard(id: number) {
     const dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
     const ticketTitle = document.getElementById('ticket_title') as HTMLHeadingElement;
@@ -147,6 +150,8 @@ export class Board implements OnInit {
         this.setTicketCatClass(this.tasks()[index].category);
       }
     }
+
+    this.openTicketID = id;
 
     this.getContacts(id);
     this.getSubTasks(id);
@@ -242,6 +247,16 @@ export class Board implements OnInit {
   closeTicketCard() {
     let dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
     dialogWindow.close();
+  }
+
+  deleteTicket(){
+    this.closeTicketCard();
+    for (let index = 0; index < this.subtasks().length; index++) {
+      if (this.subtasks()[index].task_id == this.openTicketID) {
+        this.db.deleteSubtask(this.subtasks()[index].id);
+      }
+    }
+    this.db.deleteTask(this.openTicketID);
   }
 
   checkBox(x: subTask) {
