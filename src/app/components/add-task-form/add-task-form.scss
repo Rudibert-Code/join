@@ -1,5 +1,8 @@
 @use '../../../styles/variables' as *;
 
+form {
+    padding-bottom: 100px;
+}
 
 .add-task-form__columns {
     display: flex;
@@ -386,9 +389,16 @@
 }
 
 .add-task-form__buttons {
+    position: fixed;
+    right: 16px;
+    bottom: 86px;
+    left: 16px;
+    z-index: 9;
     display: flex;
     justify-content: flex-end;
     gap: 12px;
+    padding: 15px 0 8px;
+    background-color: $main-white;
 }
 
 .add-task-form__button {
@@ -422,7 +432,7 @@
     padding: 10px 12px;
 
     &::after {
-        content: '×';
+        content: '\00d7';
     }
 
     &:hover {
@@ -440,7 +450,7 @@
     padding: 10px 14px;
 
     &::after {
-        content: '✓';
+        content: '\2713';
         font-weight: 400;
     }
 
@@ -462,10 +472,16 @@
 @media screen and (min-width: 1024px) {
     .add-task-form__columns {
         flex-direction: row;
-        gap: 3vw
+        gap: 3vw;
     }
-    .add-task-form__left{
+
+    .add-task-form__left {
         border-right: 1px solid $main-border;
         padding-right: 40px;
+    }
+
+    .add-task-form__buttons {
+        bottom: 50px;
+        background-color: none;
     }
 }
