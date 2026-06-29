@@ -269,9 +269,9 @@ dialog::backdrop {
   display: flex;
   justify-content: start;
   align-items: center;
+  margin-bottom: 8px;
   >p{
     margin: 0;
-    margin-bottom: 16px;
   }
   &_btn_false {
     padding: 0, 4px;

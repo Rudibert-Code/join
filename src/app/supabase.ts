@@ -41,7 +41,7 @@ export interface Subtask {
   id: number;
   task_id: number;
   title: string;
-  is_done: string;
+  is_done: boolean;
   created_at: string;
 }
 
@@ -184,6 +184,32 @@ export class Supabase {
     return tasks;
   }
 
+
+
+  async deleteTask(id: number) {
+    const { error } = await this.supabase.from('tasks').delete().eq('id', id);
+
+    if (error) {
+      console.error('Supabase deleteTask error', error);
+      return;
+    }
+
+    await this.getTasks();
+  }
+
+  async deleteSubtask(id: number) {
+    const { error } = await this.supabase.from('subtasks').delete().eq('id', id);
+
+    if (error) {
+      console.error('Supabase deleteSubtask error', error);
+      return;
+    }
+
+    await this.getSubtasks();
+  }
+
+
+
   async getSubtasks() {
     const { data: subtasks, error } = await this.supabase
       .from('subtasks')
@@ -264,6 +290,21 @@ export class Supabase {
       return;
     }
     await this.getSubtasks();
+    return data;
+  }
+
+  async updateSubtasks(id: number, is_done: boolean) {
+    const { data, error } = await this.supabase
+      .from('subtasks')
+      .update({ is_done })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase uupdatedSubtask error', error);
+      return;
+    }
+
     return data;
   }
 

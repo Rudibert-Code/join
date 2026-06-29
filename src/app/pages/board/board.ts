@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 
 interface subTask {
   title: String;
-  is_Done: String;
+  is_Done: Boolean;
   id: number;
 }
 
@@ -37,6 +37,8 @@ export class Board implements OnInit {
   taskPriority: string = '';
   taskCategory: string = '';
   searchQuery: string = '';
+
+  openTicketID:number = 0;
 
   ngOnInit() {
     this.loadTasks();
@@ -128,6 +130,7 @@ export class Board implements OnInit {
   }
 
   //Open Ticket Card
+
   openTicketCard(id: number) {
     const dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
     const ticketTitle = document.getElementById('ticket_title') as HTMLHeadingElement;
@@ -147,6 +150,8 @@ export class Board implements OnInit {
         this.setTicketCatClass(this.tasks()[index].category);
       }
     }
+
+    this.openTicketID = id;
 
     this.getContacts(id);
     this.getSubTasks(id);
@@ -244,14 +249,29 @@ export class Board implements OnInit {
     dialogWindow.close();
   }
 
+  deleteTicket(){
+    this.closeTicketCard();
+    for (let index = 0; index < this.subtasks().length; index++) {
+      if (this.subtasks()[index].task_id == this.openTicketID) {
+        this.db.deleteSubtask(this.subtasks()[index].id);
+      }
+    }
+    this.db.deleteTask(this.openTicketID);
+  }
+
   checkBox(x: subTask) {
     let checkBoxID = String(x.id);
+    let subTaskState:boolean = true;
     let currentButton = document.getElementById(checkBoxID) as HTMLImageElement;
     
     if (currentButton.classList.contains("subtasks_btn_true")) {
       currentButton.classList.add("subtasks_btn_false");
+      subTaskState = false;
     }
 
     currentButton.classList.toggle("subtasks_btn_true");
+
+
+    this.db.updateSubtasks(x.id, subTaskState);
   }
 }
