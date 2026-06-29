@@ -151,13 +151,16 @@ export class AddTaskForm {
     this.editingSubtaskIndex = null;
   }
 
-  async createTask() {
+  private isTaskFormInvalid() {
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
-      return;
+      return true;
     }
-    const formValue = this.taskForm.getRawValue();
-    const newTask = {
+    return false;
+  }
+
+  private buildNewTask(formValue: any) {
+    return {
       title: formValue.title.trim(),
       description: formValue.description?.trim() || null,
       due_date: formValue.due_date,
@@ -165,26 +168,57 @@ export class AddTaskForm {
       category: formValue.category,
       status: 'to_do',
     };
-    const createdTask = await this.supabase.addTask(newTask);
-    if (!createdTask) {
-      return;
-    }
-    const newSubtasks = formValue.subtasks
+  }
+
+  private async createMainTask(formValue: any) {
+    const newTask = this.buildNewTask(formValue);
+
+    return await this.supabase.addTask(newTask);
+  }
+
+  private buildNewSubtasks(taskId: number, subtaskTitles: string[]) {
+    return subtaskTitles
       .map((title) => ({
-        task_id: createdTask.id,
+        task_id: taskId,
         title: title.trim(),
         is_done: false,
       }))
       .filter((subtask) => subtask.title);
+  }
+
+  private async createSubtasks(taskId: number, subtaskTitles: string[]) {
+    const newSubtasks = this.buildNewSubtasks(taskId, subtaskTitles);
 
     await this.supabase.addSubtasks(newSubtasks);
+  }
 
-    const taskContacts = formValue.assignedContactIds.map((contactId) => ({
-      task_id: createdTask.id,
+  private buildTaskContacts(taskId: number, contactIds: number[]) {
+    return contactIds.map((contactId) => ({
+      task_id: taskId,
       contact_id: contactId,
     }));
+  }
+
+  private async assignContactsToTask(taskId: number, contactIds: number[]) {
+    const taskContacts = this.buildTaskContacts(taskId, contactIds);
 
     await this.supabase.addTaskContacts(taskContacts);
+  }
+
+  async createTask() {
+    if (this.isTaskFormInvalid()) {
+      return;
+    }
+
+    const formValue = this.taskForm.getRawValue();
+    const createdTask = await this.createMainTask(formValue);
+
+    if (!createdTask) {
+      return;
+    }
+
+    await this.createSubtasks(createdTask.id, formValue.subtasks);
+    await this.assignContactsToTask(createdTask.id, formValue.assignedContactIds);
 
     this.clearTaskForm();
   }
