@@ -41,7 +41,7 @@ export interface Subtask {
   id: number;
   task_id: number;
   title: string;
-  is_done: string;
+  is_done: boolean;
   created_at: string;
 }
 
@@ -266,6 +266,25 @@ export class Supabase {
     await this.getSubtasks();
     return data;
   }
+
+
+
+  async updateSubtasks(id: number, is_done: boolean) {
+    const { data, error } = await this.supabase
+      .from('subtasks')
+      .update({ is_done })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase uupdatedSubtask error', error);
+      return;
+    }
+
+    return data;
+  }
+
+
 
   async updateTaskStatus(id: number, status: string) {
     const { data, error } = await this.supabase

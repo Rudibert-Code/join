@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 
 interface subTask {
   title: String;
-  is_Done: String;
+  is_Done: Boolean;
   id: number;
 }
 
@@ -239,12 +239,17 @@ export class Board implements OnInit {
 
   checkBox(x: subTask) {
     let checkBoxID = String(x.id);
+    let subTaskState:boolean = true;
     let currentButton = document.getElementById(checkBoxID) as HTMLImageElement;
     
     if (currentButton.classList.contains("subtasks_btn_true")) {
       currentButton.classList.add("subtasks_btn_false");
+      subTaskState = false;
     }
 
     currentButton.classList.toggle("subtasks_btn_true");
+
+
+    this.db.updateSubtasks(x.id, subTaskState);
   }
 }
