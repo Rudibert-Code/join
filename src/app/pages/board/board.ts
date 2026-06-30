@@ -110,7 +110,7 @@ export class Board implements OnInit {
     const idStr = event.dataTransfer?.getData('text/plain');
 
     if (idStr) {
-      const id = parseInt(idStr, 100);
+      const id = parseInt(idStr, 10);
       await this.db.updateTaskStatus(id, status);
       this.loadTasks();
     }
