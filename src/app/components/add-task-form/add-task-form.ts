@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Contact, Supabase } from '../../supabase';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-task-form',
@@ -16,6 +17,7 @@ export class AddTaskForm {
   isAssignedDropdownOpen = false;
   isSubtaskInputActive = false;
   editingSubtaskIndex: number | null = null;
+  taskStatus = 'to_do';
 
   subtaskInput = new FormControl('', {
     nonNullable: true,
@@ -48,8 +50,16 @@ export class AddTaskForm {
     subtasks: new FormArray<FormControl<string>>([]),
   });
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.supabase.getContacts();
+  }
+
+  ngOnInit() {
+    const status = this.route.snapshot.queryParamMap.get('status');
+
+    if (status) {
+      this.taskStatus = status;
+    }
   }
 
   setPriority(priority: 'urgent' | 'medium' | 'low') {
@@ -166,7 +176,7 @@ export class AddTaskForm {
       due_date: formValue.due_date,
       priority: formValue.priority,
       category: formValue.category,
-      status: 'to_do',
+      status: this.taskStatus,
     };
   }
 
