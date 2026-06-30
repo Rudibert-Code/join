@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Contact, Supabase } from '../../supabase';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-task-form',
@@ -50,7 +50,10 @@ export class AddTaskForm {
     subtasks: new FormArray<FormControl<string>>([]),
   });
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
     this.supabase.getContacts();
   }
 
@@ -231,5 +234,6 @@ export class AddTaskForm {
     await this.assignContactsToTask(createdTask.id, formValue.assignedContactIds);
 
     this.clearTaskForm();
+    await this.router.navigate(['/board']);
   }
 }
