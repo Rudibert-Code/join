@@ -400,6 +400,36 @@ svg {
   }
 }
 
+.subtask-progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100px;
+}
+
+.progressbar-track {
+  flex: 1;
+  height: 8px;
+  max-width: 80px;
+  background-color: $main-grey;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressbar-fill {
+  height: 100%;
+  max-width: 80px;
+  background-color: $label_user;
+  border-radius: 4px;
+  transition: width 2.5s ease-in-out;
+}
+
+.subtask-text {
+  white-space: nowrap;
+  margin: 0;
+}
+
 @media (max-width: 1023px) {
   .tasks-wrapper-desktop,
   .task-wrapper-desktop {
