@@ -182,7 +182,22 @@
             </p>
           </div>
           <div class="d-flex center-space">
-            <p>User...</p>
+            <div class="task-card__users">
+              <div
+                *ngFor="let contact of getContactsForTaskcard(task.id) | slice: 0 : 3"
+                class="user-badge"
+                [style.backgroundColor]="contact.color"
+              >
+                <p>{{ contact.initials }}</p>
+              </div>
+
+              <div
+                *ngIf="getContactsForTaskcard(task.id).length > 3"
+                class="user-badge overflow-badge"
+              >
+                <p>+{{ getContactsForTaskcard(task.id).length - 3 }}</p>
+              </div>
+            </div>
             <img
               [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
               alt="priority"
@@ -239,7 +254,22 @@
             </p>
           </div>
           <div class="d-flex center-space">
-            <p>User...</p>
+            <div class="task-card__users">
+              <div
+                *ngFor="let contact of getContactsForTaskcard(task.id) | slice: 0 : 3"
+                class="user-badge"
+                [style.backgroundColor]="contact.color"
+              >
+                <p>{{ contact.initials }}</p>
+              </div>
+
+              <div
+                *ngIf="getContactsForTaskcard(task.id).length > 3"
+                class="user-badge overflow-badge"
+              >
+                <p>+{{ getContactsForTaskcard(task.id).length - 3 }}</p>
+              </div>
+            </div>
             <img
               [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
               alt="priority"
@@ -300,7 +330,22 @@
             </p>
           </div>
           <div class="d-flex center-space">
-            <p>User...</p>
+            <div class="task-card__users">
+              <div
+                *ngFor="let contact of getContactsForTaskcard(task.id) | slice: 0 : 3"
+                class="user-badge"
+                [style.backgroundColor]="contact.color"
+              >
+                <p>{{ contact.initials }}</p>
+              </div>
+
+              <div
+                *ngIf="getContactsForTaskcard(task.id).length > 3"
+                class="user-badge overflow-badge"
+              >
+                <p>+{{ getContactsForTaskcard(task.id).length - 3 }}</p>
+              </div>
+            </div>
             <img
               [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
               alt="priority"
@@ -354,7 +399,22 @@
             </p>
           </div>
           <div class="d-flex center-space">
-            <p>User...</p>
+            <div class="task-card__users">
+              <div
+                *ngFor="let contact of getContactsForTaskcard(task.id) | slice: 0 : 3"
+                class="user-badge"
+                [style.backgroundColor]="contact.color"
+              >
+                <p>{{ contact.initials }}</p>
+              </div>
+
+              <div
+                *ngIf="getContactsForTaskcard(task.id).length > 3"
+                class="user-badge overflow-badge"
+              >
+                <p>+{{ getContactsForTaskcard(task.id).length - 3 }}</p>
+              </div>
+            </div>
             <img
               [src]="'assets/UI/icon_prio-' + getNormalizedPriority(task.priority) + '.png'"
               alt="priority"
