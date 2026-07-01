@@ -175,6 +175,7 @@ form {
 }
 
 .assigned-dropdown {
+    position: relative;
     display: flex;
     flex-direction: column;
 
@@ -189,6 +190,12 @@ form {
 }
 
 .assigned-dropdown__menu {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 20;
+
     height: 150px;
     overflow: auto;
     background-color: #fff;
@@ -488,7 +495,8 @@ form {
         bottom: 50px;
         background-color: none;
     }
-    .add-task-form__required-footer-text{
+
+    .add-task-form__required-footer-text {
         position: fixed;
         bottom: 100px;
     }

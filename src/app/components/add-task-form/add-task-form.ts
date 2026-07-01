@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Contact, Supabase } from '../../supabase';
@@ -13,6 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AddTaskForm {
   supabase = inject(Supabase);
   contacts = this.supabase.contacts;
+  private elementRef = inject(ElementRef<HTMLElement>);
+
   today = new Date().toISOString().split('T')[0];
   isAssignedDropdownOpen = false;
   isSubtaskInputActive = false;
@@ -71,6 +73,20 @@ export class AddTaskForm {
 
   toggleAssignedDropdown() {
     this.isAssignedDropdownOpen = !this.isAssignedDropdownOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeAssignedDropdownOnOutsideClick(event: MouseEvent) {
+    const clickedElement = event.target as HTMLElement;
+    const assignedDropdown = this.elementRef.nativeElement.querySelector('.assigned-dropdown');
+
+    if (
+      this.isAssignedDropdownOpen &&
+      assignedDropdown &&
+      !assignedDropdown.contains(clickedElement)
+    ) {
+      this.isAssignedDropdownOpen = false;
+    }
   }
 
   toggleContact(contactId: number) {
