@@ -1,0 +1,16 @@
+@use '../../../styles/variables' as *;
+
+.add-task-page {
+  width: 100%;
+  max-width: 1208px;
+  min-height: 100%;
+  padding: 10px;
+  background-color: $main-white;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .add-task-page {
+    padding: 24px 32px;
+  }
+}

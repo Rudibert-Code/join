@@ -112,25 +112,27 @@
 }
 
 .task-card__description {
+  min-height: 36px;
+  max-height: 36px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
 
-.invisibile-button-section{
+.invisibile-button-section {
   visibility: hidden;
 }
 
-.direction-btn{
+.direction-btn {
   padding: 5px 15px;
 }
 
-.up-arrow{
+.up-arrow {
   height: 15px;
 }
 
-.down-arrow{
+.down-arrow {
   height: 15px;
   rotate: 180deg;
 }
@@ -233,12 +235,12 @@ dialog::backdrop {
 
   width: 100%;
   gap: 16px;
-  >p{
+  > p {
     padding: 0;
     margin: 0;
     margin-bottom: 16px;
   }
-  >img{
+  > img {
     margin: 0;
     margin-bottom: 16px;
   }
@@ -279,7 +281,7 @@ dialog::backdrop {
   justify-content: start;
   align-items: center;
   margin-bottom: 8px;
-  >p{
+  > p {
     margin: 0;
   }
   &_btn_false {
@@ -350,7 +352,7 @@ svg {
   align-items: center;
   gap: 8px;
 
-  >p{
+  > p {
     margin: 0;
     margin-bottom: 16px;
   }
@@ -360,12 +362,7 @@ svg {
   width: 42px;
   height: 42px;
 
-  &_ffa35e{
-    width: 42px;
-    height: 42px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &_ffa35e {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_orange;
@@ -374,12 +371,7 @@ svg {
       color: $main_white;
     }
   }
-  &_ff5eb3{
-    width: 42px;
-    height: 42px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &_ff5eb3 {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_pink;
@@ -388,7 +380,7 @@ svg {
       color: $main_white;
     }
   }
-  &_6e52ff{
+  &_6e52ff {
     width: 42px;
     height: 42px;
     display: flex;
@@ -402,7 +394,7 @@ svg {
       color: $main_white;
     }
   }
-  &_9327ff{
+  &_9327ff {
     width: 42px;
     height: 42px;
     display: flex;
@@ -597,6 +589,58 @@ svg {
   justify-content: center;
   align-items: center;
   gap: 8px;
+.subtask-progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100px;
+}
+
+.progressbar-track {
+  flex: 1;
+  height: 8px;
+  max-width: 80px;
+  background-color: $main-grey;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressbar-fill {
+  height: 100%;
+  max-width: 80px;
+  background-color: $label_user;
+  border-radius: 4px;
+  transition: width 2.5s ease-in-out;
+}
+
+.task-card__users {
+  display: flex;
+  gap: 4px;
+  margin-left: 6px;
+}
+
+.user-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  margin-left: -10px;
+  flex-shrink: 0;
+  > p {
+    color: white;
+    font-size: 1.3rem;
+  }
+}
+
+.overflow-badge {
+  background-color: $main-black;
+  font-size: 1.3rem;
+  color: white;
+  z-index: 4;
 }
 
 @media (max-width: 1023px) {
@@ -612,8 +656,8 @@ svg {
   }
 
   .task-card {
-  height: 270px;
-}
+    height: 270px;
+  }
 
   .task-wrapper-desktop {
     display: flex;
@@ -659,5 +703,24 @@ svg {
   .tasks-wrapper-desktop {
     display: flex;
     width: 100%;
+  }
+}
+
+@media (min-width: 1499px) {
+  .todo-container,
+  .progress-container,
+  .feedback-container,
+  .done-container {
+    flex: none;
+  }
+
+  .tasks-wrapper-desktop {
+    align-items: start;
+    justify-content: start;
+    gap: 30px;
+  }
+
+  .task-wrapper-desktop {
+    justify-content: start;
   }
 }

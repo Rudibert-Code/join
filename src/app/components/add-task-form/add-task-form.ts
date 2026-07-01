@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Contact, Supabase } from '../../supabase';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-task-form',
@@ -12,10 +13,13 @@ import { Contact, Supabase } from '../../supabase';
 export class AddTaskForm {
   supabase = inject(Supabase);
   contacts = this.supabase.contacts;
+  private elementRef = inject(ElementRef<HTMLElement>);
+
   today = new Date().toISOString().split('T')[0];
   isAssignedDropdownOpen = false;
   isSubtaskInputActive = false;
   editingSubtaskIndex: number | null = null;
+  taskStatus = 'to_do';
 
   subtaskInput = new FormControl('', {
     nonNullable: true,
@@ -48,8 +52,19 @@ export class AddTaskForm {
     subtasks: new FormArray<FormControl<string>>([]),
   });
 
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
     this.supabase.getContacts();
+  }
+
+  ngOnInit() {
+    const status = this.route.snapshot.queryParamMap.get('status');
+
+    if (status) {
+      this.taskStatus = status;
+    }
   }
 
   setPriority(priority: 'urgent' | 'medium' | 'low') {
@@ -58,6 +73,20 @@ export class AddTaskForm {
 
   toggleAssignedDropdown() {
     this.isAssignedDropdownOpen = !this.isAssignedDropdownOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeAssignedDropdownOnOutsideClick(event: MouseEvent) {
+    const clickedElement = event.target as HTMLElement;
+    const assignedDropdown = this.elementRef.nativeElement.querySelector('.assigned-dropdown');
+
+    if (
+      this.isAssignedDropdownOpen &&
+      assignedDropdown &&
+      !assignedDropdown.contains(clickedElement)
+    ) {
+      this.isAssignedDropdownOpen = false;
+    }
   }
 
   toggleContact(contactId: number) {
@@ -166,7 +195,7 @@ export class AddTaskForm {
       due_date: formValue.due_date,
       priority: formValue.priority,
       category: formValue.category,
-      status: 'to_do',
+      status: this.taskStatus,
     };
   }
 
@@ -221,5 +250,6 @@ export class AddTaskForm {
     await this.assignContactsToTask(createdTask.id, formValue.assignedContactIds);
 
     this.clearTaskForm();
+    await this.router.navigate(['/board']);
   }
 }

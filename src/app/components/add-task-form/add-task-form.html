@@ -5,7 +5,18 @@
     <div class="add-task-form__left">
       <div class="add-task-form__title">
         <label for="title">Title<span class="red">*</span></label>
-        <input type="text" name="title" formControlName="title" placeholder="Enter a title" />
+        <input
+          type="text"
+          name="title"
+          formControlName="title"
+          placeholder="Enter a title"
+          [class.add-task-form__field--invalid]="
+            taskForm.controls.title.invalid && taskForm.controls.title.touched
+          "
+        />
+        @if (taskForm.controls.title.invalid && taskForm.controls.title.touched) {
+          <p class="add-task-form__error">This field is required</p>
+        }
       </div>
       <div class="add-task-form__description">
         <label for="description">Description</label>
@@ -17,7 +28,18 @@
       </div>
       <div class="add-task-form__due_date">
         <label for="due_date">Due date<span class="red">*</span></label>
-        <input type="date" name="due_date" formControlName="due_date" [min]="today" />
+        <input
+          type="date"
+          name="due_date"
+          formControlName="due_date"
+          [min]="today"
+          [class.add-task-form__field--invalid]="
+            taskForm.controls.due_date.invalid && taskForm.controls.due_date.touched
+          "
+        />
+        @if (taskForm.controls.due_date.invalid && taskForm.controls.due_date.touched) {
+          <p class="add-task-form__error">This field is required</p>
+        }
       </div>
     </div>
 
@@ -54,11 +76,20 @@
 
       <div class="dropdown-caregory">
         <label for="category">Category<span class="red">*</span></label>
-        <select name="category" formControlName="category">
+        <select
+          name="category"
+          formControlName="category"
+          [class.add-task-form__field--invalid]="
+            taskForm.controls.category.invalid && taskForm.controls.category.touched
+          "
+        >
           <option value="">Select task category</option>
           <option value="Technical Tasks">Technical Tasks</option>
           <option value="User Story">User Story</option>
         </select>
+        @if (taskForm.controls.category.invalid && taskForm.controls.category.touched) {
+          <p class="add-task-form__error">This field is required</p>
+        }
       </div>
 
       <div class="assigned-dropdown">
@@ -93,13 +124,21 @@
 
         @if (selectedContacts().length > 0) {
           <div class="assigned-dropdown__selected">
-            @for (contact of selectedContacts(); track contact.id) {
+            @for (contact of selectedContacts().slice(0, 3); track contact.id) {
               <span
                 class="assigned-dropdown__selected-avatar"
                 [style.background-color]="contact.color"
                 [title]="contact.first_name + ' ' + contact.last_name"
               >
                 {{ contact.first_name[0] }}{{ contact.last_name[0] }}
+              </span>
+            }
+            @if (selectedContacts().length > 3) {
+              <span
+                class="assigned-dropdown__selected-avatar assigned-dropdown__selected-more"
+                [title]="selectedContacts().length - 3 + ' weitere Kontakte'"
+              >
+                +{{ selectedContacts().length - 3 }}
               </span>
             }
           </div>
@@ -109,10 +148,7 @@
       <div class="subtasks">
         <label for="subtask">Subtasks</label>
 
-        <div
-          class="subtasks__input"
-          [class.subtasks__input--active]="isSubtaskInputActive"
-        >
+        <div class="subtasks__input" [class.subtasks__input--active]="isSubtaskInputActive">
           <input
             id="subtask"
             type="text"
@@ -166,11 +202,7 @@
                     ></button>
                   </div>
                 } @else {
-                  <button
-                    class="subtasks__title"
-                    type="button"
-                    (click)="startEditSubtask($index)"
-                  >
+                  <button class="subtasks__title" type="button" (click)="startEditSubtask($index)">
                     {{ subtask.value }}
                   </button>
 
@@ -198,12 +230,24 @@
     </div>
   </div>
 
+  <div class="add-task-form__required-footer-text">
+    <p><span class="red">*</span> This field is required.</p>
+  </div>
+
   <div class="add-task-form__buttons">
-    <button class="add-task-form__button add-task-form__button--clear" type="button" (click)="clearTaskForm()">
+    <button
+      class="add-task-form__button add-task-form__button--clear"
+      type="button"
+      (click)="clearTaskForm()"
+    >
       Clear
     </button>
 
-    <button class="add-task-form__button add-task-form__button--create" type="button" (click)="createTask()">
+    <button
+      class="add-task-form__button add-task-form__button--create"
+      type="button"
+      (click)="createTask()"
+    >
       Create Task
     </button>
   </div>
