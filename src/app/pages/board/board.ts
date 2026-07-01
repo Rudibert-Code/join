@@ -112,7 +112,7 @@ export class Board implements OnInit {
     if (idStr) {
       const id = Number(idStr);
       //const id = parseInt(idStr, 10);
-      
+
       await this.db.updateTaskStatus(id, status);
       this.loadTasks();
     }
@@ -292,5 +292,23 @@ export class Board implements OnInit {
 
     const completed = taskSubtasks.filter((subtask) => subtask.is_done).length;
     return (completed / total) * 100;
+  }
+
+  getContactsForTaskcard(taskId: number) {
+    const allContacts = this.contacts();
+    const relationContacts = this.task_contacts();
+    const matchedContacts = [];
+    for (const relation of relationContacts) {
+      if (relation.task_id === taskId) {
+        const contact = allContacts.find((contact) => contact.id === relation.contact_id);
+        if (contact) {
+          matchedContacts.push({
+            initials: `${contact.first_name.charAt(0).toUpperCase()}${contact.last_name.charAt(0).toUpperCase()}`,
+            color: contact.color.startsWith('#') ? contact.color : `#${contact.color}`,
+          });
+        }
+      }
+    }
+    return matchedContacts;
   }
 }

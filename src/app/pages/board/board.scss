@@ -118,19 +118,19 @@
   overflow: hidden;
 }
 
-.invisibile-button-section{
+.invisibile-button-section {
   visibility: hidden;
 }
 
-.direction-btn{
+.direction-btn {
   padding: 5px 15px;
 }
 
-.up-arrow{
+.up-arrow {
   height: 15px;
 }
 
-.down-arrow{
+.down-arrow {
   height: 15px;
   rotate: 180deg;
 }
@@ -173,8 +173,6 @@ dialog {
   border: none;
   z-index: 10;
 }
-
-
 
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.355);
@@ -235,12 +233,12 @@ dialog::backdrop {
 
   width: 100%;
   gap: 16px;
-  >p{
+  > p {
     padding: 0;
     margin: 0;
     margin-bottom: 16px;
   }
-  >img{
+  > img {
     margin: 0;
     margin-bottom: 16px;
   }
@@ -281,7 +279,7 @@ dialog::backdrop {
   justify-content: start;
   align-items: center;
   margin-bottom: 8px;
-  >p{
+  > p {
     margin: 0;
   }
   &_btn_false {
@@ -352,7 +350,7 @@ svg {
   align-items: center;
   gap: 8px;
 
-  >p{
+  > p {
     margin: 0;
     margin-bottom: 16px;
   }
@@ -362,37 +360,37 @@ svg {
   width: 42px;
   height: 42px;
 
-  &_ffa35e{
+  &_ffa35e {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_orange;
     color: $main_white;
   }
-  &_ff5eb3{
+  &_ff5eb3 {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_pink;
     color: $main_white;
   }
-  &_6e52ff{
+  &_6e52ff {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_blue;
     color: $main_white;
   }
-  &_9327ff{
+  &_9327ff {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_purple;
     color: $main_white;
   }
-  &_00bee8{
+  &_00bee8 {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_lightblue;
     color: $main_white;
   }
-  &_ff745e{
+  &_ff745e {
     border-radius: 100px;
     padding: 4px;
     background-color: $user_red;
@@ -425,9 +423,33 @@ svg {
   transition: width 2.5s ease-in-out;
 }
 
-.subtask-text {
-  white-space: nowrap;
-  margin: 0;
+.task-card__users {
+  display: flex;
+  gap: 4px;
+  margin-left: 6px;
+}
+
+.user-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  margin-left: -10px;
+  flex-shrink: 0;
+  > p {
+    color: white;
+    font-size: 1.3rem;
+  }
+}
+
+.overflow-badge {
+  background-color: $main-black;
+  font-size: 1.3rem;
+  color: white;
+  z-index: 4;
 }
 
 @media (max-width: 1023px) {
@@ -443,8 +465,8 @@ svg {
   }
 
   .task-card {
-  height: 270px;
-}
+    height: 270px;
+  }
 
   .task-wrapper-desktop {
     display: flex;
@@ -490,5 +512,24 @@ svg {
   .tasks-wrapper-desktop {
     display: flex;
     width: 100%;
+  }
+}
+
+@media (min-width: 1499px) {
+  .todo-container,
+  .progress-container,
+  .feedback-container,
+  .done-container {
+    flex: none;
+  }
+
+  .tasks-wrapper-desktop {
+    align-items: start;
+    justify-content: start;
+    gap: 30px;
+  }
+
+  .task-wrapper-desktop {
+    justify-content: start;
   }
 }
