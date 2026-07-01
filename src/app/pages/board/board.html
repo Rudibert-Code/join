@@ -57,6 +57,13 @@
 
     <section class="edit_entry">
       <p>Asigned To</p>
+      <section class="dropdown">
+        <div class="dropdown_list" id="dropdown">
+          @for (contact of contacts(); track contact.id) {
+            <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+          }
+        </div>
+      </section>
       <!--Contact List-->
       <div class="subtask_edit_contact">
         @for (contact of contactsCache; track $index) {
