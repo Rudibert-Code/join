@@ -363,6 +363,11 @@ svg {
   height: 42px;
 
   &_ffa35e {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_orange;
@@ -372,6 +377,11 @@ svg {
     }
   }
   &_ff5eb3 {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_pink;
@@ -723,4 +733,5 @@ svg {
   .task-wrapper-desktop {
     justify-content: start;
   }
+}
 }
