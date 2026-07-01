@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Contact, Supabase } from '../../supabase';
 import { ContactForm } from '../contact-form/contact-form';
 import { ContactDetails } from '../contact-details/contact-details'
-import { ContacsButton } from "../contacs-button/contacs-button";
-import { first } from 'rxjs';
-import { RouterLink, RouterLinkActive } from "@angular/router";
 import { Router } from '@angular/router';
 
 let userInitials:string="";
@@ -18,7 +15,7 @@ let userPhone:string="";
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [CommonModule, ContactForm, ContacsButton, RouterLink, RouterLinkActive],
+  imports: [CommonModule, ContactForm],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
