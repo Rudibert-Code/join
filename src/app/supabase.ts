@@ -69,6 +69,8 @@ export class Supabase {
   contacts = signal<Contact[]>([]);
   task_contacts = signal<TaskContacts[]>([]);
 
+  today = new Date().toISOString().split('T')[0];
+
   /*
    * this function read all contacts from the db and set it
    */
@@ -317,6 +319,66 @@ export class Supabase {
 
     if (error) {
       console.error('Supabase updateTaskStatus error', error);
+      return;
+    }
+
+    return data;
+  }
+
+  async updateTaskPrio(id: number,priority:string) {
+    const { data, error } = await this.supabase
+      .from('tasks')
+      .update({ priority })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase updateTaskPrio error', error);
+      return;
+    }
+
+    return data;
+  }
+
+  async updateTaskTitle(id: number,title:string) {
+    const { data, error } = await this.supabase
+      .from('tasks')
+      .update({ title })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase updateTaskPrio error', error);
+      return;
+    }
+
+    return data;
+  }
+
+  async updateTaskDescription(id: number,description:string) {
+    const { data, error } = await this.supabase
+      .from('tasks')
+      .update({ description })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase updateTaskPrio error', error);
+      return;
+    }
+
+    return data;
+  }
+
+  async updateTaskDueDate(id: number,due_date:string) {
+    const { data, error } = await this.supabase
+      .from('tasks')
+      .update({ due_date })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase updateTaskPrio error', error);
       return;
     }
 

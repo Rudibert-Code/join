@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Supabase, Task, Subtask, TaskContacts } from '../../supabase';
 import { RouterLink } from '@angular/router';
+//import { AddTaskForm } from '../../components/add-task-form/add-task-form';
 
 interface subTask {
   title: String;
@@ -11,10 +12,17 @@ interface subTask {
 }
 
 interface contacts {
+  id?:number;
   name: string;
   surname: string;
   initials: string;
   color: string;
+}
+
+interface newSubTask {
+  task_id: number,
+  title: string,
+  is_done: boolean,
 }
 
 @Component({
@@ -110,9 +118,9 @@ export class Board implements OnInit {
     const idStr = event.dataTransfer?.getData('text/plain');
 
     if (idStr) {
-      const id = Number(idStr);
-      //const id = parseInt(idStr, 100);
-      
+      //const id = Number(idStr);
+      const id = parseInt(idStr, 10);
+
       await this.db.updateTaskStatus(id, status);
       this.loadTasks();
     }
@@ -141,6 +149,8 @@ export class Board implements OnInit {
     const ticketPriority = document.getElementById('ticket_priority') as HTMLParagraphElement;
     const ticketCategory = document.getElementById('ticket_category') as HTMLParagraphElement;
 
+    this.ticketCardID = id;
+
     for (let index = 0; index < this.tasks().length; index++) {
       if (this.tasks()[index].id == id) {
         ticketTitle.textContent = this.tasks()[index].title;
@@ -159,6 +169,144 @@ export class Board implements OnInit {
     this.getSubTasks(id);
     dialogWindow.showModal();
   }
+
+
+
+
+
+  ticketCardID:number = 0;
+  newDialogEditTitle:string = "";
+  newDialogDescription:string = "";
+  newDialogDueDate:string = "";
+
+  openTicketEdit() {
+    const dialogEdit = document.getElementById('ticket_edit') as HTMLDialogElement;
+    const dialogEditTitle = document.getElementById('editTaskTitle') as HTMLInputElement;
+    const dialogEditDescription = document.getElementById('editTaskDescription') as HTMLInputElement;
+    const dialogEditDueDate = document.getElementById('subtask_edit_dd') as HTMLInputElement;
+    let dialogPrio:string = ""; 
+
+    for (let index = 0; index < this.tasks().length; index++) {
+      if (this.tasks()[index].id == this.ticketCardID) {
+        dialogEditTitle.value = this.tasks()[index].title;  
+        dialogEditDescription.value = this.tasks()[index].description;
+        dialogEditDueDate.value = this.tasks()[index].due_date;
+        dialogPrio = this.tasks()[index].priority;
+      }
+    }
+    this.closeTicketCard();
+    this.editTicketPrio(dialogPrio);
+    this.setContactColor(this.ticketCardID);
+    dialogEdit.showModal();
+  }
+
+  editTicketPrio(newPrio:string){
+    const iconUrgent = document.getElementById('edit_prio_urgent') as HTMLButtonElement;
+    const iconMedium = document.getElementById('edit_prio_medium') as HTMLButtonElement;
+    const iconLow = document.getElementById('edit_prio_low') as HTMLButtonElement;
+    iconUrgent.classList.remove('edit_prio_urgent');
+    iconMedium.classList.remove('edit_prio_medium');
+    iconLow.classList.remove('edit_prio_low');
+    switch (newPrio) {
+      case 'urgent':
+        iconUrgent.classList.add('edit_prio_urgent');
+        break;
+
+      case 'medium':
+        iconMedium.classList.add('edit_prio_medium');
+        break;
+
+      case 'low':
+        iconLow.classList.add('edit_prio_low');
+        break;
+    }
+    this.db.updateTaskPrio(this.ticketCardID,newPrio);
+  }
+
+  updateTicketEdit(){
+    const ticketTitle = document.getElementById('editTaskTitle') as HTMLInputElement;
+    const ticketDescription = document.getElementById('editTaskDescription') as HTMLInputElement;
+    const ticketDueDate = document.getElementById('subtask_edit_dd') as HTMLInputElement;
+
+    this.newDialogEditTitle = ticketTitle.value; 
+    this.newDialogDescription = ticketDescription.value;
+    this.newDialogDueDate = ticketDueDate.value;
+
+
+    this.db.updateTaskTitle(this.ticketCardID, this.newDialogEditTitle);
+    this.db.updateTaskDescription(this.ticketCardID, this.newDialogDescription);
+    this.db.updateTaskDueDate(this.ticketCardID, this.newDialogDueDate);
+    this.closeTicketCard();
+  }
+
+  setContactColor(taskId:number){
+    for (let index = 0; index < this.db.task_contacts().length; index++) {
+      if (this.db.task_contacts()[index].task_id == taskId) {
+        let currentContactID = this.db.task_contacts()[index].contact_id;
+
+        for (let index = 0; index < this.db.contacts().length; index++) {
+          if (this.db.contacts()[index].id == currentContactID) {
+            let currentContactClass = "contacts_icon_" + this.db.contacts()[index].color.slice(1);  
+            let currentContact = document.getElementById(String(currentContactID)) as HTMLDivElement;
+            currentContact.classList.add(currentContactClass);
+          }
+        }
+      }
+    }
+  }
+
+
+  subtaskInput:boolean = false;
+
+  checkSubtaskInput(){ 
+    let subtaskCheckButton = document.getElementById('subtask_input_check') as HTMLImageElement;
+    if (this.subtaskInput == false) {
+      this.subtaskInput = true;
+      subtaskCheckButton.style.display="flex";
+    }
+  }
+
+  unCheckSubtaskInput(){
+    let subtaskCheckButton = document.getElementById('subtask_input_check') as HTMLImageElement;
+    this.subtaskInput = false;
+    subtaskCheckButton.style.display="none";
+  }
+
+  async createNewSubtask(){
+    let subtaskInput = document.getElementById('editTaskSubtasks') as HTMLInputElement;
+    let newSubtaskTitle = subtaskInput.value;
+    let newSubtask:newSubTask[]=[
+      {
+        task_id: this.ticketCardID,
+        title: newSubtaskTitle,
+        is_done: false,
+      }
+    ]
+    let newSubtaskID: number = 0;
+    for (let index = 0; index < this.db.subtasks().length; index++) {
+      if (this.db.subtasks()[index].title == newSubtaskTitle) {
+        newSubtaskID = this.db.subtasks()[index].id;
+      }
+    }
+    this.subtasksCache.push({
+      title: newSubtaskTitle,
+      is_Done: false,
+      id: newSubtaskID,
+    });
+    this.db.addSubtasks(newSubtask);
+    subtaskInput.value = "";
+    this.unCheckSubtaskInput()
+  }
+
+  deleteSubtask(subtask:subTask){
+    let targetSubtask = document.getElementById(String(subtask.id)) as HTMLDivElement;
+    targetSubtask.style.display="none";
+    this.db.deleteSubtask(subtask.id);
+  }
+
+
+
+
 
   contactsCache: contacts[] = [];
 
@@ -179,6 +327,7 @@ export class Board implements OnInit {
       }
 
       this.contactsCache.push({
+        id:Number(matchingContact.id),
         name: String(matchingContact.first_name),
         surname: String(matchingContact.last_name),
         initials: `${matchingContact.first_name.charAt(0).toUpperCase()}${matchingContact.last_name.charAt(0).toUpperCase()}`,
@@ -247,7 +396,9 @@ export class Board implements OnInit {
 
   closeTicketCard() {
     let dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
+    let dialogEdit = document.getElementById('ticket_edit') as HTMLDialogElement;
     dialogWindow.close();
+    dialogEdit.close();
   }
 
   deleteTicket() {

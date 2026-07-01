@@ -174,8 +174,6 @@ dialog {
   z-index: 10;
 }
 
-
-
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.355);
 }
@@ -363,41 +361,242 @@ svg {
   height: 42px;
 
   &_ffa35e{
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_orange;
     color: $main_white;
+    >p{
+      color: $main_white;
+    }
   }
   &_ff5eb3{
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_pink;
     color: $main_white;
+    >p{
+      color: $main_white;
+    }
   }
   &_6e52ff{
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_blue;
     color: $main_white;
+    >p{
+      color: $main_white;
+    }
   }
   &_9327ff{
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_purple;
     color: $main_white;
+    >p{
+      color: $main_white;
+    }
   }
   &_00bee8{
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_lightblue;
     color: $main_white;
+    >p{
+      color: $main_white;
+    }
   }
   &_ff745e{
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_red;
     color: $main_white;
+    >p{
+      color: $main_white;
+    }
   }
+}
+
+.edit_prio{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  >button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    >p {
+      font-size: 1.4rem;
+      margin: 0;
+    }
+    >svg{
+      width: 20px;
+    }
+    &:hover{
+      filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.199));
+    }
+  }
+    &_urgent{
+      background-color: #FF3D00;
+      .edit_icon {
+        fill: white;
+      }
+    }
+    &_medium{
+      background-color: #FFA800;
+      .edit_icon {
+        fill: white;
+      }
+    }
+    &_low{
+      background-color: #7AE229;
+      .edit_icon {
+        fill: white;
+      }
+    }
+  }
+
+.edit{
+  &_header {
+    height: 60px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 0 16px;
+  }
+  &_input{
+    padding: 0 16px;
+    >input{
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 2px solid $main_grey;
+      text-align: start;
+    }
+  }
+}
+.subtask_input{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  >input{
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 2px solid $main_grey;
+    text-align: start;
+  }
+}
+.input_check{
+  cursor: pointer;
+  position: absolute;
+  display: none;
+  top: 8px;
+  right: 8px;
+}
+.edit_entry{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  padding: 0 16px;
+  &_footer{
+      display: flex;
+      justify-content: end;
+      align-items: start;
+      padding-right: 16px;
+      padding-bottom: 16px;
+      >button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        outline: none;
+        border: none;
+        border-radius: 8px;
+        background-color: $main_header;
+        padding: 8px 16px;
+      }
+  }
+}
+
+.subtask_instance{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &_front{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+  &_dot{
+    width: 8px;
+    height: 8px;
+    background-color: $main_header;
+    border-radius: 50%;
+  }
+  &_edit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    >img{
+      cursor: pointer;
+    }
+  }
+  &_separator{
+    width: 2px;
+    height: 16px;
+    background-color: rgba(0, 0, 0, 0.199);
+  }
+}
+
+.subtask_edit_contact{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
 @media (max-width: 1023px) {
