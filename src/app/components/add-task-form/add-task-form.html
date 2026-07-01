@@ -5,7 +5,18 @@
     <div class="add-task-form__left">
       <div class="add-task-form__title">
         <label for="title">Title<span class="red">*</span></label>
-        <input type="text" name="title" formControlName="title" placeholder="Enter a title" />
+        <input
+          type="text"
+          name="title"
+          formControlName="title"
+          placeholder="Enter a title"
+          [class.add-task-form__field--invalid]="
+            taskForm.controls.title.invalid && taskForm.controls.title.touched
+          "
+        />
+        @if (taskForm.controls.title.invalid && taskForm.controls.title.touched) {
+          <p class="add-task-form__error">This field is required</p>
+        }
       </div>
       <div class="add-task-form__description">
         <label for="description">Description</label>
@@ -17,7 +28,18 @@
       </div>
       <div class="add-task-form__due_date">
         <label for="due_date">Due date<span class="red">*</span></label>
-        <input type="date" name="due_date" formControlName="due_date" [min]="today" />
+        <input
+          type="date"
+          name="due_date"
+          formControlName="due_date"
+          [min]="today"
+          [class.add-task-form__field--invalid]="
+            taskForm.controls.due_date.invalid && taskForm.controls.due_date.touched
+          "
+        />
+        @if (taskForm.controls.due_date.invalid && taskForm.controls.due_date.touched) {
+          <p class="add-task-form__error">This field is required</p>
+        }
       </div>
     </div>
 
@@ -54,11 +76,20 @@
 
       <div class="dropdown-caregory">
         <label for="category">Category<span class="red">*</span></label>
-        <select name="category" formControlName="category">
+        <select
+          name="category"
+          formControlName="category"
+          [class.add-task-form__field--invalid]="
+            taskForm.controls.category.invalid && taskForm.controls.category.touched
+          "
+        >
           <option value="">Select task category</option>
           <option value="Technical Tasks">Technical Tasks</option>
           <option value="User Story">User Story</option>
         </select>
+        @if (taskForm.controls.category.invalid && taskForm.controls.category.touched) {
+          <p class="add-task-form__error">This field is required</p>
+        }
       </div>
 
       <div class="assigned-dropdown">

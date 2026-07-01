@@ -77,6 +77,16 @@ form {
     color: rgba(255, 129, 144, 1);
 }
 
+.add-task-form__field--invalid {
+    border-color: rgba(255, 129, 144, 1) !important;
+}
+
+.add-task-form__error {
+    margin: 4px 0 0;
+    color: rgba(255, 129, 144, 1);
+    font-size: 12px;
+}
+
 .priority-buttons__wrapper {
     display: flex;
     flex-direction: row;
