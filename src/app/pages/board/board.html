@@ -145,7 +145,11 @@
   <section class="task-wrapper">
     <section class="todo-wrapper d-flex center-space">
       <h4 class="margin-correction">To Do</h4>
-      <button routerLink="/add-task" class="add-btn-task d-flex center">
+      <button
+        [routerLink]="['/add-task']"
+        [queryParams]="{ status: 'to_do' }"
+        class="add-btn-task d-flex center"
+      >
         <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
       </button>
     </section>
@@ -198,7 +202,11 @@
     </div>
     <section class="progress-wrapper d-flex center-space">
       <h4 class="margin-correction">in Progress</h4>
-      <button routerLink="/add-task" class="add-btn-task d-flex center">
+      <button
+        [routerLink]="['/add-task']"
+        [queryParams]="{ status: 'in_progress' }"
+        class="add-btn-task d-flex center"
+      >
         <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
       </button>
     </section>
@@ -255,7 +263,11 @@
     </div>
     <section class="feedback-wrapper d-flex center-space">
       <h4 class="margin-correction">Await Feedback</h4>
-      <button routerLink="/add-task" class="add-btn-task d-flex center">
+      <button
+        [routerLink]="['/add-task']"
+        [queryParams]="{ status: 'await_feedback' }"
+        class="add-btn-task d-flex center"
+      >
         <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
       </button>
     </section>
@@ -365,19 +377,31 @@
   <section class="task-wrapper-desktop">
     <section class="todo-wrapper d-flex center-space">
       <h4 class="margin-desktop">To Do</h4>
-      <button routerLink="/add-task" class="add-btn-task d-flex center">
+      <button
+        [routerLink]="['/add-task']"
+        [queryParams]="{ status: 'to_do' }"
+        class="add-btn-task d-flex center"
+      >
         <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
       </button>
     </section>
     <section class="progress-wrapper d-flex center-space">
       <h4 class="margin-desktop">in Progress</h4>
-      <button routerLink="/add-task" class="add-btn-task d-flex center">
+      <button
+        [routerLink]="['/add-task']"
+        [queryParams]="{ status: 'in_progress' }"
+        class="add-btn-task d-flex center"
+      >
         <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
       </button>
     </section>
     <section class="feedback-wrapper d-flex center-space">
       <h4 class="margin-desktop">Await Feedback</h4>
-      <button routerLink="/add-task" class="add-btn-task d-flex center">
+      <button
+        [routerLink]="['/add-task']"
+        [queryParams]="{ status: 'await_feedback' }"
+        class="add-btn-task d-flex center"
+      >
         <img class="add-icon-task" src="assets/UI/icon_add.png" alt="add icon" />
       </button>
     </section>
