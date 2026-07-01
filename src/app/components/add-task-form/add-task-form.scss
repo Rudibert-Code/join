@@ -71,10 +71,10 @@ form {
     label {
         display: block;
     }
+}
 
-    .red {
-        color: rgba(255, 129, 144, 1);
-    }
+.red {
+    color: rgba(255, 129, 144, 1);
 }
 
 .priority-buttons__wrapper {
@@ -483,5 +483,9 @@ form {
     .add-task-form__buttons {
         bottom: 50px;
         background-color: none;
+    }
+    .add-task-form__required-footer-text{
+        position: fixed;
+        bottom: 100px;
     }
 }
