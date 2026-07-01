@@ -58,14 +58,14 @@
     <section class="edit_entry">
       <p>Asigned To</p>
       <!--Contact List-->
+      <div class="subtask_edit_contact">
         @for (contact of contactsCache; track $index) {
-          <div class="subtask_edit_contact">
+          
             <div class="" id="{{ contact.id }}">
               <p>{{ contact.initials }}</p>
             </div>
-            <p>{{ contact.name }} {{ contact.surname }}</p>
-          </div>
         }
+      </div>
     </section>
 
     <section class="edit_input">
