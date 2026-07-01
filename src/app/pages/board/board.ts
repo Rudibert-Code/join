@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Supabase, Task, Subtask, TaskContacts } from '../../supabase';
 import { RouterLink } from '@angular/router';
-//import { AddTaskForm } from '../../components/add-task-form/add-task-form';
 
 interface subTask {
   title: String;
