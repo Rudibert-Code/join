@@ -93,13 +93,21 @@
 
         @if (selectedContacts().length > 0) {
           <div class="assigned-dropdown__selected">
-            @for (contact of selectedContacts(); track contact.id) {
+            @for (contact of selectedContacts().slice(0, 3); track contact.id) {
               <span
                 class="assigned-dropdown__selected-avatar"
                 [style.background-color]="contact.color"
                 [title]="contact.first_name + ' ' + contact.last_name"
               >
                 {{ contact.first_name[0] }}{{ contact.last_name[0] }}
+              </span>
+            }
+            @if (selectedContacts().length > 3) {
+              <span
+                class="assigned-dropdown__selected-avatar assigned-dropdown__selected-more"
+                [title]="selectedContacts().length - 3 + ' weitere Kontakte'"
+              >
+                +{{ selectedContacts().length - 3 }}
               </span>
             }
           </div>
@@ -109,10 +117,7 @@
       <div class="subtasks">
         <label for="subtask">Subtasks</label>
 
-        <div
-          class="subtasks__input"
-          [class.subtasks__input--active]="isSubtaskInputActive"
-        >
+        <div class="subtasks__input" [class.subtasks__input--active]="isSubtaskInputActive">
           <input
             id="subtask"
             type="text"
@@ -166,11 +171,7 @@
                     ></button>
                   </div>
                 } @else {
-                  <button
-                    class="subtasks__title"
-                    type="button"
-                    (click)="startEditSubtask($index)"
-                  >
+                  <button class="subtasks__title" type="button" (click)="startEditSubtask($index)">
                     {{ subtask.value }}
                   </button>
 
@@ -203,11 +204,19 @@
   </div>
 
   <div class="add-task-form__buttons">
-    <button class="add-task-form__button add-task-form__button--clear" type="button" (click)="clearTaskForm()">
+    <button
+      class="add-task-form__button add-task-form__button--clear"
+      type="button"
+      (click)="clearTaskForm()"
+    >
       Clear
     </button>
 
-    <button class="add-task-form__button add-task-form__button--create" type="button" (click)="createTask()">
+    <button
+      class="add-task-form__button add-task-form__button--create"
+      type="button"
+      (click)="createTask()"
+    >
       Create Task
     </button>
   </div>

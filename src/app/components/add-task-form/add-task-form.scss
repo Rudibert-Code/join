@@ -170,6 +170,10 @@ form {
     font-weight: 500;
 }
 
+.assigned-dropdown__selected-more {
+    background-color: #000;
+}
+
 .assigned-dropdown {
     display: flex;
     flex-direction: column;
