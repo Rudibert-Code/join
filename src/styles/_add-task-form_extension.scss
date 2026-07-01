@@ -1,0 +1,366 @@
+@use './variables' as *;
+@use './typography';
+
+.assigned-dropdown__selected {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.assigned-dropdown__selected-avatar {
+    width: 42px;
+    height: 42px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.assigned-dropdown__selected-more {
+    background-color: #000;
+}
+
+.assigned-dropdown {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    button {
+        color: #000;
+        background-color: #fff;
+        padding: 10px 16px;
+        border: 1px solid $main-border;
+        text-align: left;
+        border-radius: 8px;
+    }
+}
+
+.assigned-dropdown__menu {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 20;
+
+    height: 150px;
+    overflow: auto;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+
+    button {
+        &.assigned-dropdown__option {
+            border: unset;
+            background-color: none;
+        }
+    }
+
+    .assigned-dropdown__option {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 150ms ease;
+
+        &.selected {
+            background-color: $main_header;
+            color: white;
+
+            span {
+                color: white;
+            }
+        }
+
+        input[type='checkbox'] {
+            accent-color: $main_header;
+        }
+
+        &:hover {
+            background-color: #eeeeee;
+        }
+
+        &.selected {
+            background-color: #2a3647;
+
+            &:hover {
+                background-color: #091931;
+            }
+
+            span {
+                color: white;
+            }
+        }
+
+
+        .assigned-dropdown__avatar__wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        span {
+            color: #000;
+
+            &.assigned-dropdown__avatar {
+                color: #fff;
+                width: 35px;
+                height: 35px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+            }
+        }
+
+        input {
+            width: inherit;
+        }
+    }
+}
+
+.subtasks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.subtasks__input {
+    display: flex;
+    align-items: center;
+    border: 1px solid $main-border;
+    border-radius: 8px;
+    background-color: #fff;
+
+    &:focus-within,
+    &.subtasks__input--active {
+        border-color: #29abe2;
+    }
+
+    input {
+        border: unset;
+        border-radius: 8px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.subtasks__list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    height: 100px;
+    overflow: auto;
+}
+
+.subtasks__item {
+    display: flex;
+    align-items: center;
+    min-height: 28px;
+    border-radius: 6px;
+    color: #000;
+
+    &::before {
+        content: '';
+        width: 4px;
+        height: 4px;
+        margin: 0 10px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background-color: #000;
+    }
+
+    &:hover {
+        background-color: #eeeeee;
+
+        .subtasks__actions--hover {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+
+    &.subtasks__item--editing {
+        border-bottom: 1px solid #29abe2;
+        border-radius: 0;
+
+        &::before {
+            display: none;
+        }
+    }
+
+    input {
+        border: unset;
+        border-radius: 0;
+        padding: 4px 0;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.subtasks__title {
+    flex: 1;
+    border: unset;
+    background-color: transparent;
+    color: #000;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.3;
+    padding: 4px 0;
+    text-align: left;
+}
+
+.subtasks__actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.subtasks__actions--hover {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.subtasks__action {
+    width: 28px;
+    height: 28px;
+    border: unset;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 18px;
+    cursor: pointer;
+}
+
+.subtasks__action--cancel {
+    background-image: url("../../public/assets/UI/vector/icon_cancle.svg");
+}
+
+.subtasks__action--delete {
+    background-image: url("../../public/assets/UI/vector/icon_delete.svg");
+}
+
+.subtasks__action--edit {
+    background-image: url("../../public/assets/UI/vector/icon_edit_dark_2.svg");
+}
+
+.subtasks__action--check {
+    background-image: url("../../public/assets/UI/vector/icon_check_dark.svg");
+}
+
+.add-task-form__buttons {
+    position: fixed;
+    right: 16px;
+    bottom: 86px;
+    left: 16px;
+    z-index: 9;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 15px 0 8px;
+    background-color: $main-white;
+}
+
+.add-task-form__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 43px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1;
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease,
+        box-shadow 150ms ease;
+
+    &::after {
+        display: inline-block;
+        font-size: 20px;
+        line-height: 1;
+    }
+}
+
+.add-task-form__button--clear {
+    border: 1px solid $main_header;
+    background-color: #fff;
+    color: $main_header;
+    padding: 10px 12px;
+
+    &::after {
+        content: '\00d7';
+    }
+
+    &:hover {
+        border-color: #29abe2;
+        color: #29abe2;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.add-task-form__button--create {
+    border: 1px solid $main_header;
+    background-color: $main_header;
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 14px;
+
+    &::after {
+        content: '\2713';
+        font-weight: 400;
+    }
+
+    &:hover {
+        border-color: #29abe2;
+        background-color: #29abe2;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+}
+
+@media screen and (min-width: 500px) {
+    .priority-buttons__wrapper {
+        button {
+            max-width: inherit;
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .add-task-form__columns {
+        flex-direction: row;
+        gap: 3vw;
+    }
+
+    .add-task-form__left {
+        border-right: 1px solid $main-border;
+        padding-right: 40px;
+    }
+
+    .add-task-form__buttons {
+        bottom: 50px;
+        position: absolute;
+        right: 30px;
+        bottom: 0;
+        background-color: unset;
+    }
+
+    .add-task-form__required-footer-text {
+        position: absolute;
+        bottom: 10px;
+    }
+}
