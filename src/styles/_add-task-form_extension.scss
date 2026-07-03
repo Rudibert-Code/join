@@ -124,21 +124,22 @@
     }
 }
 
-.subtasks {
+.add-task-form__subtasks {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.subtasks__input {
+.add-task-form__subtasks-input {
     display: flex;
     align-items: center;
     border: 1px solid $main-border;
     border-radius: 8px;
     background-color: #fff;
+    width: 100%;
 
     &:focus-within,
-    &.subtasks__input--active {
+    &.add-task-form__subtasks-input--active {
         border-color: #29abe2;
     }
 
@@ -152,7 +153,7 @@
     }
 }
 
-.subtasks__list {
+.add-task-form__subtasks-list {
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -162,7 +163,7 @@
     overflow: auto;
 }
 
-.subtasks__item {
+.add-task-form__subtasks-item {
     display: flex;
     align-items: center;
     min-height: 28px;
@@ -182,13 +183,13 @@
     &:hover {
         background-color: #eeeeee;
 
-        .subtasks__actions--hover {
+        .add-task-form__subtasks-actions--hover {
             opacity: 1;
             pointer-events: auto;
         }
     }
 
-    &.subtasks__item--editing {
+    &.add-task-form__subtasks-item--editing {
         border-bottom: 1px solid #29abe2;
         border-radius: 0;
 
@@ -208,7 +209,7 @@
     }
 }
 
-.subtasks__title {
+.add-task-form__subtasks-title {
     flex: 1;
     border: unset;
     background-color: transparent;
@@ -221,18 +222,18 @@
     text-align: left;
 }
 
-.subtasks__actions {
+.add-task-form__subtasks-actions {
     display: flex;
     align-items: center;
     flex-shrink: 0;
 }
 
-.subtasks__actions--hover {
+.add-task-form__subtasks-actions--hover {
     opacity: 0;
     pointer-events: none;
 }
 
-.subtasks__action {
+.add-task-form__subtasks-action {
     width: 28px;
     height: 28px;
     border: unset;
@@ -243,19 +244,19 @@
     cursor: pointer;
 }
 
-.subtasks__action--cancel {
+.add-task-form__subtasks-action--cancel {
     background-image: url("../../public/assets/UI/vector/icon_cancle.svg");
 }
 
-.subtasks__action--delete {
+.add-task-form__subtasks-action--delete {
     background-image: url("../../public/assets/UI/vector/icon_delete.svg");
 }
 
-.subtasks__action--edit {
+.add-task-form__subtasks-action--edit {
     background-image: url("../../public/assets/UI/vector/icon_edit_dark_2.svg");
 }
 
-.subtasks__action--check {
+.add-task-form__subtasks-action--check {
     background-image: url("../../public/assets/UI/vector/icon_check_dark.svg");
 }
 
