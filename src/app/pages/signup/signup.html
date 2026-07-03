@@ -1,0 +1,38 @@
+<main class="main-wrapper">
+  <header class="header-wrapper d-flex">
+    <img class="logo" src="assets/UI/logo_join.png" alt="company logo" />
+  </header>
+  <section class="content-wrapper d-flex column">
+    <a class="back-arrow" routerLink="login"
+      ><img src="assets/UI/icon_arrow.png" alt="arrow icon"
+    /></a>
+    <div>
+      <h3 class="login">Sign up</h3>
+      <div class="d-flex center">
+        <div class="underline"></div>
+      </div>
+      <form class="d-flex column input-wrapper">
+        <input class="input-field" type="text" id="firstname" placeholder="Firstname" required />
+        <input class="input-field" type="text" id="lastname" placeholder="Lastname" required />
+        <input class="input-field" type="email" id="email" placeholder="Email" required />
+        <input class="input-field" type="password" id="pw" placeholder="Password" required />
+        <input
+          class="input-field"
+          type="password"
+          id="reqPw"
+          placeholder="Confirm Password"
+          required
+        />
+        <div class="d-flex center">
+          <input type="checkbox" id="checkPolicy" required />
+          <p>I accept the <a class="accept-policy" routerLink="privacy-police">privacy policy</a></p>
+        </div>
+        <button class="submit-btn">Sign Up</button>
+      </form>
+    </div>
+  </section>
+  <footer class="footer-wrapper d-flex center">
+    <a class="footer-links" routerLink="privacy-police">Privacy Policy</a>
+    <a class="footer-links" routerLink="legal-notice">Legal Notice</a>
+  </footer>
+</main>

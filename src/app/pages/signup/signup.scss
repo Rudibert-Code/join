@@ -1,0 +1,88 @@
+@use '../../../styles/variables' as *;
+
+.d-flex {
+  display: flex;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+}
+
+.column {
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.main-wrapper {
+  background-color: $main-white;
+  min-height: 100vh;
+}
+
+.header-wrapper {
+  justify-content: flex-start;
+  align-items: center;
+  padding: 12px 0 12px 24px;
+  height: 84px;
+}
+
+.content-wrapper {
+  background-color: #ffffff;
+  padding: 24px 0;
+  margin: 26px 16px;
+  border-radius: 16px;
+}
+
+.footer-wrapper {
+  gap: 15px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: solid 1px $main-border;
+}
+
+.accept-policy {
+  color: $main_blue;
+}
+
+.submit-btn {
+  width: 75%;
+  padding: 10px;
+  background-color: $main_header;
+  border-width: 0;
+  border-radius: 8px;
+}
+
+.logo {
+  width: 60px;
+  padding: 5px;
+}
+
+.login {
+  margin-block-start: 0.6rem;
+  margin-block-end: 0.5rem;
+  color: $main_black;
+  text-align: center;
+}
+
+.back-arrow {
+  position: fixed;
+  left: 25px;
+  top: 150px;
+}
+
+.underline {
+  width: 80%;
+  height: 2px;
+  background-color: $main_blue;
+  margin: 10px 0;
+}
+
+.footer-links {
+  color: $main-border;
+}
