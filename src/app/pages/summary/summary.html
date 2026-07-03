@@ -11,14 +11,14 @@
       <div class="d-flex center infobox-up">
         <img class="icons" src="assets/UI/icon_edit.png" alt="edit icon" />
         <div>
-          <h3 class="margin-corection black-txt">1</h3>
+          <h3 class="margin-corection black-txt">{{ todoTasks.length }}</h3>
           <p class="margin-corection">To-Do</p>
         </div>
       </div>
       <div class="d-flex center infobox-up">
         <img class="icons" src="assets/UI/icon_done.png" alt="done icon" />
         <div>
-          <h3 class="margin-corection black-txt">1</h3>
+          <h3 class="margin-corection black-txt">{{ doneTasks.length }}</h3>
           <p class="margin-corection">Done</p>
         </div>
       </div>
@@ -45,18 +45,18 @@
     </section>
     <section class="d-flex space-center lower-section">
       <div class="infobox-low">
-        <h3 class="margin-corection black-txt">5</h3>
+        <h3 class="margin-corection black-txt">{{ tasks().length }}</h3>
         <p class="margin-corection">
           Tasks <br />
           in Board
         </p>
       </div>
       <div class="infobox-low">
-        <h3 class="margin-corection black-txt">2</h3>
+        <h3 class="margin-corection black-txt">{{ progressTasks.length }}</h3>
         <p class="margin-corection">Tasks in Progress</p>
       </div>
       <div class="infobox-low">
-        <h3 class="margin-corection black-txt">3</h3>
+        <h3 class="margin-corection black-txt">{{ feedbackTasks.length }}</h3>
         <p class="margin-corection">Awaiting Feedback</p>
       </div>
     </section>
