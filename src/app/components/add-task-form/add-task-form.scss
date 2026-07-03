@@ -86,6 +86,12 @@ form {
     margin: 4px 0 0;
     color: rgba(255, 129, 144, 1);
     font-size: 12px;
+    min-height: 15px;
+    visibility: hidden;
+}
+
+.add-task-form__error--visible {
+    visibility: visible;
 }
 
 .priority-buttons__wrapper {
