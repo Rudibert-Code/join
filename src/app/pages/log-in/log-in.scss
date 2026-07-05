@@ -108,6 +108,9 @@
   border: solid 1px $main-border;
   border-radius: 8px;
   color: $main_black;
+    &:hover {
+    scale: 1.05;
+  }
 }
 
 .dark-btn {
@@ -115,14 +118,23 @@
   background-color: $main_header;
   border-width: 0;
   border-radius: 8px;
+    &:hover {
+    scale: 1.05;
+  }
 }
 
 .dark-btn-signup {
   width: 105px;
   padding: 10px;
+  color: $main-white;
+  text-align: center;
   background-color: $main_header;
   border-width: 0;
   border-radius: 8px;
+  &:hover {
+    text-decoration: none;
+    scale: 1.05;
+  }
 }
 
 .signup-wrapper {
