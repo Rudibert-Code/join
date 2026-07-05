@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, computed } from '@angular/core';
 import { Supabase } from '../../supabase';
 import { Task } from '../../supabase';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-summary',
@@ -13,17 +14,23 @@ import { Task } from '../../supabase';
 export class Summary {
   db = inject(Supabase);
   tasks = computed(() => this.db.tasks());
-
+  router = inject(Router);
   deadline: Date = new Date();
+  displayName: string = 'Guest';
 
   constructor() {
     this.deadline.setDate(this.deadline.getDate() + 5);
+    const currentNavigation = this.router.getCurrentNavigation();
+    if (currentNavigation?.extras.state && currentNavigation.extras.state['userName']) {
+      this.displayName = currentNavigation.extras.state['userName'];
+    }
   }
-  ngOnInit(){
+  
+  ngOnInit() {
     this.loadTasks();
   }
 
-  async loadTasks(){
+  async loadTasks() {
     await this.db.getTasks();
   }
 
@@ -41,9 +48,9 @@ export class Summary {
 
   get doneTasks() {
     return this.tasks().filter((task) => this.getStatus(task) === 'done');
-  } 
+  }
 
-  private getStatus(task: Task): string{
+  private getStatus(task: Task): string {
     return task.status?.toLowerCase().trim() || 'to_do';
   }
 }
