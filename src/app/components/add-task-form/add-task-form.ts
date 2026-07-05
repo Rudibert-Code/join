@@ -19,6 +19,7 @@ export class AddTaskForm {
   isAssignedDropdownOpen = false;
   isSubtaskInputActive = false;
   editingSubtaskIndex: number | null = null;
+  showValidationErrors = false;
   taskStatus = 'to_do';
 
   subtaskInput = new FormControl('', {
@@ -178,9 +179,12 @@ export class AddTaskForm {
     this.subtasks.clear();
     this.cancelNewSubtask();
     this.editingSubtaskIndex = null;
+    this.showValidationErrors = false;
   }
 
   private isTaskFormInvalid() {
+    this.showValidationErrors = true;
+
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
       return true;
