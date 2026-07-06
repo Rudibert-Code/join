@@ -15,11 +15,9 @@ export class Summary {
   db = inject(Supabase);
   tasks = computed(() => this.db.tasks());
   router = inject(Router);
-  deadline: Date = new Date();
   displayName: string = 'Guest';
 
   constructor() {
-    this.deadline.setDate(this.deadline.getDate() + 5);
     const currentNavigation = this.router.getCurrentNavigation();
     if (currentNavigation?.extras.state && currentNavigation.extras.state['userName']) {
       this.displayName = currentNavigation.extras.state['userName'];
@@ -48,6 +46,18 @@ export class Summary {
 
   get doneTasks() {
     return this.tasks().filter((task) => this.getStatus(task) === 'done');
+  }
+
+  get upcomingDeadline(): Date | null {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const futureDeadlines = this.tasks()
+      .map((task) => new Date(`${task.due_date}T00:00:00`))
+      .filter((date) => !isNaN(date.getTime()) && date >= today)
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    return futureDeadlines[0] || null;
   }
 
   private getStatus(task: Task): string {
