@@ -80,7 +80,26 @@ export class Summary {
     return this.tasks().filter((task) => this.getStatus(task) === 'done');
   }
 
+  get urgentTasks() {
+    return this.tasks().filter((task) => this.getPriority(task) === 'urgent');
+  }
+
+  get upcomingDeadline(): Date | null {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const futureDeadlines = this.tasks()
+      .map((task) => new Date(`${task.due_date}T00:00:00`))
+      .filter((date) => !isNaN(date.getTime()) && date >= today)
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    return futureDeadlines[0] || null;
+  }
+
   private getStatus(task: Task): string {
     return task.status?.toLowerCase().trim() || 'to_do';
+  }
+  private getPriority(task: Task): string {
+    return task.priority?.toLowerCase().trim() || 'urgent';
   }
 }
