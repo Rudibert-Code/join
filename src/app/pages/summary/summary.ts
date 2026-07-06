@@ -48,6 +48,10 @@ export class Summary {
     return this.tasks().filter((task) => this.getStatus(task) === 'done');
   }
 
+  get urgentTasks() {
+    return this.tasks().filter((task) => this.getPriority(task) === 'urgent');
+  }
+
   get upcomingDeadline(): Date | null {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -62,5 +66,8 @@ export class Summary {
 
   private getStatus(task: Task): string {
     return task.status?.toLowerCase().trim() || 'to_do';
+  }
+  private getPriority(task: Task): string {
+    return task.priority?.toLowerCase().trim() || 'urgent';
   }
 }
