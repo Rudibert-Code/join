@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, computed } from '@angular/core';
 import { Supabase } from '../../supabase';
 import { Task } from '../../supabase';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-summary',
@@ -14,24 +14,54 @@ import { Router } from '@angular/router';
 export class Summary {
   db = inject(Supabase);
   tasks = computed(() => this.db.tasks());
-  router = inject(Router);
+  router = inject(ActivatedRoute);
   deadline: Date = new Date();
-  displayName: string = 'Guest';
+  displayName: string = '';
+  greetingText: string = '';
 
   constructor() {
     this.deadline.setDate(this.deadline.getDate() + 5);
-    const currentNavigation = this.router.getCurrentNavigation();
-    if (currentNavigation?.extras.state && currentNavigation.extras.state['userName']) {
-      this.displayName = currentNavigation.extras.state['userName'];
+    const state = window.history.state;
+
+    if (state && state.firstName) {
+      this.displayName = state.lastName ? `${state.firstName} ${state.lastName}` : state.firstName;
     }
   }
-  
-  ngOnInit() {
+
+  async ngOnInit() {
+    try {
+      const {
+        data: { user },
+      } = await this.db.supabase.auth.getUser();
+      if (user && user.user_metadata) {
+        const firstName = user.user_metadata['first_name'];
+        const lastName = user.user_metadata['last_name'];
+        this.displayName = `${firstName} ${lastName}`;
+      } else {
+        this.displayName = 'Guest';
+      }
+    } catch (error) {
+      this.displayName = 'Guest';
+    }
     this.loadTasks();
+    this.getGreetingText()
   }
 
   async loadTasks() {
     await this.db.getTasks();
+  }
+
+  async getGreetingText() {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 5 && currentHour < 11) {
+      this.greetingText = 'Good morning,';
+    } else if (currentHour >= 11 && currentHour < 18) {
+      this.greetingText = 'Good afternoon,';
+    } else if (currentHour >= 18 && currentHour < 21) {
+      this.greetingText = 'Good evening,';
+    } else {
+      this.greetingText = 'Good night,';
+    }
   }
 
   get todoTasks() {

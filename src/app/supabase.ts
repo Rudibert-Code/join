@@ -56,6 +56,16 @@ export interface TaskContacts {
   contact_id: number;
 }
 
+export interface User {
+  id: number;
+  created_at: string;
+  contact_id: number | null;
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -68,7 +78,7 @@ export class Supabase {
   subtasks = signal<Subtask[]>([]);
   contacts = signal<Contact[]>([]);
   task_contacts = signal<TaskContacts[]>([]);
-
+  currentUser: User | null = null;
   today = new Date().toISOString().split('T')[0];
 
   /*
@@ -186,8 +196,6 @@ export class Supabase {
     return tasks;
   }
 
-
-
   async deleteTask(id: number) {
     const { error } = await this.supabase.from('tasks').delete().eq('id', id);
 
@@ -209,8 +217,6 @@ export class Supabase {
 
     await this.getSubtasks();
   }
-
-
 
   async getSubtasks() {
     const { data: subtasks, error } = await this.supabase
@@ -325,7 +331,7 @@ export class Supabase {
     return data;
   }
 
-  async updateTaskPrio(id: number,priority:string) {
+  async updateTaskPrio(id: number, priority: string) {
     const { data, error } = await this.supabase
       .from('tasks')
       .update({ priority })
@@ -340,7 +346,7 @@ export class Supabase {
     return data;
   }
 
-  async updateTaskTitle(id: number,title:string) {
+  async updateTaskTitle(id: number, title: string) {
     const { data, error } = await this.supabase
       .from('tasks')
       .update({ title })
@@ -355,7 +361,7 @@ export class Supabase {
     return data;
   }
 
-  async updateTaskDescription(id: number,description:string) {
+  async updateTaskDescription(id: number, description: string) {
     const { data, error } = await this.supabase
       .from('tasks')
       .update({ description })
@@ -370,7 +376,7 @@ export class Supabase {
     return data;
   }
 
-  async updateTaskDueDate(id: number,due_date:string) {
+  async updateTaskDueDate(id: number, due_date: string) {
     const { data, error } = await this.supabase
       .from('tasks')
       .update({ due_date })
@@ -383,5 +389,34 @@ export class Supabase {
     }
 
     return data;
+  }
+
+  async signUpWithEmail(email: string, password: string, firstName: string, lastName: string) {
+    const { data, error } = await this.supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+        },
+      },
+    });
+    return { data, error };
+  }
+
+  async signIn(email: string, password: string) {
+    const { data, error } = await this.supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+    return { data, error };
+  }
+
+  async getCurrentUser() {
+    const {
+      data: { user },
+    } = await this.supabase.auth.getUser();
+    return user;
   }
 }

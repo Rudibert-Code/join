@@ -1,24 +1,36 @@
 import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-
-export interface User {
-  id: number;
-  created_at: string;
-  contact_id: number | null;
-  first_name: string;
-  last_name: string;
-  email: string;
-}
+import { inject } from '@angular/core';
+import { Supabase, User } from '../../supabase';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-log-in',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './log-in.html',
   styleUrls: ['./log-in.scss'],
 })
 export class LogIn {
-  constructor(private router: Router) {}
+  db = inject(Supabase);
+  router = inject(Router);
+
+  loginData = {
+    email: '',
+    password: '',
+  };
+
+  async onSubmitLogin() {
+    const { data, error } = await this.db.signIn(this.loginData.email, this.loginData.password);
+    console.log('Daten von Supabase Auth:', data);
+    if (error) {
+      console.error('Login fehlgeschlagen:', error.message);
+      return;
+    }
+    if (data.user) {
+      this.router.navigate(['/summary']);
+    }
+  }
 
   onGuestLogin() {
     this.router.navigate(['/summary'], {
@@ -28,7 +40,10 @@ export class LogIn {
 
   onRealLogin(userFromDatabase: User) {
     this.router.navigate(['/summary'], {
-      state: { userName: userFromDatabase.first_name },
+      state: {
+        firstName: userFromDatabase.first_name,
+        lastName: userFromDatabase.last_name,
+      },
     });
   }
 
