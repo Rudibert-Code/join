@@ -1,8 +1,10 @@
-import { Injectable, Component } from '@angular/core';
+import { Injectable, Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Supabase } from '../../supabase';
 
 @Component({
   selector: 'app-submenu-popup',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './submenu-popup.html',
   styleUrl: './submenu-popup.scss',
 })
@@ -12,6 +14,7 @@ import { Injectable, Component } from '@angular/core';
 })
 
 export class SubmenuPopup {
+  supabase = inject(Supabase);
 
   isActive:boolean = false;
 
@@ -26,5 +29,9 @@ export class SubmenuPopup {
       submenuBox.classList.add("out");
       this.isActive = false;
     }
+  }
+
+  signOut(){
+    this.supabase.signOut();
   }
 }

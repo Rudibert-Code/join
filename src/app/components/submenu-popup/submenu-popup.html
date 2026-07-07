@@ -1,6 +1,6 @@
 <dialog open hidden class="submenu" id="submenu">
-    <p class="submenu_btn help">Help</p>
-    <p class="submenu_btn">Legal Notice</p>
-    <p class="submenu_btn">Privacy Policy</p>
-    <p class="submenu_btn">Log Out</p>
+    <p class="submenu_btn help" routerLink="/help">Help</p>
+    <p class="submenu_btn" routerLink="/legal-notice">Legal Notice</p>
+    <p class="submenu_btn" routerLink="/privacy-police">Privacy Policy</p>
+    <p class="submenu_btn" routerLink="/login" (click)="signOut()">Log Out</p>
 </dialog>
