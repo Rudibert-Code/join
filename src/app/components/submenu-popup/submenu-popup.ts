@@ -1,4 +1,4 @@
-import { Injectable, Component, inject } from '@angular/core';
+import { Injectable, Component, HostListener, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Supabase } from '../../supabase';
 
@@ -33,5 +33,14 @@ export class SubmenuPopup {
 
   signOut(){
     this.supabase.signOut();
+  }
+  
+  @HostListener('document:click', ['$event'])
+  closeSubMenuPopUp(event: MouseEvent) {
+    const clickedElement = event.target as HTMLElement;
+    const submenuPopUp = document.getElementById('submenu');
+    if (!submenuPopUp?.contains(clickedElement)) {
+      this.toggleSubMenu(); 
+    }
   }
 }
