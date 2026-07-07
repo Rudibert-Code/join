@@ -41,26 +41,39 @@
           <p>Log out</p>
         </div>
       </button>
-
     </section>
   } @else {
     <section class="navbar__links">
       <a class="navbar__link" [routerLink]="['/login']" routerLinkActive="active">
+        <div class="navbar__icon">
+          <img src="assets/UI/vector/icon_login.svg" alt="Log in" />
+        </div>
         <div class="navbar__name">
           <p>Log in</p>
-        </div>
-      </a>
-
-      <a class="navbar__link" [routerLink]="['/signup']" routerLinkActive="active">
-        <div class="navbar__name">
-          <p>Sign up</p>
         </div>
       </a>
     </section>
   }
 
-   <section class="navbar__links--legals">
-    <a class="navbar__name" [routerLink]="['/privacy-police']"><p>Privacy Policy</p></a>
-    <a class="navbar__name" [routerLink]="['/legal-notice']"><p>Legal notice</p></a>
+  <section class="navbar__links--legals">
+    <a
+      class="navbar__link navbar__legal-link"
+      [routerLink]="['/privacy-police']"
+      routerLinkActive="active"
+    >
+      <div class="navbar__name">
+        <p>Privacy Policy</p>
+      </div>
+    </a>
+
+    <a
+      class="navbar__link navbar__legal-link"
+      [routerLink]="['/legal-notice']"
+      routerLinkActive="active"
+    >
+      <div class="navbar__name">
+        <p>Legal notice</p>
+      </div>
+    </a>
   </section>
 </nav>

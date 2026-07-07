@@ -75,6 +75,10 @@ nav {
   }
 }
 
+.navbar__legal-link {
+  width: auto;
+}
+
 @media (min-width: 1024px) {
   nav {
     height: 100%;
@@ -90,14 +94,14 @@ nav {
   }
 
   .navbar__links--legals {
-    display: block;
-    align-self: flex-start;
-    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 
     .navbar__name {
       color: $main_white;
       display: block;
-      margin-bottom: 10px;
+      // margin-bottom: 10px;
       text-decoration: none;
       transition: 0.3s all ease-in-out;
 
@@ -126,5 +130,17 @@ nav {
 
   .navbar__icon {
     margin-right: 10px;
+  }
+
+  .navbar__legal-link {
+    width: 100%;
+    padding: 8px 40px;
+    justify-content: flex-start;
+
+    &:hover,
+    &.active {
+      border-radius: 0;
+      background-color: rgba(9, 25, 49, 1);
+    }
   }
 }
