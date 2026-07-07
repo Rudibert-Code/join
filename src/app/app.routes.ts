@@ -7,12 +7,11 @@ import { LogIn } from './pages/log-in/log-in';
 import { LegalNotice } from './pages/legal-notice/legal-notice';
 import { PrivacyPolicy } from './pages/privacy-policy/privacy-policy';
 import { Summary } from './pages/summary/summary';
+import { Signup } from './pages/signup/signup';
 
 export const routes: Routes = [
-  {
-    path: 'login',
-    component: LogIn,
-  },
+  { path: 'login', component: LogIn },
+  { path: 'signup', component: Signup },
   {
     path: '',
     component: MainLayout,

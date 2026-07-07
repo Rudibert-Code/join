@@ -1,13 +1,52 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { Supabase, User } from '../../supabase';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-log-in',
-  imports: [RouterLink],
+  standalone: true,
+  imports: [RouterLink, FormsModule],
   templateUrl: './log-in.html',
   styleUrls: ['./log-in.scss'],
 })
 export class LogIn {
+  db = inject(Supabase);
+  router = inject(Router);
+
+  loginData = {
+    email: '',
+    password: '',
+  };
+
+  async onSubmitLogin() {
+    const { data, error } = await this.db.signIn(this.loginData.email, this.loginData.password);
+    console.log('Daten von Supabase Auth:', data);
+    if (error) {
+      console.error('Login fehlgeschlagen:', error.message);
+      return;
+    }
+    if (data.user) {
+      this.router.navigate(['/summary']);
+    }
+  }
+
+  onGuestLogin() {
+    this.router.navigate(['/summary'], {
+      state: { userName: 'Guest' },
+    });
+  }
+
+  onRealLogin(userFromDatabase: User) {
+    this.router.navigate(['/summary'], {
+      state: {
+        firstName: userFromDatabase.first_name,
+        lastName: userFromDatabase.last_name,
+      },
+    });
+  }
+
   ngOnInit() {
     this.startAnimation();
   }

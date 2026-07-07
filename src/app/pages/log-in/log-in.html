@@ -11,13 +11,13 @@
       <div class="d-flex center">
         <div class="underline"></div>
       </div>
-      <div class="d-flex column input-wrapper">
+      <form class="d-flex column input-wrapper" (ngSubmit)="onSubmitLogin()">
         <div class="input-icon-wrapper">
           <input
             class="input-field"
             type="email"
-            id="email"
             name="email"
+            [(ngModel)]="loginData.email"
             placeholder="Email"
             required
           />
@@ -27,8 +27,8 @@
           <input
             class="input-field"
             type="password"
-            id="pwd"
             name="password"
+            [(ngModel)]="loginData.password"
             placeholder="Password"
             required
           />
@@ -39,19 +39,19 @@
             (click)="showPassword()"
           />
         </div>
-      </div>
+      </form>
     </div>
     <div class="d-flex column">
-      <button class="dark-btn">Log In</button>
-      <button class="white-btn">Guest Log In</button>
+      <button class="dark-btn" (click)="onSubmitLogin()">Log In</button>
+      <button class="white-btn" (click)="onGuestLogin()">Guest Log In</button>
     </div>
   </section>
   <section class="d-flex center signup-wrapper">
     <p>Not a Member?</p>
-    <button class="dark-btn-signup">Sign Up</button>
+    <a class="dark-btn-signup" routerLink="/signup">Sign Up</a>
   </section>
   <footer class="d-flex center footer-wrapper">
-    <a class="footer-links" routerLink="policy">Privacy Policy</a>
-    <a class="footer-links" routerLink="legal">Legal Notice</a>
+    <a class="footer-links" routerLink="/privacy-police">Privacy Policy</a>
+    <a class="footer-links" routerLink="/legal-notice">Legal Notice</a>
   </footer>
 </main>

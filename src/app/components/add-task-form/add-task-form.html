@@ -11,12 +11,17 @@
           formControlName="title"
           placeholder="Enter a title"
           [class.add-task-form__field--invalid]="
-            taskForm.controls.title.invalid && taskForm.controls.title.touched
+            taskForm.controls.title.invalid && showValidationErrors
           "
         />
-        @if (taskForm.controls.title.invalid && taskForm.controls.title.touched) {
-          <p class="add-task-form__error">This field is required</p>
-        }
+        <p
+          class="add-task-form__error"
+          [class.add-task-form__error--visible]="
+            taskForm.controls.title.invalid && showValidationErrors
+          "
+        >
+          This field is required
+        </p>
       </div>
       <div class="add-task-form__description">
         <label for="description">Description</label>
@@ -34,12 +39,17 @@
           formControlName="due_date"
           [min]="today"
           [class.add-task-form__field--invalid]="
-            taskForm.controls.due_date.invalid && taskForm.controls.due_date.touched
+            taskForm.controls.due_date.invalid && showValidationErrors
           "
         />
-        @if (taskForm.controls.due_date.invalid && taskForm.controls.due_date.touched) {
-          <p class="add-task-form__error">This field is required</p>
-        }
+        <p
+          class="add-task-form__error"
+          [class.add-task-form__error--visible]="
+            taskForm.controls.due_date.invalid && showValidationErrors
+          "
+        >
+          This field is required
+        </p>
       </div>
     </div>
 
@@ -80,16 +90,21 @@
           name="category"
           formControlName="category"
           [class.add-task-form__field--invalid]="
-            taskForm.controls.category.invalid && taskForm.controls.category.touched
+            taskForm.controls.category.invalid && showValidationErrors
           "
         >
           <option value="">Select task category</option>
           <option value="Technical Tasks">Technical Tasks</option>
           <option value="User Story">User Story</option>
         </select>
-        @if (taskForm.controls.category.invalid && taskForm.controls.category.touched) {
-          <p class="add-task-form__error">This field is required</p>
-        }
+        <p
+          class="add-task-form__error"
+          [class.add-task-form__error--visible]="
+            taskForm.controls.category.invalid && showValidationErrors
+          "
+        >
+          This field is required
+        </p>
       </div>
 
       <div class="assigned-dropdown">
@@ -145,10 +160,13 @@
         }
       </div>
 
-      <div class="subtasks">
+      <div class="add-task-form__subtasks">
         <label for="subtask">Subtasks</label>
 
-        <div class="subtasks__input" [class.subtasks__input--active]="isSubtaskInputActive">
+        <div
+          class="add-task-form__subtasks-input"
+          [class.add-task-form__subtasks-input--active]="isSubtaskInputActive"
+        >
           <input
             id="subtask"
             type="text"
@@ -158,16 +176,16 @@
           />
 
           @if (isSubtaskInputActive) {
-            <div class="subtasks__actions">
+            <div class="add-task-form__subtasks-actions">
               <button
-                class="subtasks__action subtasks__action--cancel"
+                class="add-task-form__subtasks-action add-task-form__subtasks-action--cancel"
                 type="button"
                 aria-label="Cancel subtask"
                 (click)="cancelNewSubtask()"
               ></button>
 
               <button
-                class="subtasks__action subtasks__action--check"
+                class="add-task-form__subtasks-action add-task-form__subtasks-action--check"
                 type="button"
                 aria-label="Add subtask"
                 (click)="addSubtask()"
@@ -177,45 +195,51 @@
         </div>
 
         @if (subtasks.controls.length > 0) {
-          <ul class="subtasks__list">
+          <ul class="add-task-form__subtasks-list">
             @for (subtask of subtasks.controls; track $index) {
               <li
-                class="subtasks__item"
-                [class.subtasks__item--editing]="editingSubtaskIndex === $index"
+                class="add-task-form__subtasks-item"
+                [class.add-task-form__subtasks-item--editing]="editingSubtaskIndex === $index"
               >
                 @if (editingSubtaskIndex === $index) {
                   <input type="text" [formControl]="subtask" />
 
-                  <div class="subtasks__actions">
+                  <div class="add-task-form__subtasks-actions">
                     <button
-                      class="subtasks__action subtasks__action--delete"
+                      class="add-task-form__subtasks-action add-task-form__subtasks-action--delete"
                       type="button"
                       aria-label="Delete subtask"
                       (click)="deleteSubtask($index)"
                     ></button>
 
                     <button
-                      class="subtasks__action subtasks__action--check"
+                      class="add-task-form__subtasks-action add-task-form__subtasks-action--check"
                       type="button"
                       aria-label="Confirm subtask"
                       (click)="confirmSubtask($index)"
                     ></button>
                   </div>
                 } @else {
-                  <button class="subtasks__title" type="button" (click)="startEditSubtask($index)">
+                  <button
+                    class="add-task-form__subtasks-title"
+                    type="button"
+                    (click)="startEditSubtask($index)"
+                  >
                     {{ subtask.value }}
                   </button>
 
-                  <div class="subtasks__actions subtasks__actions--hover">
+                  <div
+                    class="add-task-form__subtasks-actions add-task-form__subtasks-actions--hover"
+                  >
                     <button
-                      class="subtasks__action subtasks__action--edit"
+                      class="add-task-form__subtasks-action add-task-form__subtasks-action--edit"
                       type="button"
                       aria-label="Edit subtask"
                       (click)="startEditSubtask($index)"
                     ></button>
 
                     <button
-                      class="subtasks__action subtasks__action--delete"
+                      class="add-task-form__subtasks-action add-task-form__subtasks-action--delete"
                       type="button"
                       aria-label="Delete subtask"
                       (click)="deleteSubtask($index)"

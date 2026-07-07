@@ -86,6 +86,12 @@ form {
     margin: 4px 0 0;
     color: rgba(255, 129, 144, 1);
     font-size: 12px;
+    min-height: 15px;
+    visibility: hidden;
+}
+
+.add-task-form__error--visible {
+    visibility: visible;
 }
 
 .priority-buttons__wrapper {
@@ -161,3 +167,35 @@ form {
     }
 }
 
+@media screen and (min-width: 500px) {
+    .priority-buttons__wrapper {
+        button {
+            max-width: inherit;
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .add-task-form__columns {
+        flex-direction: row;
+        gap: 3vw;
+    }
+
+    .add-task-form__left {
+        border-right: 1px solid $main-border;
+        padding-right: 40px;
+    }
+
+    .add-task-form__buttons {
+        bottom: 50px;
+        position: absolute;
+        right: 30px;
+        bottom: 0;
+        background-color: unset;
+    }
+
+    .add-task-form__required-footer-text {
+        position: absolute;
+        bottom: 10px;
+    }
+}

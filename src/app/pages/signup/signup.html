@@ -1,0 +1,100 @@
+<main class="main-wrapper">
+  <header class="header-wrapper d-flex">
+    <img class="logo" src="assets/UI/logo_join.png" alt="company logo" />
+  </header>
+  <section class="content-wrapper d-flex column">
+    <a class="back-arrow" routerLink="/login"
+      ><img src="assets/UI/icon_arrow.png" alt="arrow icon"
+    /></a>
+    <div>
+      <h3 class="login">Sign up</h3>
+      <div class="d-flex center">
+        <div class="underline"></div>
+      </div>
+      <form class="d-flex column input-wrapper" (ngSubmit)="onSubmitSignUp()">
+        <div class="input-icon-wrapper">
+          <input
+            class="input-field"
+            type="text"
+            id="firstname"
+            name="firstName"
+            [(ngModel)]="signUpData.firstName"
+            placeholder="Firstname"
+            required
+          />
+          <img class="user-icon" src="assets/UI/icon_user.png" alt="user icon" />
+        </div>
+
+        <div class="input-icon-wrapper">
+          <input
+            class="input-field"
+            type="text"
+            id="lastname"
+            name="lastName"
+            [(ngModel)]="signUpData.lastName"
+            placeholder="Lastname"
+            required
+          />
+          <img class="user-icon" src="assets/UI/icon_user.png" alt="user icon" />
+        </div>
+
+        <div class="input-icon-wrapper">
+          <input
+            class="input-field"
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="signUpData.email"
+            placeholder="Email"
+            required
+          />
+          <img class="mail-icon" src="assets/UI/icon_mail.png" alt="mail icon" />
+        </div>
+
+        <div class="input-icon-wrapper">
+          <input
+            class="input-field"
+            type="password"
+            id="pwd"
+            name="password"
+            [(ngModel)]="signUpData.password"
+            placeholder="Password"
+            required
+          />
+          <img class="visibility-icon" [src]="iconSrc" (click)="showPassword()" alt="lock icon" />
+        </div>
+
+        <div class="input-icon-wrapper">
+          <input
+            class="input-field"
+            type="password"
+            id="reqPw"
+            name="confirmPassword"
+            [(ngModel)]="signUpData.confirmPassword"
+            placeholder="Confirm Password"
+            required
+          />
+          <img class="visibility-icon" src="assets/UI/icon_locked.png" alt="lock icon" />
+        </div>
+
+        <div class="d-flex center">
+          <input
+            type="checkbox"
+            id="checkPolicy"
+            name="acceptPolicy"
+            [(ngModel)]="signUpData.acceptPolicy"
+            required
+          />
+          <p>
+            I accept the <a class="accept-policy" routerLink="/privacy-police">privacy policy</a>
+          </p>
+        </div>
+        <button class="submit-btn" type="submit">Sign Up</button>
+      </form>
+    </div>
+  </section>
+  <footer class="footer-wrapper d-flex center">
+    <a class="footer-links" routerLink="/privacy-police">Privacy Policy</a>
+    <a class="footer-links" routerLink="/legal-notice">Legal Notice</a>
+  </footer>
+</main>
