@@ -13,6 +13,7 @@ export class App {
   dbService = inject(Supabase);
 
   ngOnInit() {
+    this.dbService.initAuth();
     this.dbService.getContacts();
     //this.dbService.setContact({first_name: 'string2' last_name: 'string2',phone: 'string2', email: 'string2'});
     //this.dbService.updateContact({id:number})

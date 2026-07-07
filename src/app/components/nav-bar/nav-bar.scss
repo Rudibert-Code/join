@@ -30,6 +30,9 @@ nav {
   gap: 4px;
   color: $main_white;
   text-decoration: none;
+  border: none;
+  background: transparent;
+  font: inherit;
 
   p {
     font-family: 'Open Sans', sans-serif;
@@ -43,7 +46,7 @@ nav {
   transition: 0.3s all ease-in-out;
 
   &:hover,
-  &.active{
+  &.active {
     cursor: pointer;
     background-color: rgba(9, 25, 49, 1);
     border-radius: 20px;
@@ -51,10 +54,10 @@ nav {
   }
 
 
-  &:hover .navbar__name p{
+  &:hover .navbar__name p {
     color: white;
   }
-} 
+}
 
 .navbar__icon img {
   width: 24px;
@@ -62,7 +65,7 @@ nav {
   object-fit: contain;
 }
 
-.navbar__name{
+.navbar__name {
   text-decoration: none;
 
   p {
@@ -86,19 +89,19 @@ nav {
     object-fit: contain;
   }
 
-  .navbar__links--legals{
+  .navbar__links--legals {
     display: block;
     align-self: flex-start;
     padding-left: 24px;
 
-    .navbar__name{
+    .navbar__name {
       color: $main_white;
       display: block;
       margin-bottom: 10px;
       text-decoration: none;
       transition: 0.3s all ease-in-out;
 
-      &:hover p{
+      &:hover p {
         color: #fff;
       }
     }
@@ -116,12 +119,12 @@ nav {
     padding-inline: 40px;
 
     &:hover,
-    &.active{
+    &.active {
       border-radius: 0;
     }
   }
 
-  .navbar__icon{
+  .navbar__icon {
     margin-right: 10px;
   }
 }
