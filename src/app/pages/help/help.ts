@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Location } from '@angular/common';
+import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'app-help',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './help.html',
   styleUrl: './help.scss',
 })
-export class Help {}
+export class Help {
+  location = inject(Location);
+
+  goBack() {
+    this.location.back();
+  }
+}
