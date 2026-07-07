@@ -24,8 +24,23 @@
   display: none;
 }
 
-.user_icon_position {
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   padding-right: 16px;
+}
+
+.header__help {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+
+  img {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .user_icon {
@@ -61,7 +76,7 @@
     margin-left: 60px;
   }
 
-  .user_icon_position {
+  .header__actions {
     margin-left: auto;
     padding-right: 32px;
   }

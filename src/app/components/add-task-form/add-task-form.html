@@ -38,6 +38,7 @@
           name="due_date"
           formControlName="due_date"
           [min]="today"
+          [max]="maxDueDate"
           [class.add-task-form__field--invalid]="
             taskForm.controls.due_date.invalid && showValidationErrors
           "
@@ -48,7 +49,7 @@
             taskForm.controls.due_date.invalid && showValidationErrors
           "
         >
-          This field is required
+          Please enter a valid due date
         </p>
       </div>
     </div>
