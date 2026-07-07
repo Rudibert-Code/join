@@ -98,9 +98,19 @@ dialog::backdrop {
     }
   }
 }
-.subtasks {
+.hide{
+  display: none;
+}
+.subtask_container{
   width: 100%;
   display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+.subtasks {
+  width: 100%;
+  flex-direction: row;
   justify-content: start;
   align-items: center;
   margin-bottom: 8px;
@@ -142,15 +152,18 @@ svg {
     margin-bottom: 16px;
   }
 }
+.icon_text{
+  font-size: 1.4rem;
+  color: $main_white;
+  padding: 4px;
+  margin: 0;
+}
 .contacts_icon {
   width: 42px;
   height: 42px;
   display: flex;
   justify-content: center;
   align-items: center;
-  >p{
-    color: $main_white;
-  }
   &_ffa35e {
     border-radius: 100px;
     padding: 4px;
@@ -346,15 +359,41 @@ svg {
   margin-bottom: 16px;
   border-radius: 8px;
   border: 2px solid $main_grey;
-  background-color: white;
-  z-index: 50;
+
   &_list{
     width: 100%;
     height: 120px;
-    overflow: scroll;
-    display: flex;
+    padding: 0 16px;
+    overflow: auto;
+    display: none;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: start;
+    >p{
+      padding-left: 16px;
+    }
+  }
+}
+.dd_contact{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 16px;
+  padding: 8px;
+  margin: 0;
+  &:hover{
+    background-color: $main_white;
+    border-radius: 8px;
+  }
+}
+.contact_selected{
+  border-radius: 8px;
+  background-color: $main_header;
+  >p{
+    color: $main_white;
+  }
+  &:hover{
+    background-color: $main_black;
   }
 }

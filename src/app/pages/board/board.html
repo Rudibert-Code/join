@@ -3,7 +3,7 @@
   <dialog class="ticket" id="ticket_edit">
 
     <section class="edit_header">
-      <button (click)="closeTicketCard()" class="exit_btn"></button>
+      <button (click)="closeTicketCard(false)" class="exit_btn"></button>
     </section>
 
     <section class="edit_input">
@@ -57,19 +57,21 @@
 
     <section class="edit_entry">
       <p>Asigned To</p>
-      <section class="dropdown">
-        <!--<div class="dropdown_list" id="dropdown">
+      <section (click)="openDropDown()" class="dropdown">
+        <dialog class="dropdown_list" id="dropdown_list">
           @for (contact of contacts(); track contact.id) {
-            <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+            <div (click)="selectDropDownContact(contact.id)" class="dd_contact" id="dd_contact_{{ contact.id }}">
+              <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+              <img src="assets/UI/checkbox_default.png" alt="" id="dd_checkbox_{{ contact.id }}">
+            </div>
           }
-        </div>-->
+        </dialog>
       </section>
       <!--Contact List-->
       <div class="subtask_edit_contact">
         @for (contact of contactsCache; track $index) {
-          
             <div class="" id="{{ contact.id }}">
-              <p>{{ contact.initials }}</p>
+              <p class="icon_text">{{ contact.initials }}</p>
             </div>
         }
       </div>
@@ -117,7 +119,7 @@
           <!--{{ task.category }}-->
         </p>
       </div>
-      <button (click)="closeTicketCard()" class="exit_btn"></button>
+      <button (click)="closeTicketCard(false)" class="exit_btn"></button>
     </section>
     <!--<h2 class="title"> {{ task.title }} </h2>-->
     <h2 class="title" id="ticket_title"></h2>
@@ -143,7 +145,9 @@
       <div>
         @for (contact of contactsCache; track $index) {
           <div class="contacts">
-            <p class="contacts_icon_{{ contact.color }}">{{ contact.initials }}</p>
+            <div class="contacts_icon_{{ contact.color }}">
+              <p class="icon_text">{{ contact.initials }}</p>
+            </div>
             <p class="contacts">{{ contact.name }} {{ contact.surname }}</p>
           </div>
         }
@@ -151,9 +155,8 @@
     </section>
     <section class="ticket_details">
       <p class="foreword">Subtasks:</p>
-      <div>
+      <div class="subtask_container">
         <!--Generate subtasks here-->
-
         @for (subtask of subtasksCache; track $index) {
           <div class="subtasks">
             <button

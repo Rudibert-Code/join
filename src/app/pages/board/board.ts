@@ -1,7 +1,7 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Supabase, Task, Subtask, TaskContacts } from '../../supabase';
+import { Supabase, Task, Subtask, TaskContacts, Contact } from '../../supabase';
 import { RouterLink } from '@angular/router';
 
 interface subTask {
@@ -11,7 +11,7 @@ interface subTask {
 }
 
 interface contacts {
-  id?:number;
+  id:number;
   name: string;
   surname: string;
   initials: string;
@@ -169,10 +169,6 @@ export class Board implements OnInit {
     dialogWindow.showModal();
   }
 
-
-
-
-
   ticketCardID:number = 0;
   newDialogEditTitle:string = "";
   newDialogDescription:string = "";
@@ -193,7 +189,7 @@ export class Board implements OnInit {
         dialogPrio = this.tasks()[index].priority;
       }
     }
-    this.closeTicketCard();
+    this.closeTicketCard(false);
     this.editTicketPrio(dialogPrio);
     this.setContactColor(this.ticketCardID);
     dialogEdit.showModal();
@@ -231,11 +227,10 @@ export class Board implements OnInit {
     this.newDialogDescription = ticketDescription.value;
     this.newDialogDueDate = ticketDueDate.value;
 
-
     this.db.updateTaskTitle(this.ticketCardID, this.newDialogEditTitle);
     this.db.updateTaskDescription(this.ticketCardID, this.newDialogDescription);
     this.db.updateTaskDueDate(this.ticketCardID, this.newDialogDueDate);
-    this.closeTicketCard();
+    this.closeTicketCard(true);
   }
 
   setContactColor(taskId:number){
@@ -253,7 +248,6 @@ export class Board implements OnInit {
       }
     }
   }
-
 
   subtaskInput:boolean = false;
 
@@ -302,10 +296,6 @@ export class Board implements OnInit {
     targetSubtask.style.display="none";
     this.db.deleteSubtask(subtask.id);
   }
-
-
-
-
 
   contactsCache: contacts[] = [];
 
@@ -393,15 +383,19 @@ export class Board implements OnInit {
     ticketPrioIcon.src = iconURL;
   }
 
-  closeTicketCard() {
+  closeTicketCard(changes:boolean) {
     let dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
     let dialogEdit = document.getElementById('ticket_edit') as HTMLDialogElement;
     dialogWindow.close();
     dialogEdit.close();
+    if (changes == true) {
+      this.assignContactsToTask(this.openTicketID, this.ddContacts);
+    }
+    this.closeDropDown();
   }
 
   deleteTicket() {
-    this.closeTicketCard();
+    this.closeTicketCard(false);
     for (let index = 0; index < this.subtasks().length; index++) {
       if (this.subtasks()[index].task_id == this.openTicketID) {
         this.db.deleteSubtask(this.subtasks()[index].id);
@@ -424,6 +418,78 @@ export class Board implements OnInit {
 
     this.db.updateSubtasks(x.id, subTaskState);
   }
+
+  
+  ddContacts:number[]=[];
+  ddOpen:boolean = false;
+
+  openDropDown(){
+    let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
+    if (this.ddOpen == false) {
+      this.ddOpen = true;
+      dropdownWindow.style.display="flex";
+      for (let index = 0; index < this.db.task_contacts().length; index++) {
+        if (this.db.task_contacts()[index].task_id == this.openTicketID) {
+          let currentContactID = Number(this.db.task_contacts()[index].contact_id);
+          this.selectDropDownContact(currentContactID);
+        }
+      } 
+    }
+  }
+
+  closeDropDown(){
+    let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
+    dropdownWindow.style.display="none";
+    for (let index = 0; index < this.ddContacts.length; index++) {
+      let contact = document.getElementById("dd_contact_" + String(this.ddContacts[index])) as HTMLDivElement;
+      let checkBox = document.getElementById("dd_checkbox_" + String(this.ddContacts[index])) as HTMLImageElement;
+      contact.classList.remove("contact_selected");
+      checkBox.src="assets/UI/checkbox_default.png"
+    }
+    this.ddContacts=[]
+    this.ddOpen = false;
+  }
+
+  selectDropDownContact(contactID:number){
+    let selectedContact = document.getElementById("dd_contact_" + String(contactID)) as HTMLDivElement;
+    let selectedCheckBox = document.getElementById("dd_checkbox_" + String(contactID)) as HTMLImageElement;
+
+    if (this.ddContacts.includes(contactID) == false) {
+      this.ddContacts.push(contactID); 
+      selectedContact.classList.add("contact_selected");
+      selectedCheckBox.src="assets/UI/checkbox_selected_white.png"
+    } 
+    else if (this.ddContacts.includes(contactID) == true) {
+      this.ddContacts.indexOf(contactID) !== -1 && this.ddContacts.splice(this.ddContacts.indexOf(contactID),1);
+      selectedContact.classList.remove("contact_selected");
+      selectedCheckBox.src="assets/UI/checkbox_default.png"
+    }
+  }
+
+  async assignContactsToTask(taskId: number, contactIds: number[]) {
+    this.filterContacts(taskId);
+    const taskContacts = this.buildTaskContacts(taskId, contactIds);
+    console.table(taskContacts)
+    await this.db.addTaskContacts(taskContacts);
+  }
+
+  filterContacts(taskID: number){
+    let entryCounter:number = 0;
+    for (let index = 0; index < this.db.task_contacts().length; index++) {
+      if (this.db.task_contacts()[index].task_id == taskID) {
+        entryCounter++
+      }
+    }
+    this.ddContacts.splice(0, entryCounter);
+  }
+
+  buildTaskContacts(taskId: number, contactIds: number[]) {
+    return contactIds.map((contactId) => ({
+      task_id: taskId,
+      contact_id: contactId,
+    }));
+  }
+
 
   getSubtaskAmount(taskId: number): Subtask[] {
     return this.subtasks().filter((subtask) => subtask.task_id === taskId);
