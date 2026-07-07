@@ -1,6 +1,14 @@
 import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  ReactiveFormsModule,
+  FormControl,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { Contact, Supabase } from '../../supabase';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,6 +24,7 @@ export class AddTaskForm {
   private elementRef = inject(ElementRef<HTMLElement>);
 
   today = new Date().toISOString().split('T')[0];
+  maxDueDate = '2099-12-31';
   isAssignedDropdownOpen = false;
   isSubtaskInputActive = false;
   editingSubtaskIndex: number | null = null;
@@ -34,7 +43,7 @@ export class AddTaskForm {
     description: new FormControl(''),
     due_date: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, this.dueDateValidator.bind(this)],
     }),
     priority: new FormControl<'urgent' | 'medium' | 'low'>('medium', {
       nonNullable: true,
@@ -66,6 +75,20 @@ export class AddTaskForm {
     if (status) {
       this.taskStatus = status;
     }
+  }
+
+  dueDateValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value) {
+      return null;
+    }
+
+    if (value < this.today || value > this.maxDueDate) {
+      return { invalidDueDate: true };
+    }
+
+    return null;
   }
 
   setPriority(priority: 'urgent' | 'medium' | 'low') {
