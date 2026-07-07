@@ -28,7 +28,17 @@ export class Summary {
     }
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.getDisplayName();
+    this.loadTasks();
+    this.getGreetingText();
+  }
+
+  async loadTasks() {
+    await this.db.getTasks();
+  }
+
+  async getDisplayName() {
     try {
       const {
         data: { user },
@@ -43,12 +53,6 @@ export class Summary {
     } catch (error) {
       this.displayName = 'Guest';
     }
-    this.loadTasks();
-    this.getGreetingText()
-  }
-
-  async loadTasks() {
-    await this.db.getTasks();
   }
 
   async getGreetingText() {

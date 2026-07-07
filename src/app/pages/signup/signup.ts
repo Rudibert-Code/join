@@ -39,11 +39,9 @@ export class Signup {
 
   async onSubmitSignUp() {
     if (this.signUpData.password !== this.signUpData.confirmPassword) {
-      console.error('Passwörter stimmen nicht überein!');
       return;
     }
     if (!this.signUpData.acceptPolicy) {
-      console.error('Bitte akzeptiere die Datenschutzbestimmungen!');
       return;
     }
     const { data, error } = await this.db.signUpWithEmail(
@@ -53,10 +51,8 @@ export class Signup {
       this.signUpData.lastName,
     );
     if (error) {
-      console.error('Registrierung bei Supabase fehlgeschlagen:', error.message);
       return;
     }
-    console.log('User erfolgreich verschlüsselt angelegt:', data);
     this.router.navigate(['/login']);
   }
 }

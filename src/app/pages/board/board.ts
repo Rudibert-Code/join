@@ -127,10 +127,7 @@ export class Board implements OnInit {
 
   async mobileMoveToStatus(id: number, status: string) {
     await this.db.updateTaskStatus(id, status);
-
     this.loadTasks();
-
-    console.log('Move Task ID:', id, 'to status:', status);
   }
 
   getTaskCardClass(category: string): string {

@@ -22,9 +22,7 @@ export class LogIn {
 
   async onSubmitLogin() {
     const { data, error } = await this.db.signIn(this.loginData.email, this.loginData.password);
-    console.log('Daten von Supabase Auth:', data);
     if (error) {
-      console.error('Login fehlgeschlagen:', error.message);
       return;
     }
     if (data.user) {
