@@ -2,9 +2,7 @@
 <section class="header_base">
   <img src="assets/UI/logo_join.png" alt="" />
   <p class="header__title">Kanban Project Management Tool</p>
-  <div (click)="openSubMenu()" class="user_icon_position">
-    <div class="user_icon">
-      <p>N/A</p>
+  <div class="user_icon_position"></div>
 
   @if (db.isLoggedIn()) {
     <div class="header__actions">
@@ -12,9 +10,11 @@
         <img src="assets/UI/vector/icon_help.svg" alt="" />
       </a>
 
-      <div class="user_icon">
+      <div (click)="openSubMenu()" class="user_icon">
+        <!--<p>N/A</p>-->
         <p>{{ userInitials() }}</p>
       </div>
     </div>
   }
 </section>
+
