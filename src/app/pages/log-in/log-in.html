@@ -1,4 +1,4 @@
-<main class="main-wrapper">
+<main class="main-wrapper d-flex column">
   <div id="splash-container">
     <div class="splash-screen"></div>
     <header class="d-flex left-bound">
@@ -20,17 +20,28 @@
             [(ngModel)]="loginData.email"
             placeholder="Email"
             required
+            email
+            #emailInput="ngModel"
           />
           <img class="mail-icon" src="assets/UI/icon_mail.png" alt="mail icon" />
+        </div>
+        <div class="placeholder-error">
+          <div class="placeholder-errors">
+            @if (emailInput.invalid && emailInput.touched) {
+              <span class="error-message">Please enter a valid email address.</span>
+            }
+          </div>
         </div>
         <div class="input-icon-wrapper">
           <input
             class="input-field"
+            id="pwd"
             type="password"
             name="password"
             [(ngModel)]="loginData.password"
             placeholder="Password"
             required
+            minlength="8"
           />
           <img
             class="visibility-icon"
@@ -39,10 +50,15 @@
             (click)="showPassword()"
           />
         </div>
+        <div class="placeholder-error">
+          @if (loginError) {
+            <span class="error-message">{{ loginError }}</span>
+          }
+        </div>
       </form>
     </div>
-    <div class="d-flex column">
-      <button class="dark-btn" (click)="onSubmitLogin()">Log In</button>
+    <div class="buttons-wrapper d-flex column">
+      <button class="dark-btn"  (click)="onSubmitLogin()">Log In</button>
       <button class="white-btn" (click)="onGuestLogin()">Guest Log In</button>
     </div>
   </section>

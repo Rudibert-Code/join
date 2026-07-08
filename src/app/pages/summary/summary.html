@@ -1,4 +1,8 @@
 <section class="main-wrapper">
+  <section class="splash-container">
+    <h3 class="black-txt margin-corection">{{ greetingText }}</h3>
+    <h3 class="margin-corection">{{ displayName }}</h3>
+  </section>
   <header class="header-wrapper">
     <h2 class="margin-corection">Join 360</h2>
     <div class="d-flex reverse">
@@ -46,10 +50,7 @@
     <section class="d-flex space-center lower-section">
       <div class="infobox-low">
         <h3 class="margin-corection black-txt txt-center">{{ tasks().length }}</h3>
-        <p class="margin-corection">
-          Tasks <br />
-          in Board
-        </p>
+        <p class="margin-corection">Tasks in Board</p>
       </div>
       <div class="infobox-low">
         <h3 class="margin-corection black-txt txt-center">{{ progressTasks.length }}</h3>
@@ -61,8 +62,4 @@
       </div>
     </section>
   </main>
-  <section class="splash-container">
-    <h3 class="black-txt margin-corection">{{ greetingText }}</h3>
-    <h3 class="margin-corection">{{ displayName }}</h3>
-  </section>
 </section>

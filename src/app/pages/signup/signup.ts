@@ -15,7 +15,7 @@ export class Signup {
   iconSrc = 'assets/UI/icon_locked.png';
   private visibilityOnSrc = 'assets/UI/icon_visibility.png';
   private visibilityOffSrc = 'assets/UI/icon_locked.png';
-
+  passwordsDoNotMatch = false;
   signUpData = {
     firstName: '',
     lastName: '',
@@ -39,11 +39,18 @@ export class Signup {
 
   async onSubmitSignUp() {
     if (this.signUpData.password !== this.signUpData.confirmPassword) {
+      this.passwordsDoNotMatch = true;
       return;
     }
+    this.passwordsDoNotMatch = false;
     if (!this.signUpData.acceptPolicy) {
       return;
     }
+    if (this.signUpData.password !== this.signUpData.confirmPassword) {
+      this.passwordsDoNotMatch = true;
+      return;
+    }
+    this.passwordsDoNotMatch = false;
     const { data, error } = await this.db.signUpWithEmail(
       this.signUpData.email,
       this.signUpData.password,

@@ -1,97 +1,143 @@
-<main class="main-wrapper">
+<main class="main-wrapper d-flex column">
   <header class="header-wrapper d-flex">
     <img class="logo" src="assets/UI/logo_join.png" alt="company logo" />
   </header>
-  <section class="content-wrapper d-flex column">
-    <a class="back-arrow" routerLink="/login"
-      ><img src="assets/UI/icon_arrow.png" alt="arrow icon"
-    /></a>
-    <div>
-      <h3 class="login">Sign up</h3>
-      <div class="d-flex center">
-        <div class="underline"></div>
-      </div>
-      <form class="d-flex column input-wrapper" (ngSubmit)="onSubmitSignUp()">
-        <div class="input-icon-wrapper">
-          <input
-            class="input-field"
-            type="text"
-            id="firstname"
-            name="firstName"
-            [(ngModel)]="signUpData.firstName"
-            placeholder="Firstname"
-            required
-          />
-          <img class="user-icon" src="assets/UI/icon_user.png" alt="user icon" />
+  <section class="d-flex center">
+    <section class="content-wrapper d-flex column">
+      <div>
+        <div class="d-flex align-center">
+          <a class="back-arrow" routerLink="/login"
+            ><img src="assets/UI/icon_arrow.png" alt="arrow icon"
+          /></a>
+          <h3 class="login">Sign up</h3>
         </div>
-
-        <div class="input-icon-wrapper">
-          <input
-            class="input-field"
-            type="text"
-            id="lastname"
-            name="lastName"
-            [(ngModel)]="signUpData.lastName"
-            placeholder="Lastname"
-            required
-          />
-          <img class="user-icon" src="assets/UI/icon_user.png" alt="user icon" />
-        </div>
-
-        <div class="input-icon-wrapper">
-          <input
-            class="input-field"
-            type="email"
-            id="email"
-            name="email"
-            [(ngModel)]="signUpData.email"
-            placeholder="Email"
-            required
-          />
-          <img class="mail-icon" src="assets/UI/icon_mail.png" alt="mail icon" />
-        </div>
-
-        <div class="input-icon-wrapper">
-          <input
-            class="input-field"
-            type="password"
-            id="pwd"
-            name="password"
-            [(ngModel)]="signUpData.password"
-            placeholder="Password"
-            required
-          />
-          <img class="visibility-icon" [src]="iconSrc" (click)="showPassword()" alt="lock icon" />
-        </div>
-
-        <div class="input-icon-wrapper">
-          <input
-            class="input-field"
-            type="password"
-            id="reqPw"
-            name="confirmPassword"
-            [(ngModel)]="signUpData.confirmPassword"
-            placeholder="Confirm Password"
-            required
-          />
-          <img class="visibility-icon" src="assets/UI/icon_locked.png" alt="lock icon" />
-        </div>
-
         <div class="d-flex center">
-          <input
-            type="checkbox"
-            id="checkPolicy"
-            name="acceptPolicy"
-            [(ngModel)]="signUpData.acceptPolicy"
-            required
-          />
-          <p>
-            I accept the <a class="accept-policy" routerLink="/privacy-police">privacy policy</a>
-          </p>
+          <div class="underline"></div>
         </div>
-        <button class="submit-btn" type="submit">Sign Up</button>
-      </form>
-    </div>
+        <form
+          class="d-flex column input-wrapper"
+          #signupForm="ngForm"
+          (ngSubmit)="onSubmitSignUp()"
+        >
+          <div class="input-icon-wrapper">
+            <input
+              class="input-field"
+              type="text"
+              id="firstname"
+              name="firstName"
+              [(ngModel)]="signUpData.firstName"
+              placeholder="Firstname"
+              required
+              minlength="3"
+              #firstnameInput="ngModel"
+            />
+            <img class="user-icon" src="assets/UI/icon_user.png" alt="user icon" />
+          </div>
+          <div class="placeholder-errors leftbound">
+            @if (firstnameInput.invalid && firstnameInput.touched) {
+              <span class="error-message"
+                >Please enter your first name with at least 3 characters.</span
+              >
+            }
+          </div>
+          <div class="input-icon-wrapper">
+            <input
+              class="input-field"
+              type="text"
+              id="lastname"
+              name="lastName"
+              [(ngModel)]="signUpData.lastName"
+              placeholder="Lastname"
+              required
+              minlength="3"
+              #lastnameInput="ngModel"
+            />
+            <img class="user-icon" src="assets/UI/icon_user.png" alt="user icon" />
+          </div>
+          <div class="placeholder-errors leftbound">
+            @if (lastnameInput.invalid && lastnameInput.touched) {
+              <span class="error-message"
+                >Please enter your last name with at least 3 characters.</span
+              >
+            }
+          </div>
+          <div class="input-icon-wrapper">
+            <input
+              class="input-field"
+              type="email"
+              id="email"
+              name="email"
+              [(ngModel)]="signUpData.email"
+              placeholder="Email"
+              required
+              email
+              #emailInput="ngModel"
+            />
+            <img class="mail-icon" src="assets/UI/icon_mail.png" alt="mail icon" />
+          </div>
+          <div class="placeholder-errors leftbound">
+            @if (emailInput.invalid && emailInput.touched) {
+              <span class="error-message">Please enter a valid email address.</span>
+            }
+          </div>
+          <div class="input-icon-wrapper">
+            <input
+              class="input-field"
+              type="password"
+              id="pwd"
+              name="password"
+              [(ngModel)]="signUpData.password"
+              placeholder="Password"
+              required
+              minlength="8"
+              #passwordInput="ngModel"
+            />
+            <img class="visibility-icon" [src]="iconSrc" (click)="showPassword()" alt="lock icon" />
+          </div>
+          <div class="placeholder-errors leftbound">
+            @if (passwordInput.invalid && passwordInput.touched) {
+              <span class="error-message"
+                >Please enter at least 8 characters in uppercase, lowercase & special signs</span
+              >
+            }
+          </div>
+          <div class="input-icon-wrapper">
+            <input
+              class="input-field"
+              type="password"
+              id="reqPw"
+              name="confirmPassword"
+              [(ngModel)]="signUpData.confirmPassword"
+              placeholder="Confirm Password"
+              required
+              #confirmPwInput="ngModel"
+            />
+            <img class="visibility-icon" src="assets/UI/icon_locked.png" alt="lock icon" />
+          </div>
+          <div class="placeholder-errors leftbound">
+            @if (confirmPwInput.invalid && confirmPwInput.touched) {
+              <span class="error-message">Please confirm your password.</span>
+            }
+            @if (passwordsDoNotMatch) {
+              <span class="error-message">Passwords do not match!</span>
+            }
+          </div>
+          <div class="d-flex center">
+            <input
+              type="checkbox"
+              id="checkPolicy"
+              name="acceptPolicy"
+              [(ngModel)]="signUpData.acceptPolicy"
+              required
+            />
+            <p>
+              I accept the <a class="accept-policy" routerLink="/privacy-police">privacy policy</a>
+            </p>
+          </div>
+          <button class="submit-btn" type="submit" [disabled]="signupForm.invalid">Sign Up</button>
+        </form>
+      </div>
+    </section>
   </section>
   <footer class="footer-wrapper d-flex center">
     <a class="footer-links" routerLink="/privacy-police">Privacy Policy</a>

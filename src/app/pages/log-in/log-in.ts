@@ -14,15 +14,20 @@ import { FormsModule } from '@angular/forms';
 export class LogIn {
   db = inject(Supabase);
   router = inject(Router);
-
+  loginError: string = '';
   loginData = {
     email: '',
     password: '',
   };
+  iconSrc = 'assets/UI/icon_visibility-off.png';
+  private visibilityOnSrc = 'assets/UI/icon_visibility.png';
+  private visibilityOffSrc = 'assets/UI/icon_visibility-off.png';
 
   async onSubmitLogin() {
+    this.loginError = '';
     const { data, error } = await this.db.signIn(this.loginData.email, this.loginData.password);
     if (error) {
+      this.loginError = 'Email or Password does not exist.';
       return;
     }
     if (data.user) {
@@ -36,22 +41,10 @@ export class LogIn {
     });
   }
 
-  onRealLogin(userFromDatabase: User) {
-    this.router.navigate(['/summary'], {
-      state: {
-        firstName: userFromDatabase.first_name,
-        lastName: userFromDatabase.last_name,
-      },
-    });
-  }
-
   ngOnInit() {
     this.startAnimation();
   }
 
-  iconSrc = 'assets/UI/icon_visibility-off.png';
-  private visibilityOnSrc = 'assets/UI/icon_visibility.png';
-  private visibilityOffSrc = 'assets/UI/icon_visibility-off.png';
   showPassword() {
     const password = document.getElementById('pwd') as HTMLInputElement | null;
     if (!password) return;
