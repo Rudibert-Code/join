@@ -1,4 +1,4 @@
-import { Injectable, Component, HostListener, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Supabase } from '../../supabase';
 import { timeout } from 'rxjs';
@@ -12,24 +12,19 @@ import { timeout } from 'rxjs';
   styleUrl: './submenu-popup.scss',
 })
 
-@Injectable({
-  providedIn: 'root',
-})
-
 export class SubmenuPopup {
   supabase = inject(Supabase);
-  isActive:any = false;
-  
+  isActive: any = false;
 
-  toggleSubMenu(){
+  toggleSubMenu() {
     let submenuBox = document.getElementById('submenu') as HTMLDialogElement;
     if (this.isActive == false) {
-      submenuBox.classList.remove("out");
-      submenuBox.classList.add("in");
+      submenuBox.classList.remove('out');
+      submenuBox.classList.add('in');
       this.isActive = true;
-    } else{
-      submenuBox.classList.remove("in");
-      submenuBox.classList.add("out");
+    } else {
+      submenuBox.classList.remove('in');
+      submenuBox.classList.add('out');
       this.isActive = false;
     }
   }
@@ -38,14 +33,13 @@ export class SubmenuPopup {
   closeSubMenuPopUp(event: MouseEvent) {
     const clickedElement = event.target as HTMLElement;
     const submenuPopUp = document.getElementById('submenu');
-    if (this.isActive == true && clickedElement?.contains(submenuPopUp) == false) {
+
+    if (this.isActive == true && !submenuPopUp?.contains(clickedElement)) {
       this.toggleSubMenu();
-    } else{
-      console.log(this.isActive , clickedElement?.contains(submenuPopUp))
     }
   }
 
-  signOut(){
+  signOut() {
     this.supabase.signOut();
   }
 }

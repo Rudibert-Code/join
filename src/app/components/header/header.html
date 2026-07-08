@@ -1,4 +1,4 @@
-<app-submenu-popup></app-submenu-popup>
+<app-submenu-popup #submenuPopup></app-submenu-popup>
 <section class="header_base">
   <img src="assets/UI/logo_join.png" alt="" />
   <p class="header__title">Kanban Project Management Tool</p>
@@ -10,7 +10,7 @@
         <img src="assets/UI/vector/icon_help.svg" alt="" />
       </a>
 
-      <div (click)="openSubMenu()" class="user_icon">
+      <div (click)="submenuPopup.toggleSubMenu(); $event.stopPropagation()" class="user_icon">
         <!--<p>N/A</p>-->
         <p>{{ userInitials() }}</p>
       </div>
