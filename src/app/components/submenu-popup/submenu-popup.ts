@@ -1,6 +1,9 @@
 import { Injectable, Component, HostListener, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Supabase } from '../../supabase';
+import { timeout } from 'rxjs';
+
+//let isActive:any = false;
 
 @Component({
   selector: 'app-submenu-popup',
@@ -15,8 +18,8 @@ import { Supabase } from '../../supabase';
 
 export class SubmenuPopup {
   supabase = inject(Supabase);
-
-  isActive:boolean = false;
+  isActive:any = false;
+  
 
   toggleSubMenu(){
     let submenuBox = document.getElementById('submenu') as HTMLDialogElement;
@@ -31,16 +34,18 @@ export class SubmenuPopup {
     }
   }
 
-  signOut(){
-    this.supabase.signOut();
-  }
-  
   @HostListener('document:click', ['$event'])
   closeSubMenuPopUp(event: MouseEvent) {
     const clickedElement = event.target as HTMLElement;
     const submenuPopUp = document.getElementById('submenu');
-    if (!submenuPopUp?.contains(clickedElement)) {
-      this.toggleSubMenu(); 
+    if (this.isActive == true && clickedElement?.contains(submenuPopUp) == false) {
+      this.toggleSubMenu();
+    } else{
+      console.log(this.isActive , clickedElement?.contains(submenuPopUp))
     }
+  }
+
+  signOut(){
+    this.supabase.signOut();
   }
 }
