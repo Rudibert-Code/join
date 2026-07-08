@@ -1,0 +1,57 @@
+@use '../../../styles/variables' as *;
+
+@keyframes fadeIn {
+  0% {left: 100%;}
+  100% {left: calc(100% - 166px);}
+}
+@keyframes fadeOut {
+  0% {left: calc(100% - 166px);}
+  100% {left: 100%;}
+}
+
+.in{
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+.out{
+    animation-name: fadeOut;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+.help{
+    display: none;
+}
+.submenu{
+    width: 150px;
+    border-radius: 16px 0 16px 16px;
+    background-color: $main_header;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 80px;
+    left: 100%;
+    gap: 8px;
+    z-index: 100;
+
+    &_btn{
+        cursor: pointer;
+        width: 100%;
+        font-weight:lighter;
+        color: $main_white;
+        padding: 8px;
+        margin: 0;
+
+        &:hover{
+            background-color: #2A3D59;
+        }
+    }
+}
+
+@media( max-width: 1024px ){
+    .help{
+        display: flex;
+    }
+}

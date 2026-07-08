@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, User as SupabaseUser } from '@supabase/supabase-js';
 
 export interface Contact {
   id: number;
@@ -78,8 +78,30 @@ export class Supabase {
   subtasks = signal<Subtask[]>([]);
   contacts = signal<Contact[]>([]);
   task_contacts = signal<TaskContacts[]>([]);
-  currentUser: User | null = null;
+  //currentUser: User | null = null;
   today = new Date().toISOString().split('T')[0];
+  authUser = signal<SupabaseUser | null>(null);
+  isGuest = signal(false);
+
+  isLoggedIn() {
+    return !!this.authUser() || this.isGuest();
+  }
+
+  async initAuth() {
+    const {
+      data: { user },
+    } = await this.supabase.auth.getUser();
+
+    this.authUser.set(user);
+
+    this.supabase.auth.onAuthStateChange((_event, session) => {
+      this.authUser.set(session?.user ?? null);
+
+      if (session?.user) {
+        this.isGuest.set(false);
+      }
+    });
+  }
 
   /*
    * this function read all contacts from the db and set it
@@ -410,7 +432,22 @@ export class Supabase {
       email: email,
       password: password,
     });
+    if (data.user) {
+      this.authUser.set(data.user);
+      this.isGuest.set(false);
+    }
     return { data, error };
+  }
+
+  signInAsGuest() {
+    this.authUser.set(null);
+    this.isGuest.set(true);
+  }
+
+  async signOut() {
+    await this.supabase.auth.signOut();
+    this.authUser.set(null);
+    this.isGuest.set(false);
   }
 
   async getCurrentUser() {

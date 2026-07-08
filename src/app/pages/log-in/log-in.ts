@@ -36,6 +36,8 @@ export class LogIn {
   }
 
   onGuestLogin() {
+    this.db.signInAsGuest();
+    
     this.router.navigate(['/summary'], {
       state: { userName: 'Guest' },
     });

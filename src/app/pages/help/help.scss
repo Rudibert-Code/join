@@ -1,0 +1,35 @@
+.help-page {
+  position: relative;
+  max-width: 900px;
+  padding: 80px 32px;
+}
+
+.help-page__back {
+  position: absolute;
+  top: 88px;
+  right: 32px;
+  color: #29abe2;
+  font-size: 32px;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+h1 {
+  margin: 0 0 24px;
+  font-size: 48px;
+}
+
+h2 {
+  margin-top: 32px;
+  font-size: 24px;
+}
+
+p {
+  font-size: 16px;
+}
+
+li {
+  margin-bottom: 16px;
+}
