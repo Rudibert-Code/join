@@ -11,11 +11,6 @@ import { SubmenuPopup } from '../submenu-popup/submenu-popup';
 })
 export class Header {
   db = inject(Supabase);
-  submanu = inject(SubmenuPopup);
-  
-  openSubMenu(){
-    this.submanu.toggleSubMenu();
-  }
 
   userInitials = computed(() => {
     if (this.db.isGuest()) {
