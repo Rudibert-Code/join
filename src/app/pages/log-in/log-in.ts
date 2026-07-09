@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './log-in.html',
   styleUrls: ['./log-in.scss'],
 })
+
 export class LogIn {
   db = inject(Supabase);
   router = inject(Router);
@@ -24,7 +25,6 @@ export class LogIn {
   private visibilityOffSrc = 'assets/UI/icon_visibility-off.png';
 
   async onSubmitLogin() {
-    this.loginError = '';
     const { data, error } = await this.db.signIn(this.loginData.email, this.loginData.password);
     if (error) {
       this.loginError = 'Email or Password does not exist.';

@@ -13,9 +13,9 @@ export interface Contact {
 export interface newContact {
   first_name: string;
   last_name: string;
-  phone: string;
+  phone?: string;
   email: string;
-  color: string;
+  color?: string;
 }
 
 export interface Task {
@@ -78,7 +78,6 @@ export class Supabase {
   subtasks = signal<Subtask[]>([]);
   contacts = signal<Contact[]>([]);
   task_contacts = signal<TaskContacts[]>([]);
-  //currentUser: User | null = null;
   today = new Date().toISOString().split('T')[0];
   authUser = signal<SupabaseUser | null>(null);
   isGuest = signal(false);
@@ -91,21 +90,15 @@ export class Supabase {
     const {
       data: { user },
     } = await this.supabase.auth.getUser();
-
     this.authUser.set(user);
-
     this.supabase.auth.onAuthStateChange((_event, session) => {
       this.authUser.set(session?.user ?? null);
-
       if (session?.user) {
         this.isGuest.set(false);
       }
     });
   }
 
-  /*
-   * this function read all contacts from the db and set it
-   */
   async getContacts() {
     const { data: contacts, error } = await this.supabase
       .from('contacts')
@@ -115,18 +108,13 @@ export class Supabase {
       console.error('Supabase getContacts error', error);
       return;
     }
-
     if (!contacts) {
       this.contacts.set([]);
       return;
     }
-
     this.contacts.set(contacts);
   }
 
-  /*
-   * this function set the data in the Contactlist Component
-   */
   async setContact(newContact: newContact) {
     const { data, error } = await this.supabase.from('contacts').insert([newContact]).select();
     if (data) {
@@ -135,47 +123,29 @@ export class Supabase {
     return data;
   }
 
-  /*
-   * this function update the db with the form (edit)
-   *
-   * @param {number} id - This is the id you want to change the properties
-   */
   async updateContact(id: number, updatedContact: Partial<Contact>) {
     const { data, error } = await this.supabase
       .from('contacts')
       .update(updatedContact)
       .eq('id', id)
       .select();
-
     if (error) {
       console.error('Supabase updateContact error', error);
       return;
     }
-
     await this.getContacts();
-
     return data;
   }
 
-  /*
-   * this function delete the id in the db
-   *
-   * @param {number} id - This is the id you want to delete
-   */
   async deleteContact(id: number) {
     const { error } = await this.supabase.from('contacts').delete().eq('id', id);
-
     if (error) {
       console.error('Supabase deleteContact error', error);
       return;
     }
-
     await this.getContacts();
   }
 
-  /*
-   * this function sort the data in the Contactlist Component
-   */
   async sortContact() {
     const { data, error } = await this.supabase
       .from('contacts')
@@ -189,11 +159,9 @@ export class Supabase {
       .select('*')
       .eq('id', contactId)
       .single();
-
     if (error) {
       throw error;
     }
-
     return data;
   }
 
@@ -202,41 +170,34 @@ export class Supabase {
       .from('tasks')
       .select('id, title, description, due_date, priority, category, status')
       .order('title', { ascending: true });
-
     if (error) {
       console.error('Supabase getTasks error', error);
       this.tasks.set([]);
       return [];
     }
-
     if (!tasks) {
       this.tasks.set([]);
       return [];
     }
-
     this.tasks.set(tasks);
     return tasks;
   }
 
   async deleteTask(id: number) {
     const { error } = await this.supabase.from('tasks').delete().eq('id', id);
-
     if (error) {
       console.error('Supabase deleteTask error', error);
       return;
     }
-
     await this.getTasks();
   }
 
   async deleteSubtask(id: number) {
     const { error } = await this.supabase.from('subtasks').delete().eq('id', id);
-
     if (error) {
       console.error('Supabase deleteSubtask error', error);
       return;
     }
-
     await this.getSubtasks();
   }
 
@@ -245,18 +206,15 @@ export class Supabase {
       .from('subtasks')
       .select('id,task_id,title,is_done,created_at')
       .order('created_at', { ascending: true });
-
     if (error) {
       console.error('Supabase getSubtasks error', error);
       this.subtasks.set([]);
       return [];
     }
-
     if (!subtasks) {
       this.subtasks.set([]);
       return [];
     }
-
     this.subtasks.set(subtasks);
     return subtasks;
   }
@@ -265,18 +223,15 @@ export class Supabase {
     const { data: task_contacts, error } = await this.supabase
       .from('task_contacts')
       .select('task_id,contact_id');
-
     if (error) {
       console.error('Supabase getTaskToContacts error', error);
       this.task_contacts.set([]);
       return [];
     }
-
     if (!task_contacts) {
       this.task_contacts.set([]);
       return [];
     }
-
     this.task_contacts.set(task_contacts);
     return task_contacts;
   }
@@ -285,26 +240,21 @@ export class Supabase {
     if (taskContacts.length === 0) {
       return [];
     }
-
     const { data, error } = await this.supabase.from('task_contacts').insert(taskContacts).select();
-
     if (error) {
       console.error('Supabase addTaskContacts error', error);
       return;
     }
-
     await this.getTaskToContacts();
     return data;
   }
 
   async addTask(newTask: NewTask) {
     const { data, error } = await this.supabase.from('tasks').insert([newTask]).select().single();
-
     if (error) {
       console.error('Supabase addTask error', error);
       return;
     }
-
     await this.getTasks();
     return data;
   }
@@ -314,7 +264,6 @@ export class Supabase {
       return [];
     }
     const { data, error } = await this.supabase.from('subtasks').insert(newSubtasks).select();
-
     if (error) {
       console.error('Supabase addSubtasks error', error);
       return;
@@ -329,12 +278,10 @@ export class Supabase {
       .update({ is_done })
       .eq('id', id)
       .select();
-
     if (error) {
       console.error('Supabase uupdatedSubtask error', error);
       return;
     }
-
     return data;
   }
 
@@ -344,12 +291,10 @@ export class Supabase {
       .update({ status })
       .eq('id', id)
       .select();
-
     if (error) {
       console.error('Supabase updateTaskStatus error', error);
       return;
     }
-
     return data;
   }
 
@@ -359,12 +304,10 @@ export class Supabase {
       .update({ priority })
       .eq('id', id)
       .select();
-
     if (error) {
       console.error('Supabase updateTaskPrio error', error);
       return;
     }
-
     return data;
   }
 
@@ -374,12 +317,10 @@ export class Supabase {
       .update({ title })
       .eq('id', id)
       .select();
-
     if (error) {
       console.error('Supabase updateTaskPrio error', error);
       return;
     }
-
     return data;
   }
 
@@ -389,12 +330,10 @@ export class Supabase {
       .update({ description })
       .eq('id', id)
       .select();
-
     if (error) {
       console.error('Supabase updateTaskPrio error', error);
       return;
     }
-
     return data;
   }
 
@@ -404,12 +343,10 @@ export class Supabase {
       .update({ due_date })
       .eq('id', id)
       .select();
-
     if (error) {
       console.error('Supabase updateTaskPrio error', error);
       return;
     }
-
     return data;
   }
 

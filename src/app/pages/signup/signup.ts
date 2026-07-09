@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { Supabase } from '../../supabase';
+import { Supabase, newContact } from '../../supabase';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -46,11 +46,6 @@ export class Signup {
     if (!this.signUpData.acceptPolicy) {
       return;
     }
-    if (this.signUpData.password !== this.signUpData.confirmPassword) {
-      this.passwordsDoNotMatch = true;
-      return;
-    }
-    this.passwordsDoNotMatch = false;
     const { data, error } = await this.db.signUpWithEmail(
       this.signUpData.email,
       this.signUpData.password,
@@ -60,6 +55,19 @@ export class Signup {
     if (error) {
       return;
     }
+    await this.pushInContact();
     this.router.navigate(['/login']);
+  }
+
+  async pushInContact() {
+    const contact: newContact = {
+      first_name: this.signUpData.firstName,
+      last_name: this.signUpData.lastName,
+      email: this.signUpData.email,
+    };
+    const result = await this.db.setContact(contact);
+    if (!result) {
+      console.error('Contact creation failed');
+    }
   }
 }
