@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, computed } from '@angular/core';
 import { Supabase } from '../../supabase';
 import { Task } from '../../supabase';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { User as SupabaseUser } from '@supabase/supabase-js';
 
 @Component({
@@ -10,7 +10,7 @@ import { User as SupabaseUser } from '@supabase/supabase-js';
   templateUrl: './summary.html',
   styleUrl: './summary.scss',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
 })
 export class Summary {
   db = inject(Supabase);

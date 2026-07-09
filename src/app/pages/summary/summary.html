@@ -17,7 +17,7 @@
   </header>
 
   <main class="summary-content">
-    <section class="metrics-grid" aria-label="Task overview">
+    <section class="metrics-grid" aria-label="Task overview" routerLink="/board">
       <div class="metric-card metric-card--top">
         <img class="metric-icon" src="assets/UI/icon_edit.png" alt="" />
         <div class="metric-text">
@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div class="metric-card metric-card--top">
+      <div class="metric-card metric-card--top" routerLink="/board">
         <img class="metric-icon" src="assets/UI/icon_done.png" alt="" />
         <div class="metric-text">
           <h3>{{ doneTasks.length }}</h3>
@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <div class="metric-card metric-card--deadline">
+      <div class="metric-card metric-card--deadline" routerLink="/board">
         <div class="deadline-count">
           <img class="metric-icon metric-icon--urgent" src="assets/UI/icon_urgent.png" alt="" />
           <div class="metric-text">
@@ -49,17 +49,17 @@
         </div>
       </div>
 
-      <div class="metric-card metric-card--small">
+      <div class="metric-card metric-card--small" routerLink="/board">
         <h3>{{ tasks().length }}</h3>
         <p>Tasks in Board</p>
       </div>
 
-      <div class="metric-card metric-card--small">
+      <div class="metric-card metric-card--small" routerLink="/board">
         <h3>{{ progressTasks.length }}</h3>
         <p>Tasks In Progress</p>
       </div>
 
-      <div class="metric-card metric-card--small">
+      <div class="metric-card metric-card--small" routerLink="/board">
         <h3>{{ feedbackTasks.length }}</h3>
         <p>Awaiting Feedback</p>
       </div>
