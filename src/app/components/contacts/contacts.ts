@@ -37,8 +37,7 @@ export class Contacts {
   
   cd = inject(ContactDetails);
 
-  // Zwischenspeicher für Contact Color
-  currentUserList:String[] = [];
+  currentUserList:number[] = [];
 
 
 
@@ -54,8 +53,7 @@ export class Contacts {
 
       groups.get(firstLetter)!.push(contact);
 
-      // fügt Contact Color-ID zu Zwischenspeicher Array hinzu
-      this.currentUserList.push(contact.color);
+      this.currentUserList.push(contact.id);
     }
     return Array.from(groups.entries());
   });
@@ -74,8 +72,6 @@ userSurName:string="";
 userEmail:string="";
 userPhone:string="";
 
-
-//kontakt details viewer status
 detailViewActive:Boolean = false;
 
 
@@ -85,9 +81,6 @@ constructor(private router: Router) {}
 
 openContactDetails(contact: Contact) {
   this.contactSelected.emit(contact);
-
-  //let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
-  //let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
   
   if (screen.width >= 1190 && this.detailViewActive == false) {
     let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
@@ -120,16 +113,12 @@ openContactDetails(contact: Contact) {
     detailContainer.style.display="flex"
     this.detailViewActive = true;
   }
-
-  // löscht active class aus Kontakt divs
   for (let index = 0; index < this.db.contacts().length; index++) {
     let currentContactID = this.db.contacts()[index].last_name;
     let targetContactIcon = document.getElementById(currentContactID);
     targetContactIcon?.classList.remove("clicked");
     this.detailViewActive = true;
   }
-
-  // ändere Contact-Feld zu active
   let userIconID = document.getElementById(contact.last_name) as HTMLDivElement;
   userIconID.classList.add("clicked"); 
 }
@@ -145,26 +134,23 @@ returnToContacts(){
   this.detailViewActive = false;
 }
 
-
-
-// for-Schleife geht Zwischenspeicher Array durch, added class passend zur Color-ID zum entsprechenden component hinzu
 setUserIconColor(){
+  let contactID:Number;
+  let colorCode:String = "";
+  let colorClass:String = "";
 
   for (let index = 0; index < this.currentUserList.length; index++) {  
-    let contactID = String(this.currentUserList[index]);
-    let colorClass = "bg-color_" + String(this.currentUserList[index]).slice(1);
+    contactID = this.currentUserList[index];
 
-    let currentContact = document.getElementById(contactID) as HTMLDivElement;
-    currentContact?.classList.add(colorClass);
+    for (let index = 0; index < this.db.contacts().length; index++) {
+      
+      if (this.db.contacts()[index].id == contactID) {
+        colorCode = this.db.contacts()[index].color;
+        colorClass = "bg-color_" + colorCode.slice(1);
+      }
+    }
+    let currentContact = document.getElementById(String(contactID)) as HTMLDivElement;
+    currentContact?.classList.add(String(colorClass));
   }
 }
-
-  //openRouterLink(){
-  //  this.router.navigate(['/contact-list-mobile-details']);
-  //}
-  //openContactDetails(contact:number) {
-  //  let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
-  //  detailsPopUp.classList.toggle('active')
-  //  this.cd.loadDetails(contact);
-  //}
 }
