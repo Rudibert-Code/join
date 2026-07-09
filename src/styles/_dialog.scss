@@ -1,8 +1,8 @@
 @use './variables' as *;
 @use './typography';
-
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
   border-radius: 50%;
 }
 ::-webkit-scrollbar-track {
@@ -14,7 +14,6 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
-
 dialog {
   width: 396px;
   max-height: 724px;
@@ -25,6 +24,13 @@ dialog {
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.355);
 }
+
+.ticket_edit_container{
+  width: 100%;
+  height: 515px;
+  overflow: auto;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -160,17 +166,18 @@ svg {
   }
 }
 .icon_text{
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: $main_white;
   padding: 4px;
   margin: 0;
 }
 .contacts_icon {
-  width: 42px;
   height: 42px;
+  aspect-ratio: 1 / 1;
   display: flex;
   justify-content: center;
   align-items: center;
+
   &_none{
     border-radius: 100px;
     padding: 4px;
@@ -359,10 +366,12 @@ svg {
   }
 }
 .subtask_edit_contact{
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
+  overflow: auto;
 }
 .dropdown{
   cursor: pointer;
@@ -372,7 +381,6 @@ svg {
   margin-bottom: 16px;
   border-radius: 8px;
   border: 2px solid $main_grey;
-
   &_list{
     width: 100%;
     height: 120px;
