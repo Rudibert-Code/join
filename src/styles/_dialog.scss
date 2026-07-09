@@ -177,44 +177,43 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  &_none{
-    border-radius: 100px;
-    padding: 4px;
-    background-color: black;
-    color: $main_white;
-  }
   &_ffa35e {
+    aspect-ratio: 1 / 1;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_orange;
     color: $main_white;
   }
   &_ff5eb3 {
+    aspect-ratio: 1 / 1;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_pink;
     color: $main_white;
   }
   &_6e52ff {
+    aspect-ratio: 1 / 1;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_blue;
     color: $main_white;
   }
   &_9327ff {
+    aspect-ratio: 1 / 1;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_purple;
     color: $main_white;
   }
   &_00bee8{
+    aspect-ratio: 1 / 1;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_lightblue;
     color: $main_white;
   }
   &_ff745e{
+    aspect-ratio: 1 / 1;
     border-radius: 100px;
     padding: 4px;
     background-color: $user_red;
@@ -382,14 +381,17 @@ svg {
   border-radius: 8px;
   border: 2px solid $main_grey;
   &_list{
-    width: 100%;
-    height: 120px;
+    width: 88%;
+    height: 88px;
     padding: 0 16px;
     overflow: auto;
     display: none;
     flex-direction: column;
     justify-content: flex-start;
     align-items: start;
+    position: absolute;
+    top: 307px;
+    left: -13px;
     >p{
       padding-left: 16px;
     }

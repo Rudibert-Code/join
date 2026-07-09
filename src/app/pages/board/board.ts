@@ -149,8 +149,8 @@ export class Board implements OnInit {
 
     for (let index = 0; index < this.tasks().length; index++) {
       if (this.tasks()[index].id == id) {
-        ticketTitle.textContent = this.tasks()[index].title;
-        ticketDescription.innerHTML = this.tasks()[index].description;
+        ticketTitle.textContent = this.cutInout(this.tasks()[index].title, "title");
+        ticketDescription.innerHTML = this.cutInout(this.tasks()[index].description, "description");
         ticketDueDate.innerHTML = String(this.setTicketDueDate(this.tasks()[index].due_date));
         ticketPriority.innerHTML = this.tasks()[index].priority;
         this.setTicketPrioIcon(this.tasks()[index].priority);
@@ -158,12 +158,23 @@ export class Board implements OnInit {
         this.setTicketCatClass(this.tasks()[index].category);
       }
     }
-
     this.openTicketID = id;
-
     this.getContacts(id);
     this.getSubTasks(id);
     dialogWindow.showModal();
+  }
+
+  cutInout(text:string,type:string){
+    let newString:string="";
+
+    if (text.length >= 17 && type == "title") {
+      newString = (text.slice(0, 14)).concat("...");
+    } else if (text.length >= 60 && type == "description") {
+      newString = (text.slice(0, 60)).concat("...");
+    } else{
+      newString = text;
+    }
+    return newString;
   }
 
   ticketCardID:number = 0;
@@ -295,15 +306,9 @@ export class Board implements OnInit {
   }
 
   contactsCache: contacts[] = [];
-  limitedCache: contacts[] = [];
-
-  
 
   async getContacts(id: number) {
     this.contactsCache = [];
-    this.limitedCache = [];
-
-    let limitedCounter:number = 0;
 
     const linkedContacts = this.contacts();
 
@@ -325,33 +330,9 @@ export class Board implements OnInit {
         initials: `${matchingContact.first_name.charAt(0).toUpperCase()}${matchingContact.last_name.charAt(0).toUpperCase()}`,
         color: String(matchingContact.color.slice(1)),
       });
-
-      //limitedCounter++
-//
-      //if (limitedCounter <= 3) {
-      //  this.limitedCache.push({
-      //    id:Number(matchingContact.id),
-      //    name: String(matchingContact.first_name),
-      //    surname: String(matchingContact.last_name),
-      //    initials: `${matchingContact.first_name.charAt(0).toUpperCase()}${matchingContact.last_name.charAt(0).toUpperCase()}`,
-      //    color: String(matchingContact.color.slice(1)),
-      //  });
-      //};
     }
-    //this.addPlaceholderContact();
   }
-
-  //addPlaceholderContact(){
-  //  let contactLocation = document.getElementById('contact_list') as HTMLDivElement;
-  //  //contactLocation.innerHTML = "";
-  //  contactLocation.innerHTML += `<div class="contacts">
-  //    <div class="contacts_icon_none">
-  //      <p class="icon_text">${this.contactsCache.length - 3}</p>
-  //    </div>
-  //    <p class="contacts">Others</p>
-  //    </div>`
-  //}
-
+  
   subtasksCache: subTask[] = [];
 
   async getSubTasks(id: any) {
