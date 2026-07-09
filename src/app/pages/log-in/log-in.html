@@ -11,7 +11,7 @@
       <div class="d-flex center">
         <div class="underline"></div>
       </div>
-      <form class="d-flex column input-wrapper" (ngSubmit)="onSubmitLogin()">
+      <form class="d-flex column input-wrapper" #loginForm="ngForm" (ngSubmit)="onSubmitLogin()">
         <div class="input-icon-wrapper">
           <input
             class="input-field"
@@ -58,7 +58,14 @@
       </form>
     </div>
     <div class="buttons-wrapper d-flex column">
-      <button class="dark-btn"  (click)="onSubmitLogin()">Log In</button>
+      <button
+        class="dark-btn"
+        type="button"
+        [disabled]="loginForm.invalid"
+        (click)="onSubmitLogin()"
+      >
+        Log In
+      </button>
       <button class="white-btn" (click)="onGuestLogin()">Guest Log In</button>
     </div>
   </section>
