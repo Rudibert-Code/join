@@ -1,65 +1,73 @@
 <section class="main-wrapper">
-  <section class="splash-container">
-    <h3 class="black-txt margin-corection">{{ greetingText }}</h3>
-    <h3 class="margin-corection">{{ displayName }}</h3>
-  </section>
+  @if (showGreetingIntro) {
+    <section class="greeting-intro" aria-hidden="true">
+      <div class="greeting-intro__text">
+        <p>{{ greetingText }}</p>
+        <h3>{{ displayName }}</h3>
+      </div>
+    </section>
+  }
+
   <header class="header-wrapper">
-    <h2 class="margin-corection">Join 360</h2>
-    <div class="d-flex reverse">
+    <h2>Join 360</h2>
+    <div class="subtitle-wrapper">
       <div class="separator"></div>
-      <p>Key Metrics at a Glace</p>
+      <p>Key Metrics at a Glance</p>
     </div>
   </header>
-  <main class="d-flex column align-column main-positioning">
-    <section class="d-flex space-center upper-section">
-      <div class="d-flex center infobox-up">
-        <img class="icons" src="assets/UI/icon_edit.png" alt="edit icon" />
-        <div>
-          <h3 class="margin-corection black-txt">{{ todoTasks.length }}</h3>
-          <p class="margin-corection">To-Do</p>
+
+  <main class="summary-content">
+    <section class="metrics-grid" aria-label="Task overview">
+      <div class="metric-card metric-card--top">
+        <img class="metric-icon" src="assets/UI/icon_edit.png" alt="" />
+        <div class="metric-text">
+          <h3>{{ todoTasks.length }}</h3>
+          <p>To-do</p>
         </div>
       </div>
-      <div class="d-flex center infobox-up">
-        <img class="icons" src="assets/UI/icon_done.png" alt="done icon" />
-        <div>
-          <h3 class="margin-corection black-txt">{{ doneTasks.length }}</h3>
-          <p class="margin-corection">Done</p>
+
+      <div class="metric-card metric-card--top">
+        <img class="metric-icon" src="assets/UI/icon_done.png" alt="" />
+        <div class="metric-text">
+          <h3>{{ doneTasks.length }}</h3>
+          <p>Done</p>
         </div>
       </div>
-    </section>
-    <section class="d-flex center">
-      <div class="d-flex center infobox-middle">
-        <div class="d-flex center middle-section">
-          <img class="icons" src="assets/UI/icon_urgent.png" alt="" />
-          <div>
-            <h3 class="margin-corection black-txt">{{ urgentTasks.length }}</h3>
-            <p class="margin-corection">Urgent</p>
-          </div>
-          <div class="middle-seperator"></div>
-          <div>
-            <p>
-              <b
-                ><p>{{ upcomingDeadline | date: 'dd. MMMM yyyy' }}</p></b
-              >
-            </p>
-            <p>Upcoming Deadline</p>
+
+      <div class="metric-card metric-card--deadline">
+        <div class="deadline-count">
+          <img class="metric-icon metric-icon--urgent" src="assets/UI/icon_urgent.png" alt="" />
+          <div class="metric-text">
+            <h3>{{ urgentTasks.length }}</h3>
+            <p>Urgent</p>
           </div>
         </div>
+        <div class="deadline-separator"></div>
+        <div class="deadline-date">
+          <strong>{{ upcomingDeadline | date: 'MMMM d, y' }}</strong>
+          <p>Upcoming Deadline</p>
+        </div>
+      </div>
+
+      <div class="metric-card metric-card--small">
+        <h3>{{ tasks().length }}</h3>
+        <p>Tasks in Board</p>
+      </div>
+
+      <div class="metric-card metric-card--small">
+        <h3>{{ progressTasks.length }}</h3>
+        <p>Tasks In Progress</p>
+      </div>
+
+      <div class="metric-card metric-card--small">
+        <h3>{{ feedbackTasks.length }}</h3>
+        <p>Awaiting Feedback</p>
       </div>
     </section>
-    <section class="d-flex space-center lower-section">
-      <div class="infobox-low">
-        <h3 class="margin-corection black-txt txt-center">{{ tasks().length }}</h3>
-        <p class="margin-corection">Tasks in Board</p>
-      </div>
-      <div class="infobox-low">
-        <h3 class="margin-corection black-txt txt-center">{{ progressTasks.length }}</h3>
-        <p class="margin-corection">Tasks in Progress</p>
-      </div>
-      <div class="infobox-low">
-        <h3 class="margin-corection black-txt txt-center">{{ feedbackTasks.length }}</h3>
-        <p class="margin-corection">Awaiting Feedback</p>
-      </div>
+
+    <section class="greeting-panel" [class.greeting-panel--intro]="showGreetingIntro">
+      <p>{{ greetingText }}</p>
+      <h3>{{ displayName }}</h3>
     </section>
   </main>
 </section>

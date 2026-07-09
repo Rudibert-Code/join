@@ -3,6 +3,7 @@ import { Component, inject, computed } from '@angular/core';
 import { Supabase } from '../../supabase';
 import { Task } from '../../supabase';
 import { Router, ActivatedRoute } from '@angular/router';
+import { User as SupabaseUser } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-summary',
@@ -18,6 +19,8 @@ export class Summary {
   deadline: Date = new Date();
   displayName: string = '';
   greetingText: string = '';
+  showGreetingIntro = false;
+  private shouldPlayGreetingIntro = false;
 
   constructor() {
     this.deadline.setDate(this.deadline.getDate() + 5);
@@ -25,13 +28,19 @@ export class Summary {
 
     if (state && state.firstName) {
       this.displayName = state.lastName ? `${state.firstName} ${state.lastName}` : state.firstName;
+    } else if (state && state.userName) {
+      this.displayName = state.userName;
     }
+
+    this.shouldPlayGreetingIntro = !!state?.playGreetingIntro;
+    this.showGreetingIntro = this.shouldPlayGreetingIntro;
   }
 
-  ngOnInit() {
-    this.getDisplayName();
-    this.loadTasks();
+  async ngOnInit() {
     this.getGreetingText();
+    await this.getDisplayName();
+    this.showGreetingIntro = this.shouldPlayGreetingIntro;
+    this.loadTasks();
   }
 
   async loadTasks() {
@@ -39,17 +48,22 @@ export class Summary {
   }
 
   async getDisplayName() {
+    if (this.db.isGuest()) {
+      this.displayName = 'Guest';
+      return;
+    }
+
+    const authUser = this.db.authUser();
+    if (authUser) {
+      this.displayName = this.getUserDisplayName(authUser);
+      return;
+    }
+
     try {
       const {
         data: { user },
       } = await this.db.supabase.auth.getUser();
-      if (user && user.user_metadata) {
-        const firstName = user.user_metadata['first_name'];
-        const lastName = user.user_metadata['last_name'];
-        this.displayName = `${firstName} ${lastName}`;
-      } else {
-        this.displayName = 'Guest';
-      }
+      this.displayName = user ? this.getUserDisplayName(user) : 'Guest';
     } catch (error) {
       this.displayName = 'Guest';
     }
@@ -105,5 +119,11 @@ export class Summary {
   }
   private getPriority(task: Task): string {
     return task.priority?.toLowerCase().trim() || 'urgent';
+  }
+
+  private getUserDisplayName(user: SupabaseUser): string {
+    const firstName = user.user_metadata?.['first_name'];
+    const lastName = user.user_metadata?.['last_name'];
+    return [firstName, lastName].filter(Boolean).join(' ') || user.email || 'Guest';
   }
 }

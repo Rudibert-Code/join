@@ -4,3 +4,47 @@
 @use 'styles/buttons';
 @use 'styles/dialog';
 @use 'styles/add-task-form_extension';
+
+@keyframes introBackdrop {
+  0%,
+  60% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes introText {
+  0%,
+  24% {
+    opacity: 1;
+    transform: translateX(var(--intro-start, 0));
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+}
+
+@keyframes greetingPanelReveal {
+  0%,
+  24% {
+    opacity: 1;
+    transform: translateX(var(--intro-start, 0));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

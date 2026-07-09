@@ -31,15 +31,19 @@ export class LogIn {
       return;
     }
     if (data.user) {
-      this.router.navigate(['/summary']);
+      const firstName = data.user.user_metadata?.['first_name'];
+      const lastName = data.user.user_metadata?.['last_name'];
+      this.router.navigate(['/summary'], {
+        state: { playGreetingIntro: true, firstName, lastName },
+      });
     }
   }
 
   onGuestLogin() {
     this.db.signInAsGuest();
-    
+
     this.router.navigate(['/summary'], {
-      state: { userName: 'Guest' },
+      state: { playGreetingIntro: true, userName: 'Guest' },
     });
   }
 

@@ -142,7 +142,7 @@
     </section>
     <section class="ticket_details">
       <p class="foreword">Assigned to:</p>
-      <div>
+      <div class="scroll_list" id="contact_list">
         @for (contact of contactsCache; track $index) {
           <div class="contacts">
             <div class="contacts_icon_{{ contact.color }}">
@@ -155,7 +155,7 @@
     </section>
     <section class="ticket_details">
       <p class="foreword">Subtasks:</p>
-      <div class="subtask_container">
+      <div class="scroll_list">
         <!--Generate subtasks here-->
         @for (subtask of subtasksCache; track $index) {
           <div class="subtasks">
