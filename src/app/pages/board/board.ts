@@ -295,9 +295,15 @@ export class Board implements OnInit {
   }
 
   contactsCache: contacts[] = [];
+  limitedCache: contacts[] = [];
+
+  
 
   async getContacts(id: number) {
     this.contactsCache = [];
+    this.limitedCache = [];
+
+    let limitedCounter:number = 0;
 
     const linkedContacts = this.contacts();
 
@@ -319,8 +325,32 @@ export class Board implements OnInit {
         initials: `${matchingContact.first_name.charAt(0).toUpperCase()}${matchingContact.last_name.charAt(0).toUpperCase()}`,
         color: String(matchingContact.color.slice(1)),
       });
+
+      //limitedCounter++
+//
+      //if (limitedCounter <= 3) {
+      //  this.limitedCache.push({
+      //    id:Number(matchingContact.id),
+      //    name: String(matchingContact.first_name),
+      //    surname: String(matchingContact.last_name),
+      //    initials: `${matchingContact.first_name.charAt(0).toUpperCase()}${matchingContact.last_name.charAt(0).toUpperCase()}`,
+      //    color: String(matchingContact.color.slice(1)),
+      //  });
+      //};
     }
+    //this.addPlaceholderContact();
   }
+
+  //addPlaceholderContact(){
+  //  let contactLocation = document.getElementById('contact_list') as HTMLDivElement;
+  //  //contactLocation.innerHTML = "";
+  //  contactLocation.innerHTML += `<div class="contacts">
+  //    <div class="contacts_icon_none">
+  //      <p class="icon_text">${this.contactsCache.length - 3}</p>
+  //    </div>
+  //    <p class="contacts">Others</p>
+  //    </div>`
+  //}
 
   subtasksCache: subTask[] = [];
 
