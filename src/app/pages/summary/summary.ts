@@ -18,6 +18,8 @@ export class Summary {
   deadline: Date = new Date();
   displayName: string = '';
   greetingText: string = '';
+  showGreetingIntro = false;
+  private shouldPlayGreetingIntro = false;
 
   constructor() {
     this.deadline.setDate(this.deadline.getDate() + 5);
@@ -25,13 +27,19 @@ export class Summary {
 
     if (state && state.firstName) {
       this.displayName = state.lastName ? `${state.firstName} ${state.lastName}` : state.firstName;
+    } else if (state && state.userName) {
+      this.displayName = state.userName;
     }
+
+    this.shouldPlayGreetingIntro = !!state?.playGreetingIntro;
+    this.showGreetingIntro = this.shouldPlayGreetingIntro;
   }
 
-  ngOnInit() {
-    this.getDisplayName();
-    this.loadTasks();
+  async ngOnInit() {
     this.getGreetingText();
+    await this.getDisplayName();
+    this.showGreetingIntro = this.shouldPlayGreetingIntro;
+    this.loadTasks();
   }
 
   async loadTasks() {
@@ -39,6 +47,11 @@ export class Summary {
   }
 
   async getDisplayName() {
+    if (this.db.isGuest()) {
+      this.displayName = 'Guest';
+      return;
+    }
+
     try {
       const {
         data: { user },
@@ -46,7 +59,7 @@ export class Summary {
       if (user && user.user_metadata) {
         const firstName = user.user_metadata['first_name'];
         const lastName = user.user_metadata['last_name'];
-        this.displayName = `${firstName} ${lastName}`;
+        this.displayName = [firstName, lastName].filter(Boolean).join(' ') || user.email || 'Guest';
       } else {
         this.displayName = 'Guest';
       }
