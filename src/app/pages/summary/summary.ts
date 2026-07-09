@@ -3,6 +3,7 @@ import { Component, inject, computed } from '@angular/core';
 import { Supabase } from '../../supabase';
 import { Task } from '../../supabase';
 import { Router, ActivatedRoute } from '@angular/router';
+import { User as SupabaseUser } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-summary',
@@ -52,17 +53,17 @@ export class Summary {
       return;
     }
 
+    const authUser = this.db.authUser();
+    if (authUser) {
+      this.displayName = this.getUserDisplayName(authUser);
+      return;
+    }
+
     try {
       const {
         data: { user },
       } = await this.db.supabase.auth.getUser();
-      if (user && user.user_metadata) {
-        const firstName = user.user_metadata['first_name'];
-        const lastName = user.user_metadata['last_name'];
-        this.displayName = [firstName, lastName].filter(Boolean).join(' ') || user.email || 'Guest';
-      } else {
-        this.displayName = 'Guest';
-      }
+      this.displayName = user ? this.getUserDisplayName(user) : 'Guest';
     } catch (error) {
       this.displayName = 'Guest';
     }
@@ -118,5 +119,11 @@ export class Summary {
   }
   private getPriority(task: Task): string {
     return task.priority?.toLowerCase().trim() || 'urgent';
+  }
+
+  private getUserDisplayName(user: SupabaseUser): string {
+    const firstName = user.user_metadata?.['first_name'];
+    const lastName = user.user_metadata?.['last_name'];
+    return [firstName, lastName].filter(Boolean).join(' ') || user.email || 'Guest';
   }
 }
