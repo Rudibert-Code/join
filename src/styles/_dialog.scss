@@ -49,7 +49,7 @@ dialog::backdrop {
 .exit_btn {
   width: 24px;
   height: 24px;
-  background-image: url(/assets/UI/icon_cancle.png);
+  background-image: url(/public/assets/UI/icon_cancle.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-color: rgba(0, 0, 0, 0);
@@ -134,7 +134,7 @@ dialog::backdrop {
     padding: 0, 4px;
     border: none;
     outline: none;
-    background-image: url(/assets/UI/checkbox_default.png);
+    background-image: url(/public/assets/UI/checkbox_default.png);
     background-repeat: no-repeat;
     background-color: #42526e00;
     background-size: contain;
@@ -143,7 +143,7 @@ dialog::backdrop {
     padding: 0, 4px;
     border: none;
     outline: none;
-    background-image: url(/assets/UI/checkbox_selected.png);
+    background-image: url(/public/assets/UI/checkbox_selected.png);
     background-repeat: no-repeat;
     background-color: #42526e00;
     background-size: contain;
