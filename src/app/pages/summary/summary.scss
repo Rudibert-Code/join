@@ -139,12 +139,18 @@
   grid-column: span 3;
   gap: 16px;
 
-  &:hover .metric-icon--todo {
-    content: url('/assets/UI/icon_edit_white.png');
+  .metric-icon--hover {
+    display: none;
   }
 
-  &:hover .metric-icon--done {
-    content: url('/assets/UI/icon_done_white.png');
+  &:hover {
+    .metric-icon--default {
+      display: none;
+    }
+
+    .metric-icon--hover {
+      display: block;
+    }
   }
 }
 

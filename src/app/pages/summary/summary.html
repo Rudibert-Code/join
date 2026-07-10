@@ -19,7 +19,8 @@
   <main class="summary-content">
     <section class="metrics-grid" aria-label="Task overview" routerLink="/board">
       <div class="metric-card metric-card--top">
-        <img class="metric-icon metric-icon--todo" src="assets/UI/icon_edit.png" alt="" />
+        <img class="metric-icon metric-icon--default" src="assets/UI/icon_edit.png" alt="" />
+        <img class="metric-icon metric-icon--hover" src="assets/UI/icon_edit_white.png" alt="" />
         <div class="metric-text">
           <h3>{{ todoTasks.length }}</h3>
           <p>To-do</p>
@@ -27,7 +28,8 @@
       </div>
 
       <div class="metric-card metric-card--top" routerLink="/board">
-        <img class="metric-icon metric-icon--done" src="assets/UI/icon_done.png" alt="" />
+        <img class="metric-icon metric-icon--default" src="assets/UI/icon_done.png" alt="" />
+        <img class="metric-icon metric-icon--hover" src="assets/UI/icon_done_white.png" alt="" />
         <div class="metric-text">
           <h3>{{ doneTasks.length }}</h3>
           <p>Done</p>
