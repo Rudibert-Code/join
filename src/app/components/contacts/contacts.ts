@@ -114,12 +114,12 @@ openContactDetails(contact: Contact) {
     this.detailViewActive = true;
   }
   for (let index = 0; index < this.db.contacts().length; index++) {
-    let currentContactID = this.db.contacts()[index].last_name;
+    let currentContactID = this.db.contacts()[index].last_name + this.db.contacts()[index].id ;
     let targetContactIcon = document.getElementById(currentContactID);
     targetContactIcon?.classList.remove("clicked");
     this.detailViewActive = true;
   }
-  let userIconID = document.getElementById(contact.last_name) as HTMLDivElement;
+  let userIconID = document.getElementById(contact.last_name + contact.id) as HTMLDivElement;
   userIconID.classList.add("clicked"); 
 }
 

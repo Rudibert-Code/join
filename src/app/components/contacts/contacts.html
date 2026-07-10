@@ -48,7 +48,7 @@
       <div class="separator"></div>
       @for (contact of group[1]; track contact.id) {
         <!--[routerLink]="['/contact-list-mobile']"-->
-        <div (click)="openContactDetails(contact)" class="contact" id="{{ contact.last_name }}">
+        <div (click)="openContactDetails(contact)" class="contact" id="{{ contact.last_name }}{{ contact.id }}">
           <div class="contact_icon" id="{{ contact.id }}">
             <p>{{ getInitials(contact) }}</p>
           </div>
