@@ -11,13 +11,13 @@ import { Signup } from './pages/signup/signup';
 import { Help } from './pages/help/help';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LogIn },
   { path: 'signup', component: Signup },
   {
     path: '',
     component: MainLayout,
     children: [
-      { path: '', redirectTo: 'summary', pathMatch: 'full' },
       { path: 'summary', component: Summary },
       { path: 'add-task', component: AddTask },
       { path: 'board', component: Board },
