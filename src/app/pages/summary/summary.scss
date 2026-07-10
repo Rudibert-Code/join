@@ -103,6 +103,7 @@
   border-radius: 16px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16);
   color: $main_header;
+  cursor: pointer;
   transition: 0.2s ease;
 
   h3,
@@ -138,8 +139,12 @@
   grid-column: span 3;
   gap: 16px;
 
-  &:hover .metric-icon {
-    filter: brightness(0) invert(1);
+  &:hover .metric-icon--todo {
+    content: url('/assets/UI/icon_edit_white.png');
+  }
+
+  &:hover .metric-icon--done {
+    content: url('/assets/UI/icon_done_white.png');
   }
 }
 
