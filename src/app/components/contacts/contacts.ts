@@ -134,7 +134,7 @@ returnToContacts(){
   this.detailViewActive = false;
 }
 
-setUserIconColor(){
+async setUserIconColor(){
   let contactID:Number;
   let colorCode:String = "";
   let colorClass:String = "";
