@@ -44,7 +44,8 @@ export class ContactForm {
     if (this.contactForm.valid) {
       const contactPayload: newContact = this.contactForm.value as newContact;
       const data = await this.db.setContact(contactPayload);
-      this.router.navigate(['']);
+      //this.router.navigate(['']);
+      this.requestClose()
     } else {
       this.contactForm.markAllAsTouched();
     }
