@@ -37,10 +37,6 @@ export class Contacts {
   
   cd = inject(ContactDetails);
 
-  currentUserList:number[] = [];
-
-
-
   groupedContacts = computed(() => {
     const groups = new Map<string, Contact[]>();
 
@@ -53,7 +49,6 @@ export class Contacts {
 
       groups.get(firstLetter)!.push(contact);
 
-      this.currentUserList.push(contact.id);
     }
     return Array.from(groups.entries());
   });
@@ -134,23 +129,4 @@ returnToContacts(){
   this.detailViewActive = false;
 }
 
-async setUserIconColor(){
-  let contactID:Number;
-  let colorCode:String = "";
-  let colorClass:String = "";
-
-  for (let index = 0; index < this.currentUserList.length; index++) {  
-    contactID = this.currentUserList[index];
-
-    for (let index = 0; index < this.db.contacts().length; index++) {
-      
-      if (this.db.contacts()[index].id == contactID) {
-        colorCode = this.db.contacts()[index].color;
-        colorClass = "bg-color_" + colorCode.slice(1);
-      }
-    }
-    let currentContact = document.getElementById(String(contactID)) as HTMLDivElement;
-    currentContact?.classList.add(String(colorClass));
-  }
-}
 }
