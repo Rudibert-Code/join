@@ -24,7 +24,7 @@ export const routes: Routes = [
       { path: 'contact-list', component: ContactList },
       { path: 'help', component: Help },
       { path: 'legal-notice', component: LegalNotice },
-      { path: 'privacy-police', component: PrivacyPolicy },
+      { path: 'privacy-policy', component: PrivacyPolicy },
     ],
   },
 ];
