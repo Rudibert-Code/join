@@ -75,7 +75,7 @@ button{
     max-width: 352px;
     display: flex;
     justify-content: start;
-    align-items: start;
+    align-items: center;
     gap: 8px;
     margin-bottom: 32px;
     border-radius: 8px;
@@ -107,6 +107,7 @@ button{
         width: 52px;
         height: 52px;
         border-radius: 100px;
+        outline: white solid 4px;
         background-color: $user_purple;
         >p{
             color: $main_white;
@@ -124,6 +125,9 @@ button{
     }
     &:active{
         background-color: $main_header;
+    }
+    div{
+        margin-left: 24px;
     }
 }
 .clicked{
