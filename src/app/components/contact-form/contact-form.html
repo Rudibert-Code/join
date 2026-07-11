@@ -30,69 +30,72 @@
         (ngSubmit)="onSubmit()"
       >
         <input formControlName="first_name" type="text" placeholder="Firstname" />
-        <p class="contact-form__error margin-correction">
-          <span
-            *ngIf="
-              contactForm.get('first_name')?.hasError('required') &&
-              contactForm.get('first_name')?.touched
-            "
-          >
-            Please enter your firstname.
-          </span>
-        </p>
-        <p class="contact-form__error margin-correction">
-          <span
-            *ngIf="
-              contactForm.get('first_name')?.hasError('minlength') &&
-              contactForm.get('first_name')?.touched
-            "
-          >
-            Your Firstname must have at least 3 characters.
-          </span>
-        </p>
-
+        <div class="placeholder-errors">
+          <p class="contact-form__error">
+            <span
+              *ngIf="
+                contactForm.get('first_name')?.hasError('required') &&
+                contactForm.get('first_name')?.touched
+              "
+            >
+              Please enter your firstname.
+            </span>
+          </p>
+          <p class="contact-form__error">
+            <span
+              *ngIf="
+                contactForm.get('first_name')?.hasError('minlength') &&
+                contactForm.get('first_name')?.touched
+              "
+            >
+              Your Firstname must have at least 3 characters.
+            </span>
+          </p>
+        </div>
         <input formControlName="last_name" type="text" placeholder="Lastname" />
-        <p class="contact-form__error margin-correction">
-          <span
-            *ngIf="
-              contactForm.get('last_name')?.hasError('required') &&
-              contactForm.get('last_name')?.touched
-            "
-          >
-            Please enter your lastname.
-          </span>
-        </p>
-        <p class="contact-form__error margin-correction">
-          <span
-            *ngIf="
-              contactForm.get('last_name')?.hasError('minlength') &&
-              contactForm.get('last_name')?.touched
-            "
-          >
-            Your Lastname must have at least 3 characters.
-          </span>
-        </p>
-
+        <div class="placeholder-errors">
+          <p class="contact-form__error">
+            <span
+              *ngIf="
+                contactForm.get('last_name')?.hasError('required') &&
+                contactForm.get('last_name')?.touched
+              "
+            >
+              Please enter your lastname.
+            </span>
+          </p>
+          <p class="contact-form__error">
+            <span
+              *ngIf="
+                contactForm.get('last_name')?.hasError('minlength') &&
+                contactForm.get('last_name')?.touched
+              "
+            >
+              Your Lastname must have at least 3 characters.
+            </span>
+          </p>
+        </div>
         <input formControlName="email" type="email" placeholder="Email" />
-        <p class="contact-form__error margin-correction">
-          <span
-            *ngIf="
-              contactForm.get('email')?.hasError('required') && contactForm.get('email')?.touched
-            "
-          >
-            Please type your email.
-          </span>
-        </p>
-        <p class="contact-form__error margin-correction">
-          <span
-            *ngIf="
-              contactForm.get('email')?.hasError('missingAt') && contactForm.get('email')?.touched
-            "
-          >
-            This email is unavaiable.
-          </span>
-        </p>
-
+        <div class="placeholder-errors">
+          <p class="contact-form__error">
+            <span
+              *ngIf="
+                contactForm.get('email')?.hasError('required') && contactForm.get('email')?.touched
+              "
+            >
+              Please type your email.
+            </span>
+          </p>
+          <p class="contact-form__error">
+            <span
+              *ngIf="
+                contactForm.get('email')?.hasError('missingAt') && contactForm.get('email')?.touched
+              "
+            >
+              This email is unavaiable.
+            </span>
+          </p>
+        </div>
         <input
           formControlName="phone"
           type="tel"
@@ -100,33 +103,35 @@
           pattern="[0-9]*"
           placeholder="Phone"
         />
-        <p class="contact-form__error margin-correction">
-          <span
-            *ngIf="
-              contactForm.get('phone')?.hasError('required') && contactForm.get('phone')?.touched
-            "
-          >
-            Please type your phonenumber
-          </span>
-        </p>
-        <p class="contact-form__error margin-correction">
-          <span
-            *ngIf="
-              contactForm.get('phone')?.hasError('minlength') && contactForm.get('phone')?.touched
-            "
-          >
-            Your phone number must have at least 5 numbers.
-          </span>
-        </p>
-        <p class="contact-form__error margin-correction">
-          <span
-            *ngIf="
-              contactForm.get('phone')?.hasError('pattern') && contactForm.get('phone')?.touched
-            "
-          >
-            Your phone number may only contain digits.
-          </span>
-        </p>
+        <div class="placeholder-errors">
+          <p class="contact-form__error">
+            <span
+              *ngIf="
+                contactForm.get('phone')?.hasError('required') && contactForm.get('phone')?.touched
+              "
+            >
+              Please type your phonenumber
+            </span>
+          </p>
+          <p class="contact-form__error">
+            <span
+              *ngIf="
+                contactForm.get('phone')?.hasError('minlength') && contactForm.get('phone')?.touched
+              "
+            >
+              Your phone number must have at least 5 numbers.
+            </span>
+          </p>
+          <p class="contact-form__error">
+            <span
+              *ngIf="
+                contactForm.get('phone')?.hasError('pattern') && contactForm.get('phone')?.touched
+              "
+            >
+              Your phone number may only contain digits.
+            </span>
+          </p>
+        </div>
       </form>
       <div class="dialog-actions d-flex center">
         <button class="cancel-button d-none center" type="button" (click)="requestClose()">

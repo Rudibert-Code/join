@@ -13,6 +13,7 @@ export class Signup {
   db = inject(Supabase);
   router = inject(Router);
   iconSrc = 'assets/UI/icon_locked.png';
+  confirmIconSrc = 'assets/UI/icon_locked.png';
   private visibilityOnSrc = 'assets/UI/icon_visibility.png';
   private visibilityOffSrc = 'assets/UI/icon_locked.png';
   passwordsDoNotMatch = false;
@@ -34,6 +35,18 @@ export class Signup {
     } else {
       password.type = 'password';
       this.iconSrc = this.visibilityOffSrc;
+    }
+  }
+
+  showConfirmPassword() {
+    const reqPassword = document.getElementById('reqPw') as HTMLInputElement | null;
+    if (!reqPassword) return;
+    if (reqPassword.type === 'password') {
+      reqPassword.type = 'text';
+      this.confirmIconSrc = this.visibilityOnSrc;
+    } else {
+      reqPassword.type = 'password';
+      this.confirmIconSrc = this.visibilityOffSrc;
     }
   }
 
