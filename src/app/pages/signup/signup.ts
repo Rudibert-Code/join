@@ -72,6 +72,14 @@ export class Signup {
     this.router.navigate(['/login']);
   }
 
+  async ngOnInit() {
+    await this.db.ensureAuthLoaded();
+    if (this.db.isLoggedIn()) {
+      this.router.navigate(['/summary']);
+      return;
+    }
+  }
+
   async pushInContact() {
     const contact: newContact = {
       first_name: this.signUpData.firstName,

@@ -1,7 +1,6 @@
 import { Component, HostListener, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Supabase } from '../../supabase';
-import { timeout } from 'rxjs';
 
 //let isActive:any = false;
 
@@ -11,9 +10,9 @@ import { timeout } from 'rxjs';
   templateUrl: './submenu-popup.html',
   styleUrl: './submenu-popup.scss',
 })
-
 export class SubmenuPopup {
   supabase = inject(Supabase);
+  router = inject(Router);
   isActive: any = false;
 
   toggleSubMenu() {
@@ -39,7 +38,8 @@ export class SubmenuPopup {
     }
   }
 
-  signOut() {
-    this.supabase.signOut();
+  async signOut() {
+    await this.supabase.signOut();
+    this.router.navigate(['/login']);
   }
 }

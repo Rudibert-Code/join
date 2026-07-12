@@ -47,7 +47,12 @@ export class LogIn {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.db.ensureAuthLoaded();
+    if (this.db.isLoggedIn()) {
+      this.router.navigate(['/summary']);
+      return;
+    }
     this.startAnimation();
   }
 
