@@ -52,6 +52,11 @@ dialog{
         margin-left: calc(50% + 64px);
         transition: 0.5s;
     }
+    &.in-active{
+        opacity: 0;
+        margin-left: calc(50% + 200px);
+        transition: 0.5s;
+    }
 }
 .icon{
     cursor: pointer;

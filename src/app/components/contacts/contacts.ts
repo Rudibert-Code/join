@@ -4,13 +4,13 @@ import { Contact, Supabase } from '../../supabase';
 import { ContactForm } from '../contact-form/contact-form';
 import { ContactDetails } from '../contact-details/contact-details'
 import { Router } from '@angular/router';
+import { timeout } from 'rxjs';
 
-let userInitials:string="";
-let userColor:String="";
-let userName:string="";
-let userSurName:string="";
-let userEmail:string="";
-let userPhone:string="";
+interface contactCache {
+  id:number;
+}
+
+let currentContact:contactCache[] = [];
 
 @Component({
   selector: 'app-contacts',
@@ -19,11 +19,11 @@ let userPhone:string="";
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
+
 export class Contacts {
 
-  
-
   db = inject(Supabase);
+  cd = inject(ContactDetails);
   
   showContactForm = signal(false);
 
@@ -35,8 +35,6 @@ export class Contacts {
     this.showContactForm.set(false);
   }
   
-  cd = inject(ContactDetails);
-
   groupedContacts = computed(() => {
     const groups = new Map<string, Contact[]>();
 
@@ -48,8 +46,8 @@ export class Contacts {
       }
 
       groups.get(firstLetter)!.push(contact);
-
     }
+
     return Array.from(groups.entries());
   });
 
@@ -67,25 +65,50 @@ userSurName:string="";
 userEmail:string="";
 userPhone:string="";
 
-detailViewActive:Boolean = false;
-
 
 constructor(private router: Router) {}
 
 @Output() contactSelected = new EventEmitter<Contact>();
 
+ngOnInit() {
+  if (currentContact.length > 0) {
+    const currentContactID = currentContact[0].id;
+    for (let index = 0; index < this.db.contacts().length; index++) {
+      if (this.db.contacts()[index].id == currentContactID) {
+        let currentContactData:Contact = ({
+          id: currentContactID,
+          first_name: this.db.contacts()[index].first_name,
+          last_name: this.db.contacts()[index].last_name,
+          phone: this.db.contacts()[index].phone,
+          email: this.db.contacts()[index].email,
+          color: this.db.contacts()[index].color
+        });
+        this.openContactDetails(currentContactData);
+      }
+    }
+    this.cd.resetWindow();
+    this.cd.loadDetails(currentContactID);
+  }
+}
+
 openContactDetails(contact: Contact) {
+  let isActive = this.cd.detailViewActive;
+
   this.contactSelected.emit(contact);
+
+  currentContact = [{
+    id:contact.id
+  }]
   
-  if (screen.width >= 1190 && this.detailViewActive == false) {
-    let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
-    detailsPopUp.classList.toggle('active') 
+  if (screen.width >= 1190 && isActive == false) {
+    this.cd.resetWindow();
+    this.cd.loadDetails(contact.id);
   }
 
   let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
   buttonMobile.src="assets/UI/vector/icon_edit-user.svg"
 
-  if (screen.width <= 1189 && this.detailViewActive == false){
+  if (screen.width <= 1189 && this.cd.detailViewActive == false){
     let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
     let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
     let contactID = Number(contact.id);
@@ -106,17 +129,27 @@ openContactDetails(contact: Contact) {
 
     contactContainer.style.display="none"
     detailContainer.style.display="flex"
-    this.detailViewActive = true;
+    this.cd.resetWindow();
+    this.cd.loadDetails(contact.id);
   }
+  setTimeout(()=>{
+  this.markContactAsClicked(contact); 
+  },0)
+}
+
+
+markContactAsClicked(contact:Contact){
   for (let index = 0; index < this.db.contacts().length; index++) {
     let currentContactID = this.db.contacts()[index].last_name + this.db.contacts()[index].id ;
     let targetContactIcon = document.getElementById(currentContactID);
     targetContactIcon?.classList.remove("clicked");
-    this.detailViewActive = true;
+    this.cd.changeState(true);
   }
-  let userIconID = document.getElementById(contact.last_name + contact.id) as HTMLDivElement;
-  userIconID.classList.add("clicked"); 
+  let userID = String(contact.last_name + contact.id);
+  let userIconID = document.getElementById(userID) as HTMLDivElement;
+  userIconID.classList.add("clicked");
 }
+
 
 returnToContacts(){
   let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
@@ -126,7 +159,7 @@ returnToContacts(){
   contactContainer.style.display="flex";
   contactContainer.style.flexDirection="column";
   detailContainer.style.display="none";
-  this.detailViewActive = false;
+  this.cd.changeState(false);
 }
 
 }
