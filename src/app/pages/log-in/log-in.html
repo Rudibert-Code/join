@@ -5,6 +5,10 @@
       <img id="logo" class="logo" src="assets/UI/logo_join.png" alt="company logo" />
     </header>
   </div>
+  <section class="d-none center desktop-signup-wrapper">
+    <p>Not a Member?</p>
+    <a class="dark-btn-signup" routerLink="/signup">Sign Up</a>
+  </section>
   <section class="d-flex column login-wrapper">
     <div>
       <h3 class="login">Log In</h3>
@@ -25,11 +29,11 @@
           />
           <img class="mail-icon" src="assets/UI/icon_mail.png" alt="mail icon" />
         </div>
-          <div class="placeholder-error">
-            @if (emailInput.invalid && emailInput.touched) {
-              <span class="error-message">Please enter a valid email address.</span>
-            }
-          </div>
+        <div class="placeholder-error">
+          @if (emailInput.invalid && emailInput.touched) {
+            <span class="error-message">Please enter a valid email address.</span>
+          }
+        </div>
         <div class="input-icon-wrapper">
           <input
             class="input-field"

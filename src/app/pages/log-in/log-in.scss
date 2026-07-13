@@ -10,6 +10,10 @@
   display: flex;
 }
 
+.d-none {
+  display: none;
+}
+
 .center {
   justify-content: center;
   align-items: center;
@@ -164,6 +168,12 @@
   width: 100%;
 }
 
+.desktop-signup-wrapper {
+  padding: 20px 0;
+  gap: 32px;
+  width: 100%;
+}
+
 .footer-wrapper {
   position: fixed;
   bottom: 25px;
@@ -183,8 +193,8 @@
   height: 100vh;
   background-color: $main_white;
   z-index: 9999;
-  transition: opacity 0.5s ease-in-out;
-  transition-delay: 0.6s;
+  transition: opacity 0.6s ease-in-out;
+  transition-delay: 0.8s;
 }
 
 #splash-container {
@@ -195,7 +205,7 @@
     }
 
     .logo {
-      top: 12px;
+      top: 20px;
       left: 24px;
       transform: translate(0, 0) scale(1);
     }
@@ -205,6 +215,37 @@
 @media (min-width: 767px) {
   .login-wrapper {
     width: 400px;
+  }
+}
+
+@media (min-width: 1023px) {
+  .signup-wrapper {
+    display: none;
+  }
+
+  .d-none {
+    display: flex;
+  }
+
+  .desktop-signup-wrapper {
+    position: fixed;
+    top: 80px;
+    right: -70%;
+    transform: translate(-50%, -50%);
+  }
+
+  .logo {
+    width: 80px;
+    transform: translate(-50%, -50%) scale(2);
+  }
+
+  #splash-container.init-done .logo {
+    top: 30px;
+    left: 25%;
+  }
+
+  .left-bound {
+    height: 0;
   }
 }
 

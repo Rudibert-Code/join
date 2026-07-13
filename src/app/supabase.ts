@@ -99,7 +99,6 @@ export class Supabase {
     if (this.authReady()) {
       return;
     }
-
     const {
       data: { user },
     } = await this.supabase.auth.getUser();
