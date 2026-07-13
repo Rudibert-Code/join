@@ -72,7 +72,7 @@ export class ContactDetails {
   }
 
   async deleteContact() {
-    this.resetWindow();
+    //this.resetWindow();
     //this.loadDetails()
 
     if (this.selectedContactId === null) {
@@ -91,6 +91,10 @@ export class ContactDetails {
     this.isEditModalOpen = false;
     },0)
   }
+
+ //getFirstEntry(){
+ //  let id = this.
+ //}
 
   resetWindow(){
     let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement; 
