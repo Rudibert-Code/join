@@ -33,6 +33,14 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayout,
+    children: [
+      { path: 'legal-notice', component: LegalNotice },
+      { path: 'privacy-policy', component: PrivacyPolicy },
+    ],
+  },
+  {
+    path: '',
+    component: MainLayout,
     canActivate: [authGuard],
     children: [
       { path: 'summary', component: Summary },
@@ -40,8 +48,6 @@ export const routes: Routes = [
       { path: 'board', component: Board },
       { path: 'contact-list', component: ContactList },
       { path: 'help', component: Help },
-      { path: 'legal-notice', component: LegalNotice },
-      { path: 'privacy-policy', component: PrivacyPolicy },
     ],
   },
 ];
