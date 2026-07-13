@@ -491,12 +491,15 @@ export class Board implements OnInit {
     ) as HTMLImageElement;
 
     if (currentButton.classList.contains('subtasks_btn_true')) {
+      currentButton.classList.remove('subtasks_btn_true');
       currentButton.classList.add('subtasks_btn_false');
+      currentButton.src="assets/UI/checkbox_default.png"
       subTaskState = false;
+    } else{
+      currentButton.classList.remove('subtasks_btn_false');
+      currentButton.classList.add('subtasks_btn_true');
+      currentButton.src="assets/UI/checkbox_selected.png";
     }
-
-    currentButton.classList.toggle('subtasks_btn_true');
-
     this.db.updateSubtasks(x.id, subTaskState);
   }
 

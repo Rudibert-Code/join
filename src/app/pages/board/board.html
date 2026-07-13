@@ -1,7 +1,7 @@
 <main class="board-wrapper">
   <dialog class="ticket" id="ticket_edit">
     <section class="edit_header">
-      <button (click)="closeTicketCard(false)" class="exit_btn"></button>
+      <button (click)="closeTicketCard(false)" class="exit_btn"><img src="assets/UI/icon_cancle.png" alt=""></button>
     </section>
     <section class="ticket_edit_container">
       <section class="edit_input">
@@ -160,7 +160,7 @@
           <!--{{ task.category }}-->
         </p>
       </div>
-      <button (click)="closeTicketCard(false)" class="exit_btn"></button>
+      <button (click)="closeTicketCard(false)" class="exit_btn"><img src="assets/UI/icon_cancle.png" alt=""></button>
     </section>
     <!--<h2 class="title"> {{ task.title }} </h2>-->
     <h2 class="title" id="ticket_title"></h2>
@@ -200,11 +200,7 @@
         <!--Generate subtasks here-->
         @for (subtask of subtasksCache; track $index) {
           <div class="subtasks">
-            <button
-              (click)="checkBox(subtask)"
-              class="subtasks_btn_{{ subtask.is_Done }}"
-              id="checkbox_{{ subtask.id }}"
-            ></button>
+            <img (click)="checkBox(subtask)" class="subtasks_btn_{{ subtask.is_Done }}" src="assets/UI/checkbox_default.png" alt="" id="checkbox_{{ subtask.id }}">
             <p>{{ subtask.title }}</p>
           </div>
         }
