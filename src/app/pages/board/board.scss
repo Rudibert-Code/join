@@ -70,6 +70,9 @@
   padding: 5px 0;
   border: 1px dashed #a8a8a8;
   border-radius: 15px;
+  transition:
+    border 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .empty-txt {
@@ -83,12 +86,15 @@
   overflow-x: scroll;
   overflow-y: hidden;
   gap: 25px;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    outline 0.2s ease;
 }
 
 .drop-target {
+  outline: 2px dashed $label_user;
+  outline-offset: -2px;
   background-color: rgba(67, 160, 255, 0.1);
-  border: 2px dashed $main-header;
   border-radius: 16px;
 }
 
@@ -97,7 +103,7 @@
   height: 340px;
   min-width: 230px;
   max-width: 260px;
-  padding: 10px 12px 0;
+  padding: 10px 12.5px 0;
   border-radius: 15px;
   background-color: #fff;
   gap: 20px;
@@ -107,9 +113,10 @@
 }
 
 .task-card.dragging {
-  opacity: 0.5;
-  transform: scale(0.98);
-  rotate: -4deg;
+  opacity: 1;
+  transform: scale(0.8);
+  rotate: 6deg;
+  overflow: visible;
 }
 
 .task-card__description {
@@ -273,6 +280,7 @@
 
   .task-card {
     height: 270px;
+    min-width: 260px;
   }
 
   .task-wrapper-desktop {
@@ -288,7 +296,7 @@
   .feedback-wrapper,
   .done-wrapper {
     display: flex;
-    width: 260px;
+    width: 268px;
     margin-left: 25px;
   }
 
@@ -298,18 +306,25 @@
   .done-container {
     display: flex;
     flex-direction: column;
+    justify-content: start;
+    align-items: center;
     flex: 1;
     margin-left: 25px;
     overflow: hidden;
+    min-height: 100vh;
   }
 
   .empty-todo-container,
   .empty-progress-container,
   .empty-feedback-container,
   .empty-done-container {
-    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin-left: 25px;
     width: 260px;
-    height: 45px;
+    height: 90px;
   }
 
   .margin-desktop {
@@ -319,6 +334,7 @@
   .tasks-wrapper-desktop {
     display: flex;
     width: 100%;
+    min-height: 100vh;
   }
 }
 
