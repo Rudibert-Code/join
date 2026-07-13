@@ -1,7 +1,7 @@
 @use '../../../styles/variables' as *;
 
 .main-wrapper {
-  min-height: calc(100vh - 80px - 90px);
+  min-height: calc(100dvh - 80px - 90px - 32px);
   padding: 40px 10px 32px;
   background-color: $main_white;
 }
@@ -220,7 +220,7 @@
 @media (min-width: 1024px) {
   .main-wrapper {
     max-width: 1208px;
-    min-height: calc(100vh - 80px);
+    min-height: calc(100dvh - 80px - 32px);
     padding: 92px 32px 80px;
   }
 
