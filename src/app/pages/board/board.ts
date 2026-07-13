@@ -11,7 +11,7 @@ interface subTask {
 }
 
 interface contacts {
-  id:number;
+  id: number;
   name: string;
   surname: string;
   initials: string;
@@ -19,9 +19,9 @@ interface contacts {
 }
 
 interface newSubTask {
-  task_id: number,
-  title: string,
-  is_done: boolean,
+  task_id: number;
+  title: string;
+  is_done: boolean;
 }
 
 @Component({
@@ -46,6 +46,11 @@ export class Board implements OnInit {
   searchQuery: string = '';
 
   openTicketID: number = 0;
+  activeDropZone: string | null = null;
+
+  isDropTarget(zone: string): boolean {
+    return this.activeDropZone === zone;
+  }
 
   ngOnInit() {
     this.loadTasks();
@@ -110,6 +115,63 @@ export class Board implements OnInit {
 
   startDragging(id: number, event: DragEvent) {
     event.dataTransfer?.setData('text/plain', id.toString());
+    const target = event.target as HTMLElement;
+    const taskCard = target.closest('.task-card') as HTMLElement;
+    if (taskCard) {
+      taskCard.classList.add('dragging');
+    }
+  }
+
+  dragEnd(event: DragEvent) {
+    const target = event.target as HTMLElement;
+    const taskCard = target.closest('.task-card') as HTMLElement;
+    if (taskCard) {
+      taskCard.classList.remove('dragging');
+    }
+
+    setTimeout(() => {
+      if (this.activeDropZone) {
+        this.removeDropTargetClass(this.activeDropZone);
+        this.activeDropZone = null;
+      }
+    }, 50);
+  }
+
+  dragOver(zone: string, event: DragEvent) {
+    event.preventDefault();
+    if (this.activeDropZone !== zone) {
+      if (this.activeDropZone) {
+        this.removeDropTargetClass(this.activeDropZone);
+      }
+      this.activeDropZone = zone;
+    }
+  }
+
+  dragLeave(zone: string, event: DragEvent) {
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    const x = event.clientX;
+    const y = event.clientY;
+
+    if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+      this.removeDropTargetClass(zone);
+      if (this.activeDropZone === zone) {
+        this.activeDropZone = null;
+      }
+    }
+  }
+
+  private addDropTargetClass(zone: string) {
+    const container = document.getElementById(zone) as HTMLElement;
+    if (container) {
+      container.classList.add('drop-target');
+    }
+  }
+
+  private removeDropTargetClass(zone: string) {
+    const container = document.getElementById(zone) as HTMLElement;
+    if (container) {
+      container.classList.remove('drop-target');
+    }
   }
 
   async moveToStatus(status: string, event: DragEvent) {
@@ -122,6 +184,11 @@ export class Board implements OnInit {
 
       await this.db.updateTaskStatus(id, status);
       this.loadTasks();
+    }
+
+    if (this.activeDropZone) {
+      this.removeDropTargetClass(this.activeDropZone);
+      this.activeDropZone = null;
     }
   }
 
@@ -149,8 +216,8 @@ export class Board implements OnInit {
 
     for (let index = 0; index < this.tasks().length; index++) {
       if (this.tasks()[index].id == id) {
-        ticketTitle.textContent = this.cutInout(this.tasks()[index].title, "title");
-        ticketDescription.innerHTML = this.cutInout(this.tasks()[index].description, "description");
+        ticketTitle.textContent = this.cutInout(this.tasks()[index].title, 'title');
+        ticketDescription.innerHTML = this.cutInout(this.tasks()[index].description, 'description');
         ticketDueDate.innerHTML = String(this.setTicketDueDate(this.tasks()[index].due_date));
         ticketPriority.innerHTML = this.tasks()[index].priority;
         this.setTicketPrioIcon(this.tasks()[index].priority);
@@ -164,34 +231,36 @@ export class Board implements OnInit {
     dialogWindow.showModal();
   }
 
-  cutInout(text:string,type:string){
-    let newString:string="";
+  cutInout(text: string, type: string) {
+    let newString: string = '';
 
-    if (text.length >= 17 && type == "title") {
-      newString = (text.slice(0, 14)).concat("...");
-    } else if (text.length >= 60 && type == "description") {
-      newString = (text.slice(0, 60)).concat("...");
-    } else{
+    if (text.length >= 17 && type == 'title') {
+      newString = text.slice(0, 14).concat('...');
+    } else if (text.length >= 60 && type == 'description') {
+      newString = text.slice(0, 60).concat('...');
+    } else {
       newString = text;
     }
     return newString;
   }
 
-  ticketCardID:number = 0;
-  newDialogEditTitle:string = "";
-  newDialogDescription:string = "";
-  newDialogDueDate:string = "";
+  ticketCardID: number = 0;
+  newDialogEditTitle: string = '';
+  newDialogDescription: string = '';
+  newDialogDueDate: string = '';
 
   openTicketEdit() {
     const dialogEdit = document.getElementById('ticket_edit') as HTMLDialogElement;
     const dialogEditTitle = document.getElementById('editTaskTitle') as HTMLInputElement;
-    const dialogEditDescription = document.getElementById('editTaskDescription') as HTMLInputElement;
+    const dialogEditDescription = document.getElementById(
+      'editTaskDescription',
+    ) as HTMLInputElement;
     const dialogEditDueDate = document.getElementById('subtask_edit_dd') as HTMLInputElement;
-    let dialogPrio:string = ""; 
+    let dialogPrio: string = '';
 
     for (let index = 0; index < this.tasks().length; index++) {
       if (this.tasks()[index].id == this.ticketCardID) {
-        dialogEditTitle.value = this.tasks()[index].title;  
+        dialogEditTitle.value = this.tasks()[index].title;
         dialogEditDescription.value = this.tasks()[index].description;
         dialogEditDueDate.value = this.tasks()[index].due_date;
         dialogPrio = this.tasks()[index].priority;
@@ -203,7 +272,7 @@ export class Board implements OnInit {
     dialogEdit.showModal();
   }
 
-  editTicketPrio(newPrio:string){
+  editTicketPrio(newPrio: string) {
     const iconUrgent = document.getElementById('edit_prio_urgent') as HTMLButtonElement;
     const iconMedium = document.getElementById('edit_prio_medium') as HTMLButtonElement;
     const iconLow = document.getElementById('edit_prio_low') as HTMLButtonElement;
@@ -223,15 +292,15 @@ export class Board implements OnInit {
         iconLow.classList.add('edit_prio_low');
         break;
     }
-    this.db.updateTaskPrio(this.ticketCardID,newPrio);
+    this.db.updateTaskPrio(this.ticketCardID, newPrio);
   }
 
-  updateTicketEdit(){
+  updateTicketEdit() {
     const ticketTitle = document.getElementById('editTaskTitle') as HTMLInputElement;
     const ticketDescription = document.getElementById('editTaskDescription') as HTMLInputElement;
     const ticketDueDate = document.getElementById('subtask_edit_dd') as HTMLInputElement;
 
-    this.newDialogEditTitle = ticketTitle.value; 
+    this.newDialogEditTitle = ticketTitle.value;
     this.newDialogDescription = ticketDescription.value;
     this.newDialogDueDate = ticketDueDate.value;
 
@@ -241,15 +310,17 @@ export class Board implements OnInit {
     this.closeTicketCard(true);
   }
 
-  setContactColor(taskId:number){
+  setContactColor(taskId: number) {
     for (let index = 0; index < this.db.task_contacts().length; index++) {
       if (this.db.task_contacts()[index].task_id == taskId) {
         let currentContactID = this.db.task_contacts()[index].contact_id;
 
         for (let index = 0; index < this.db.contacts().length; index++) {
           if (this.db.contacts()[index].id == currentContactID) {
-            let currentContactClass = "contacts_icon_" + this.db.contacts()[index].color.slice(1);  
-            let currentContact = document.getElementById(String(currentContactID)) as HTMLDivElement;
+            let currentContactClass = 'contacts_icon_' + this.db.contacts()[index].color.slice(1);
+            let currentContact = document.getElementById(
+              String(currentContactID),
+            ) as HTMLDivElement;
             currentContact.classList.add(currentContactClass);
           }
         }
@@ -257,32 +328,32 @@ export class Board implements OnInit {
     }
   }
 
-  subtaskInput:boolean = false;
+  subtaskInput: boolean = false;
 
-  checkSubtaskInput(){ 
+  checkSubtaskInput() {
     let subtaskCheckButton = document.getElementById('subtask_input_check') as HTMLImageElement;
     if (this.subtaskInput == false) {
       this.subtaskInput = true;
-      subtaskCheckButton.style.display="flex";
+      subtaskCheckButton.style.display = 'flex';
     }
   }
 
-  unCheckSubtaskInput(){
+  unCheckSubtaskInput() {
     let subtaskCheckButton = document.getElementById('subtask_input_check') as HTMLImageElement;
     this.subtaskInput = false;
-    subtaskCheckButton.style.display="none";
+    subtaskCheckButton.style.display = 'none';
   }
 
-  async createNewSubtask(){
+  async createNewSubtask() {
     let subtaskInput = document.getElementById('editTaskSubtasks') as HTMLInputElement;
     let newSubtaskTitle = subtaskInput.value;
-    let newSubtask:newSubTask[]=[
+    let newSubtask: newSubTask[] = [
       {
         task_id: this.ticketCardID,
         title: newSubtaskTitle,
         is_done: false,
-      }
-    ]
+      },
+    ];
     let newSubtaskID: number = 0;
     for (let index = 0; index < this.db.subtasks().length; index++) {
       if (this.db.subtasks()[index].title == newSubtaskTitle) {
@@ -295,13 +366,13 @@ export class Board implements OnInit {
       id: newSubtaskID,
     });
     this.db.addSubtasks(newSubtask);
-    subtaskInput.value = "";
-    this.unCheckSubtaskInput()
+    subtaskInput.value = '';
+    this.unCheckSubtaskInput();
   }
 
-  deleteSubtask(subtask:subTask){
+  deleteSubtask(subtask: subTask) {
     let targetSubtask = document.getElementById(String(subtask.id)) as HTMLDivElement;
-    targetSubtask.style.display="none";
+    targetSubtask.style.display = 'none';
     this.db.deleteSubtask(subtask.id);
   }
 
@@ -324,7 +395,7 @@ export class Board implements OnInit {
       }
 
       this.contactsCache.push({
-        id:Number(matchingContact.id),
+        id: Number(matchingContact.id),
         name: String(matchingContact.first_name),
         surname: String(matchingContact.last_name),
         initials: `${matchingContact.first_name.charAt(0).toUpperCase()}${matchingContact.last_name.charAt(0).toUpperCase()}`,
@@ -332,7 +403,7 @@ export class Board implements OnInit {
       });
     }
   }
-  
+
   subtasksCache: subTask[] = [];
 
   async getSubTasks(id: any) {
@@ -391,7 +462,7 @@ export class Board implements OnInit {
     ticketPrioIcon.src = iconURL;
   }
 
-  closeTicketCard(changes:boolean) {
+  closeTicketCard(changes: boolean) {
     let dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
     let dialogEdit = document.getElementById('ticket_edit') as HTMLDialogElement;
     dialogWindow.close();
@@ -415,7 +486,9 @@ export class Board implements OnInit {
   checkBox(x: subTask) {
     let checkBoxID = String(x.id);
     let subTaskState: boolean = true;
-    let currentButton = document.getElementById(String("checkbox_" + checkBoxID)) as HTMLImageElement;
+    let currentButton = document.getElementById(
+      String('checkbox_' + checkBoxID),
+    ) as HTMLImageElement;
 
     if (currentButton.classList.contains('subtasks_btn_true')) {
       currentButton.classList.add('subtasks_btn_false');
@@ -427,65 +500,72 @@ export class Board implements OnInit {
     this.db.updateSubtasks(x.id, subTaskState);
   }
 
-  
-  ddContacts:number[]=[];
-  ddOpen:boolean = false;
+  ddContacts: number[] = [];
+  ddOpen: boolean = false;
 
-  openDropDown(){
+  openDropDown() {
     let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
     if (this.ddOpen == false) {
       this.ddOpen = true;
-      dropdownWindow.style.display="flex";
+      dropdownWindow.style.display = 'flex';
       for (let index = 0; index < this.db.task_contacts().length; index++) {
         if (this.db.task_contacts()[index].task_id == this.openTicketID) {
           let currentContactID = Number(this.db.task_contacts()[index].contact_id);
           this.selectDropDownContact(currentContactID);
         }
-      } 
+      }
     }
   }
 
-  closeDropDown(){
+  closeDropDown() {
     let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
-    dropdownWindow.style.display="none";
+    dropdownWindow.style.display = 'none';
     for (let index = 0; index < this.ddContacts.length; index++) {
-      let contact = document.getElementById("dd_contact_" + String(this.ddContacts[index])) as HTMLDivElement;
-      let checkBox = document.getElementById("dd_checkbox_" + String(this.ddContacts[index])) as HTMLImageElement;
-      contact.classList.remove("contact_selected");
-      checkBox.src="assets/UI/checkbox_default.png"
+      let contact = document.getElementById(
+        'dd_contact_' + String(this.ddContacts[index]),
+      ) as HTMLDivElement;
+      let checkBox = document.getElementById(
+        'dd_checkbox_' + String(this.ddContacts[index]),
+      ) as HTMLImageElement;
+      contact.classList.remove('contact_selected');
+      checkBox.src = 'assets/UI/checkbox_default.png';
     }
-    this.ddContacts=[]
+    this.ddContacts = [];
     this.ddOpen = false;
   }
 
-  selectDropDownContact(contactID:number){
-    let selectedContact = document.getElementById("dd_contact_" + String(contactID)) as HTMLDivElement;
-    let selectedCheckBox = document.getElementById("dd_checkbox_" + String(contactID)) as HTMLImageElement;
+  selectDropDownContact(contactID: number) {
+    let selectedContact = document.getElementById(
+      'dd_contact_' + String(contactID),
+    ) as HTMLDivElement;
+    let selectedCheckBox = document.getElementById(
+      'dd_checkbox_' + String(contactID),
+    ) as HTMLImageElement;
 
     if (this.ddContacts.includes(contactID) == false) {
-      this.ddContacts.push(contactID); 
-      selectedContact.classList.add("contact_selected");
-      selectedCheckBox.src="assets/UI/checkbox_selected_white.png"
-    } 
-    else if (this.ddContacts.includes(contactID) == true) {
-      this.ddContacts.indexOf(contactID) !== -1 && this.ddContacts.splice(this.ddContacts.indexOf(contactID),1);
-      selectedContact.classList.remove("contact_selected");
-      selectedCheckBox.src="assets/UI/checkbox_default.png"
+      this.ddContacts.push(contactID);
+      selectedContact.classList.add('contact_selected');
+      selectedCheckBox.src = 'assets/UI/checkbox_selected_white.png';
+    } else if (this.ddContacts.includes(contactID) == true) {
+      this.ddContacts.indexOf(contactID) !== -1 &&
+        this.ddContacts.splice(this.ddContacts.indexOf(contactID), 1);
+      selectedContact.classList.remove('contact_selected');
+      selectedCheckBox.src = 'assets/UI/checkbox_default.png';
     }
   }
 
   async assignContactsToTask(taskId: number, contactIds: number[]) {
     this.filterContacts(taskId);
     const taskContacts = this.buildTaskContacts(taskId, contactIds);
-    console.table(taskContacts)
+    console.table(taskContacts);
     await this.db.addTaskContacts(taskContacts);
   }
 
-  filterContacts(taskID: number){
-    let entryCounter:number = 0;
+  filterContacts(taskID: number) {
+    let entryCounter: number = 0;
     for (let index = 0; index < this.db.task_contacts().length; index++) {
       if (this.db.task_contacts()[index].task_id == taskID) {
-        entryCounter++
+        entryCounter++;
       }
     }
     this.ddContacts.splice(0, entryCounter);
@@ -497,7 +577,6 @@ export class Board implements OnInit {
       contact_id: contactId,
     }));
   }
-
 
   getSubtaskAmount(taskId: number): Subtask[] {
     return this.subtasks().filter((subtask) => subtask.task_id === taskId);

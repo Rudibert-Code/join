@@ -13,6 +13,7 @@ export class Signup {
   db = inject(Supabase);
   router = inject(Router);
   iconSrc = 'assets/UI/icon_locked.png';
+  confirmIconSrc = 'assets/UI/icon_locked.png';
   private visibilityOnSrc = 'assets/UI/icon_visibility.png';
   private visibilityOffSrc = 'assets/UI/icon_locked.png';
   passwordsDoNotMatch = false;
@@ -37,6 +38,18 @@ export class Signup {
     }
   }
 
+  showConfirmPassword() {
+    const reqPassword = document.getElementById('reqPw') as HTMLInputElement | null;
+    if (!reqPassword) return;
+    if (reqPassword.type === 'password') {
+      reqPassword.type = 'text';
+      this.confirmIconSrc = this.visibilityOnSrc;
+    } else {
+      reqPassword.type = 'password';
+      this.confirmIconSrc = this.visibilityOffSrc;
+    }
+  }
+
   async onSubmitSignUp() {
     if (this.signUpData.password !== this.signUpData.confirmPassword) {
       this.passwordsDoNotMatch = true;
@@ -57,6 +70,14 @@ export class Signup {
     }
     await this.pushInContact();
     this.router.navigate(['/login']);
+  }
+
+  async ngOnInit() {
+    await this.db.ensureAuthLoaded();
+    if (this.db.isLoggedIn()) {
+      this.router.navigate(['/summary']);
+      return;
+    }
   }
 
   async pushInContact() {

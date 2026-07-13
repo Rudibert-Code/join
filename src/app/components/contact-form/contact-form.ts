@@ -28,23 +28,18 @@ export class ContactForm {
   contactForm = new FormGroup({
     first_name: new FormControl('', { validators: [Validators.required, Validators.minLength(3)] }),
     last_name: new FormControl('', { validators: [Validators.required, Validators.minLength(3)] }),
-    email: new FormControl('', { validators: [Validators.required, this.emailValidate] }),
+    email: new FormControl('', { validators: [Validators.required, Validators.email] }),
     phone: new FormControl('', {
       validators: [Validators.required, Validators.minLength(5), Validators.pattern(/^[0-9]+$/)],
     }),
   });
 
-  emailValidate(control: AbstractControl) {
-    const email = control.value;
-    if (!email) return null;
-    return email.includes('@') ? null : { missingAt: true };
-  }
+  
 
   async onSubmit() {
     if (this.contactForm.valid) {
       const contactPayload: newContact = this.contactForm.value as newContact;
       const data = await this.db.setContact(contactPayload);
-      //this.router.navigate(['']);
       this.requestClose()
     } else {
       this.contactForm.markAllAsTouched();

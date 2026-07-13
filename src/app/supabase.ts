@@ -81,12 +81,24 @@ export class Supabase {
   today = new Date().toISOString().split('T')[0];
   authUser = signal<SupabaseUser | null>(null);
   isGuest = signal(false);
+  authReady = signal(false);
+  private authInitPromise: Promise<void> | null = null;
 
   isLoggedIn() {
     return !!this.authUser() || this.isGuest();
   }
 
+  async ensureAuthLoaded() {
+    if (!this.authInitPromise) {
+      this.authInitPromise = this.initAuth();
+    }
+    await this.authInitPromise;
+  }
+
   async initAuth() {
+    if (this.authReady()) {
+      return;
+    }
     const {
       data: { user },
     } = await this.supabase.auth.getUser();
@@ -97,6 +109,7 @@ export class Supabase {
         this.isGuest.set(false);
       }
     });
+    this.authReady.set(true);
   }
 
   async getContacts() {
@@ -379,6 +392,7 @@ export class Supabase {
   signInAsGuest() {
     this.authUser.set(null);
     this.isGuest.set(true);
+    this.authReady.set(true);
   }
 
   async signOut() {

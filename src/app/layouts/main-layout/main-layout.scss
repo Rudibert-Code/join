@@ -17,9 +17,9 @@ app-nav-bar {
 }
 
 .content {
-    padding: 16px;
+    padding: 16px 16px 0;
     background-color: $main-white;
-    min-height: calc(100vh - $header_height_mobile);
+    min-height: calc(100dvh - $header_height_mobile - 90px);
 }
 
 @media (min-width: 1024px) {
@@ -42,5 +42,9 @@ app-nav-bar {
 
     .app-content {
         padding-bottom: 0;
+    }
+
+    .content {
+        min-height: calc(100dvh - $header_height_desktop);
     }
 }

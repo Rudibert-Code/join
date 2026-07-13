@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-import { inject } from '@angular/core';
+import { inject, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Supabase, User } from '../../supabase';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-log-in',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './log-in.html',
   styleUrls: ['./log-in.scss'],
 })
-
 export class LogIn {
   db = inject(Supabase);
   router = inject(Router);
+  private cd = inject(ChangeDetectorRef);
   loginError: string = '';
   loginData = {
     email: '',
@@ -28,6 +29,7 @@ export class LogIn {
     const { data, error } = await this.db.signIn(this.loginData.email, this.loginData.password);
     if (error) {
       this.loginError = 'Email or Password does not exist.';
+      this.cd.detectChanges();
       return;
     }
     if (data.user) {
@@ -47,7 +49,12 @@ export class LogIn {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.db.ensureAuthLoaded();
+    if (this.db.isLoggedIn()) {
+      this.router.navigate(['/summary']);
+      return;
+    }
     this.startAnimation();
   }
 
