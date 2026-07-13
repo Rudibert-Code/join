@@ -30,9 +30,9 @@
           <img class="mail-icon" src="assets/UI/icon_mail.png" alt="mail icon" />
         </div>
         <div class="placeholder-error">
-          @if (emailInput.invalid && emailInput.touched) {
-            <span class="error-message">Please enter a valid email address.</span>
-          }
+          <span *ngIf="emailInput.invalid && emailInput.touched" class="error-message"
+            >Please enter a valid email address.</span
+          >
         </div>
         <div class="input-icon-wrapper">
           <input
@@ -53,9 +53,7 @@
           />
         </div>
         <div class="placeholder-error">
-          @if (loginError) {
-            <span class="error-message">{{ loginError }}</span>
-          }
+          <span *ngIf="loginError" class="error-message">{{ loginError }}</span>
         </div>
       </form>
     </div>
