@@ -303,7 +303,6 @@
     display: flex;
     width: 268px;
     margin-left: 25px;
-    
   }
 
   .todo-container,
@@ -352,15 +351,15 @@
     display: flex;
     background-color: $main-header;
     border: none;
-    border-radius: 5px;
-    padding: 4.5px 15px;
+    border-radius: 16px;
+    padding: 4px 16px;
     > p {
       color: $main-white;
     }
   }
 
   .searchbar-wrapper {
-    gap: 24px;
+    gap: 32px;
     transform: translateY(-60px);
   }
 
