@@ -42,6 +42,7 @@ button{
 .separator{
     max-width: 352px;
     height: 2px;
+    margin-bottom: 32px;
     background-color: #2a36471e;
 }
 
@@ -71,6 +72,7 @@ button{
     }
 }
 .contact{
+    cursor: pointer;
     width: 100%;
     max-width: 352px;
     display: flex;
