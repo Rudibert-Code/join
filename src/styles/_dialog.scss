@@ -165,7 +165,7 @@ svg {
 
   > p {
     margin: 0;
-    margin-bottom: 16px;
+    
   }
 }
 .icon_text{
@@ -346,6 +346,10 @@ svg {
     justify-content: center;
     align-items: center;
     gap: 8px;
+    >p{
+      margin: 0;
+      margin-top: 16px;
+    }
   }
   &_dot{
     width: 8px;
@@ -410,6 +414,7 @@ svg {
   justify-content: flex-start;
   align-items: start;
   overflow: auto;
+  gap: 4px;
 }
 .dd_contact{
   width: 100%;
