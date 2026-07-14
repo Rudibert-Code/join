@@ -93,29 +93,6 @@ export class ContactDetails {
     isActive = this.detailViewActive;
   }
 
- getFirstEntry(){
-    this.userName = this.db.contacts()[0].first_name;
-    this.userSurName = this.db.contacts()[0].last_name;
-    this.userEmail = this.db.contacts()[0].email;
-    this.userPhone = this.db.contacts()[0].phone;
-    this.userInitials = (this.userName.charAt(0).toUpperCase())+(this.userSurName.charAt(0).toUpperCase());
- }
-
-
-
-  //resetWindow(){
-  //  let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement; 
-  //  if (detailsPopUp.classList.contains("active")) {
-  //    detailsPopUp.classList.remove("active");
-  //    detailsPopUp.classList.add("in-active");
-  //    this.detailViewActive = false
-  //  } else{
-  //    detailsPopUp.classList.remove("in-active");
-  //    detailsPopUp.classList.add("active");
-  //    this.detailViewActive = true;
-  //  }
-  //}
-
   openWindow(){
     let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
     detailsPopUp.classList.remove("in-active"); 
