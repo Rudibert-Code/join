@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
+import { Component, EventEmitter, Output, computed, inject, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contact, Supabase } from '../../supabase';
 import { ContactForm } from '../contact-form/contact-form';
@@ -21,7 +21,6 @@ let currentContact:contactCache[] = [];
 })
 
 export class Contacts {
-
   db = inject(Supabase);
   cd = inject(ContactDetails);
   
@@ -86,29 +85,23 @@ ngOnInit() {
         this.openContactDetails(currentContactData);
       }
     }
-    this.cd.resetWindow();
+    this.cd.openWindow();
     this.cd.loadDetails(currentContactID);
   }
 }
 
 openContactDetails(contact: Contact) {
-  let isActive = this.cd.detailViewActive;
-
   this.contactSelected.emit(contact);
 
   currentContact = [{
     id:contact.id
   }]
   
-  if (screen.width >= 1190 && isActive == false) {
-    this.cd.resetWindow();
-    this.cd.loadDetails(contact.id);
+  if (screen.width >= 1190) {
+    this.cd.openWindow();
   }
 
-  let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
-  buttonMobile.src="assets/UI/vector/icon_edit-user.svg"
-
-  if (screen.width <= 1189 && this.cd.detailViewActive == false){
+  if (screen.width <= 1189){
     let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
     let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
     let contactID = Number(contact.id);
@@ -126,17 +119,20 @@ openContactDetails(contact: Contact) {
         userIcon.style.backgroundColor = String(this.userColor);
       }      
     }
-
     contactContainer.style.display="none"
     detailContainer.style.display="flex"
-    this.cd.resetWindow();
-    this.cd.loadDetails(contact.id);
+    this.cd.openWindow();
   }
+
+  this.cd.loadDetails(contact.id);
+
+  let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
+  buttonMobile.src="assets/UI/vector/icon_edit-user.svg"
+
   setTimeout(()=>{
   this.markContactAsClicked(contact); 
   },0)
 }
-
 
 markContactAsClicked(contact:Contact){
   for (let index = 0; index < this.db.contacts().length; index++) {
@@ -150,7 +146,6 @@ markContactAsClicked(contact:Contact){
   userIconID.classList.add("clicked");
 }
 
-
 returnToContacts(){
   let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
   let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
@@ -161,5 +156,4 @@ returnToContacts(){
   detailContainer.style.display="none";
   this.cd.changeState(false);
 }
-
 }
