@@ -124,10 +124,16 @@
     }
 }
 
-.add-task-form__subtasks {
+.add-task-form__subtasks,
+.dropdown-caregory,
+.priority-buttons,
+.add-task-form__due_date,
+.add-task-form__description,
+.add-task-form__title,
+.assigned-dropdown {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 16px;
 }
 
 .add-task-form__subtasks-input {
