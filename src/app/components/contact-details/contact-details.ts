@@ -116,11 +116,9 @@ export class ContactDetails {
   //  }
   //}
 
-
-  
-
   openWindow(){
-    let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement; 
+    let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
+    detailsPopUp.classList.remove("in-active"); 
     if (detailsPopUp.classList.contains("active")) {
       detailsPopUp.classList.remove("active");
     }
@@ -134,7 +132,6 @@ export class ContactDetails {
     detailsPopUp.classList.remove("active");
     detailsPopUp.classList.add("in-active");
   }
-
 
   changeState(X:boolean){
     this.detailViewActive = X;
