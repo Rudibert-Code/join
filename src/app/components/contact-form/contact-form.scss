@@ -56,6 +56,7 @@
   align-items: flex-end;
   justify-content: center;
   backdrop-filter: blur(1px);
+  overflow: hidden;
   z-index: 999;
 }
 
@@ -72,7 +73,7 @@
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
   overflow: hidden;
-  transform: translateY(100%);
+  transform: translateY(calc(100% + 40px));
   animation: slideUp 0.25s ease-out forwards;
 }
 
@@ -82,7 +83,7 @@
 
 @keyframes slideUp {
   from {
-    transform: translateY(100%);
+    transform: translateY(calc(100% + 40px));
   }
   to {
     transform: translateY(0);
@@ -94,13 +95,13 @@
     transform: translateY(0);
   }
   to {
-    transform: translateY(100%);
+    transform: translateY(calc(100% + 40px));
   }
 }
 
 @keyframes slideIn {
   from {
-    transform: translateX(100%);
+    transform: translateX(calc(50vw + 50%));
   }
   to {
     transform: translateX(0);
@@ -112,7 +113,7 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(100%);
+    transform: translateX(calc(50vw + 50%));
   }
 }
 
@@ -247,7 +248,7 @@
     bottom: 0;
     justify-content: space-between;
     min-width: 800px;
-    transform: translateX(100%);
+    transform: translateX(calc(50vw + 50%));
     animation: slideIn 0.25s ease-out forwards;
   }
 
