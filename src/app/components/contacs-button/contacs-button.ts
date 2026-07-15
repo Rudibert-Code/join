@@ -12,21 +12,20 @@ import { EditContactModal } from '../edit-contact-modal/edit-contact-modal';
 })
 export class ContacsButton {
   @Input() contactId: number | null = null;
+  @Input() isEditMode = false;
 
   showContactForm = signal(false);
   showEditModal = signal(false);
 
   openContactForm() {
-    let btnIMG = document.getElementById('contact-button_img') as HTMLImageElement;
-    let btnState = String(btnIMG.src);
-   if (btnState.includes('assets/UI/vector/icon_add-user.svg')) {
-     this.showContactForm.set(true);
-   } else if (
-     btnState.includes('assets/UI/vector/icon_edit-user.svg') &&
-     this.contactId !== null
-   ) {
-     this.showEditModal.set(true);
-   }
+    if (this.isEditMode) {
+      if (this.contactId !== null) {
+        this.showEditModal.set(true);
+      }
+      return;
+    }
+
+    this.showContactForm.set(true);
   }
 
   closeContactForm() {
