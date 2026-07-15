@@ -14,8 +14,19 @@ import { Contact } from '../../supabase';
 })
 export class ContactList {
   @ViewChild(ContactDetails) detailsComponent?: ContactDetails;
+  selectedContactId: number | null = null;
+  isMobileDetailView = false;
   
   onContactSelected(contact: Contact) {
-    this.detailsComponent?.loadDetails(Number(contact.id));
+    this.selectedContactId = Number(contact.id);
+    this.detailsComponent?.loadDetails(this.selectedContactId);
+  }
+
+  onMobileDetailViewChange(isOpen: boolean) {
+    this.isMobileDetailView = isOpen;
+
+    if (!isOpen) {
+      this.selectedContactId = null;
+    }
   }
 }

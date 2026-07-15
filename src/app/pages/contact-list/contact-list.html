@@ -1,5 +1,13 @@
 <div class="screen" id="contact-list_screen">
-  <app-contacs-button></app-contacs-button>
-  <app-contacts class="contacts" (contactSelected)="onContactSelected($event)" id="app-contacts"></app-contacts>
+  <app-contacs-button
+    [contactId]="selectedContactId"
+    [isEditMode]="isMobileDetailView"
+  ></app-contacs-button>
+  <app-contacts
+    class="contacts"
+    id="app-contacts"
+    (contactSelected)="onContactSelected($event)"
+    (mobileDetailViewChange)="onMobileDetailViewChange($event)"
+  ></app-contacts>
   <app-contact-details class="details" id="app-contact-details"></app-contact-details>
 </div>

@@ -1,10 +1,8 @@
-import { Component, EventEmitter, Output, computed, inject, signal, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contact, Supabase } from '../../supabase';
 import { ContactForm } from '../contact-form/contact-form';
 import { ContactDetails } from '../contact-details/contact-details'
-import { Router } from '@angular/router';
-import { timeout } from 'rxjs';
 
 interface contactCache {
   id:number;
@@ -65,12 +63,11 @@ userEmail:string="";
 userPhone:string="";
 
 
-constructor(private router: Router) {}
-
 @Output() contactSelected = new EventEmitter<Contact>();
+@Output() mobileDetailViewChange = new EventEmitter<boolean>();
 
 ngOnInit() {
-  if (currentContact.length > 0) {
+  if (currentContact.length > 0 && !this.isMobileViewport()) {
     const currentContactID = currentContact[0].id;
     for (let index = 0; index < this.db.contacts().length; index++) {
       if (this.db.contacts()[index].id == currentContactID) {
@@ -97,11 +94,11 @@ openContactDetails(contact: Contact) {
     id:contact.id
   }]
   
-  if (screen.width >= 1190) {
+  if (!this.isMobileViewport()) {
     this.cd.openWindow();
   }
 
-  if (screen.width <= 1189){
+  if (this.isMobileViewport()) {
     let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
     let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
     let contactID = Number(contact.id);
@@ -121,13 +118,11 @@ openContactDetails(contact: Contact) {
     }
     contactContainer.style.display="none"
     detailContainer.style.display="flex"
+    this.mobileDetailViewChange.emit(true);
     this.cd.openWindow();
   }
 
   this.cd.loadDetails(contact.id);
-
-  let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
-  buttonMobile.src="assets/UI/vector/icon_edit-user.svg"
 
   setTimeout(()=>{
   this.markContactAsClicked(contact); 
@@ -149,11 +144,14 @@ markContactAsClicked(contact:Contact){
 returnToContacts(){
   let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
   let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
-  let buttonMobile = document.getElementById('contact-button_img') as HTMLImageElement;
-  buttonMobile.src="assets/UI/vector/icon_add-user.svg";
   contactContainer.style.display="flex";
   contactContainer.style.flexDirection="column";
   detailContainer.style.display="none";
+  this.mobileDetailViewChange.emit(false);
   this.cd.changeState(false);
+}
+
+private isMobileViewport() {
+  return window.matchMedia('(max-width: 1023px)').matches;
 }
 }

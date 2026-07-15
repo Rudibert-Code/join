@@ -1,6 +1,15 @@
 <div class="contact-button_shape" (click)="openContactForm()" >
-    <img src="assets/UI/vector/icon_add-user.svg" alt="" id="contact-button_img">
+    <img
+        [src]="isEditMode
+            ? 'assets/UI/vector/icon_edit-user.svg'
+            : 'assets/UI/vector/icon_add-user.svg'"
+        [alt]="isEditMode ? 'Kontakt bearbeiten' : 'Kontakt hinzufügen'"
+    >
 </div>
 
 <app-contact-form *ngIf="showContactForm()" (close)="closeContactForm()"></app-contact-form>
-<app-edit-contact-modal *ngIf="showEditModal()" (close)="closeEditModal()"></app-edit-contact-modal>
+<app-edit-contact-modal
+    *ngIf="showEditModal() && contactId !== null"
+    [contactId]="contactId!"
+    (close)="closeEditModal()"
+></app-edit-contact-modal>
