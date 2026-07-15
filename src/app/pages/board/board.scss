@@ -165,6 +165,10 @@
   width: 20px;
 }
 
+.add-btn-desktop {
+  display: none;
+}
+
 .subtask-progress-container {
   display: flex;
   align-items: center;
@@ -289,6 +293,7 @@
     justify-content: center;
     width: calc(100% - 30px);
     gap: 30px;
+    transform: translateY(-60px);
   }
 
   .todo-wrapper,
@@ -335,6 +340,31 @@
     display: flex;
     width: 100%;
     min-height: 100vh;
+    transform: translateY(-60px);
+  }
+
+  .add-btn {
+    display: none;
+  }
+
+  .add-btn-desktop {
+    display: flex;
+    background-color: $main-header;
+    border: none;
+    border-radius: 16px;
+    padding: 4px 16px;
+    > p {
+      color: $main-white;
+    }
+  }
+
+  .searchbar-wrapper {
+    gap: 32px;
+    transform: translateY(-60px);
+  }
+
+  .add-icon {
+    margin-left: 10px;
   }
 }
 

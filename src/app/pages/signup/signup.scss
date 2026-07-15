@@ -172,12 +172,12 @@
     left: 24px;
   }
 
-  .column{
+  .column {
     justify-content: center;
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   .content-wrapper {
     width: 500px;
   }
@@ -188,5 +188,15 @@
 
   .align-center {
     gap: 80px;
+  }
+}
+
+@media (min-width: 2559px) {
+  .header-wrapper {
+    padding: 80px 25px 0 80px;
+  }
+
+  .logo {
+    width: 80px;
   }
 }

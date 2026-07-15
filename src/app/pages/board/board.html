@@ -1,7 +1,9 @@
 <main class="board-wrapper">
   <dialog class="ticket" id="ticket_edit">
     <section class="edit_header">
-      <button (click)="closeTicketCard(false)" class="exit_btn"><img src="assets/UI/icon_cancle.png" alt=""></button>
+      <button (click)="closeTicketCard(false)" class="exit_btn">
+        <img src="assets/UI/icon_cancle.png" alt="" />
+      </button>
     </section>
     <section class="ticket_edit_container">
       <section class="edit_input">
@@ -160,7 +162,9 @@
           <!--{{ task.category }}-->
         </p>
       </div>
-      <button (click)="closeTicketCard(false)" class="exit_btn"><img src="assets/UI/icon_cancle.png" alt=""></button>
+      <button (click)="closeTicketCard(false)" class="exit_btn">
+        <img src="assets/UI/icon_cancle.png" alt="" />
+      </button>
     </section>
     <!--<h2 class="title"> {{ task.title }} </h2>-->
     <h2 class="title" id="ticket_title"></h2>
@@ -200,7 +204,13 @@
         <!--Generate subtasks here-->
         @for (subtask of subtasksCache; track $index) {
           <div class="subtasks">
-            <img (click)="checkBox(subtask)" class="subtasks_btn_{{ subtask.is_Done }}" src="assets/UI/checkbox_default.png" alt="" id="checkbox_{{ subtask.id }}">
+            <img
+              (click)="checkBox(subtask)"
+              class="subtasks_btn_{{ subtask.is_Done }}"
+              src="assets/UI/checkbox_default.png"
+              alt=""
+              id="checkbox_{{ subtask.id }}"
+            />
             <p>{{ subtask.title }}</p>
           </div>
         }
@@ -273,7 +283,7 @@
         <img class="add-icon" src="assets/UI/icon_add.png" alt="add icon" />
       </button>
     </section>
-    <div class="d-flex center">
+    <div class="d-flex center searchbar-wrapper">
       <div class="search-task d-flex center">
         <input
           type="text"
@@ -286,6 +296,12 @@
           <div class="seperator"></div>
           <img src="assets/UI/icon_search.png" alt="search icon" />
         </div>
+      </div>
+      <div>
+        <button routerLink="/add-task" class="add-btn-desktop d-flex center">
+          <p class="margin-correction">Add task</p>
+          <img class="add-icon" src="assets/UI/icon_add.png" alt="add icon" />
+        </button>
       </div>
     </div>
   </header>

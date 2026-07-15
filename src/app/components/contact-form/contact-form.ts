@@ -34,19 +34,18 @@ export class ContactForm {
     }),
   });
 
-  
-
   async onSubmit() {
     if (this.contactForm.valid) {
       const contactPayload: newContact = this.contactForm.value as newContact;
       const data = await this.db.setContact(contactPayload);
-      this.requestClose()
+      this.requestClose();
     } else {
       this.contactForm.markAllAsTouched();
     }
   }
 
   private animationCloseTimer?: number;
+  private ANIMATION_DURATION = 250;
 
   requestClose() {
     if (this.isClosing) {
@@ -57,7 +56,7 @@ export class ContactForm {
 
     this.animationCloseTimer = window.setTimeout(() => {
       this.emitClose();
-    }, 550);
+    }, this.ANIMATION_DURATION);
   }
 
   onPanelAnimationEnd(event: AnimationEvent) {
