@@ -47,9 +47,8 @@ button{
 }
 
 .contact-details-mobile{
-    height: 100vh;
     width: 100%;
-    
+
     display: none;
     flex-direction: column;
     justify-content: start;
@@ -79,7 +78,7 @@ button{
     justify-content: start;
     align-items: center;
     gap: 8px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     border-radius: 8px;
     >h1{
       margin: 0;  
@@ -204,5 +203,11 @@ button{
     .main-container{
         height: 100%;
         width: 100%;
+    }
+    .contact{
+        overflow-y: none;
+        &_second{
+            display: none;
+        }
     }
 }
