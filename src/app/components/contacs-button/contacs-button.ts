@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal, inject } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { ContactForm } from '../contact-form/contact-form';
 import { EditContactModal } from '../edit-contact-modal/edit-contact-modal';
-import { Supabase } from '../../supabase';
 
 @Component({
   selector: 'app-contacs-button',
@@ -12,8 +11,7 @@ import { Supabase } from '../../supabase';
   styleUrl: './contacs-button.scss',
 })
 export class ContacsButton {
-  
-  db = inject(Supabase);
+  @Input() contactId: number | null = null;
 
   showContactForm = signal(false);
   showEditModal = signal(false);
@@ -23,7 +21,10 @@ export class ContacsButton {
     let btnState = String(btnIMG.src);
    if (btnState.includes('assets/UI/vector/icon_add-user.svg')) {
      this.showContactForm.set(true);
-   } else if (btnState.includes('assets/UI/vector/icon_edit-user.svg')){
+   } else if (
+     btnState.includes('assets/UI/vector/icon_edit-user.svg') &&
+     this.contactId !== null
+   ) {
      this.showEditModal.set(true);
    }
   }

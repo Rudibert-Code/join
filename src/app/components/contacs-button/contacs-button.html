@@ -3,4 +3,8 @@
 </div>
 
 <app-contact-form *ngIf="showContactForm()" (close)="closeContactForm()"></app-contact-form>
-<app-edit-contact-modal *ngIf="showEditModal()" (close)="closeEditModal()"></app-edit-contact-modal>
+<app-edit-contact-modal
+    *ngIf="showEditModal() && contactId !== null"
+    [contactId]="contactId!"
+    (close)="closeEditModal()"
+></app-edit-contact-modal>

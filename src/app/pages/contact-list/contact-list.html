@@ -1,5 +1,5 @@
 <div class="screen" id="contact-list_screen">
-  <app-contacs-button></app-contacs-button>
+  <app-contacs-button [contactId]="selectedContactId"></app-contacs-button>
   <app-contacts class="contacts" (contactSelected)="onContactSelected($event)" id="app-contacts"></app-contacts>
   <app-contact-details class="details" id="app-contact-details"></app-contact-details>
 </div>
