@@ -78,7 +78,7 @@ button{
     justify-content: start;
     align-items: center;
     gap: 8px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     border-radius: 8px;
     >h1{
       margin: 0;  
@@ -203,5 +203,11 @@ button{
     .main-container{
         height: 100%;
         width: 100%;
+    }
+    .contact{
+        overflow-y: none;
+        &_second{
+            display: none;
+        }
     }
 }
