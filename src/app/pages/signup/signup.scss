@@ -31,9 +31,14 @@
 }
 
 .header-wrapper {
+  height: 84px;
+  width: 100%;
+}
+
+.header-content {
   justify-content: flex-start;
   align-items: center;
-  height: 84px;
+  height: 100%;
   width: 100%;
   padding: 10px 25px 0;
 }
@@ -177,7 +182,11 @@
   .header-wrapper {
     position: fixed;
     top: 12px;
-    left: 24px;
+    left: 0;
+  }
+
+  .header-content {
+    padding-left: 49px;
   }
 
   .column {
@@ -186,6 +195,17 @@
 }
 
 @media (min-width: 1024px) {
+  .header-wrapper {
+    top: 22px;
+  }
+
+  .header-content {
+    width: calc(100% - 96px);
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
   .content-wrapper {
     width: 500px;
   }
@@ -200,10 +220,6 @@
 }
 
 @media (min-width: 2559px) {
-  .header-wrapper {
-    padding: 80px 25px 0 80px;
-  }
-
   .logo {
     width: 80px;
   }
