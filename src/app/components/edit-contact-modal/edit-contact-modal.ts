@@ -13,8 +13,12 @@ export class EditContactModal {
   avatarColor: string = '';
   initalFirstname: string = '';
   initalLastname: string = '';
+  isClosing = false;
   @Input() contactId!: number;
   @Output() close = new EventEmitter<void>();
+
+  private animationCloseTimer?: number;
+  private readonly animationDuration = 250;
 
   async ngOnInit() {
     const contact = await this.contacts.getContactById(this.contactId);
@@ -50,11 +54,46 @@ export class EditContactModal {
       phone: formValue.phone!,
     };
     await this.contacts.updateContact(this.contactId, updatedContact);
-    this.close.emit();
+    this.requestClose();
   }
 
   async deleteContact() {
     await this.contacts.deleteContact(this.contactId);
+    this.requestClose();
+  }
+
+  requestClose() {
+    if (this.isClosing) {
+      return;
+    }
+
+    this.isClosing = true;
+    this.animationCloseTimer = window.setTimeout(() => {
+      this.emitClose();
+    }, this.animationDuration);
+  }
+
+  onModalAnimationEnd(event: AnimationEvent) {
+    if (!this.isClosing || event.target !== event.currentTarget) {
+      return;
+    }
+
+    if (event.animationName === 'slideOutToBottom' || event.animationName === 'slideOutToRight') {
+      this.emitClose();
+    }
+  }
+
+  private emitClose() {
+    if (!this.isClosing) {
+      return;
+    }
+
+    this.isClosing = false;
+    if (this.animationCloseTimer) {
+      window.clearTimeout(this.animationCloseTimer);
+      this.animationCloseTimer = undefined;
+    }
+
     this.close.emit();
   }
 }
