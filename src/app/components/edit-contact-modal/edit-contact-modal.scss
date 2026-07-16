@@ -150,6 +150,10 @@
     animation: slideInFromBottom 250ms ease-out;
 }
 
+.edit-modal--closing {
+    animation: slideOutToBottom 250ms ease-in forwards;
+}
+
 @keyframes slideInFromBottom {
     from {
         transform: translateY(100%);
@@ -157,6 +161,16 @@
 
     to {
         transform: translateY(0);
+    }
+}
+
+@keyframes slideOutToBottom {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(100%);
     }
 }
 
@@ -199,6 +213,10 @@
         animation: slideInFromRight 250ms ease-out;
     }
 
+    .edit-modal--closing {
+        animation: slideOutToRight 250ms ease-in forwards;
+    }
+
     @keyframes slideInFromRight {
         from {
             transform: translateX(100%);
@@ -206,6 +224,16 @@
 
         to {
             transform: translateX(0);
+        }
+    }
+
+    @keyframes slideOutToRight {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(100%);
         }
     }
 

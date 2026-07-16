@@ -1,7 +1,11 @@
 <div class="edit-modal-overlay">
-  <div class="edit-modal">
+  <div
+    class="edit-modal"
+    [class.edit-modal--closing]="isClosing"
+    (animationend)="onModalAnimationEnd($event)"
+  >
     <section class="edit-modal__header">
-      <button class="edit-modal__close edit-modal__close--mobileIMG" type="button" (click)="close.emit()">
+      <button class="edit-modal__close edit-modal__close--mobileIMG" type="button" (click)="requestClose()">
         <img class="" src="assets/UI/vector/icon_close.svg" alt="Schließen" />
       </button>
 
@@ -11,7 +15,7 @@
     </section>
 
     <section class="edit-modal__body">
-      <button class="edit-modal__close edit-modal__close--desktopIMG" type="button" (click)="close.emit()">
+      <button class="edit-modal__close edit-modal__close--desktopIMG" type="button" (click)="requestClose()">
         <img class="" src="assets/UI/vector/icon_cancle.svg" alt="Schließen" />
       </button>
       <div class="edit-modal__avatar" [style.backgroundColor]="avatarColor">

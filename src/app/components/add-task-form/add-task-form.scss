@@ -195,10 +195,11 @@ form {
     }
 
     .add-task-form__buttons {
-        bottom: 50px;
         position: absolute;
+        left: auto;
         right: 30px;
         bottom: 0;
+        padding-inline: 0;
         background-color: unset;
     }
 
