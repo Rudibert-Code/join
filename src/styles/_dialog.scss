@@ -340,17 +340,18 @@ svg {
   border-radius: 8px;
   border: 2px solid $main_grey;
   &_list{
-    width: 88%;
-    height: 88px;
+    width: 113%;
+    height: 95px;
+    border-radius: 0;
     padding: 0 16px;
     overflow: auto;
     display: none;
     flex-direction: column;
     justify-content: flex-start;
     align-items: start;
-    position: absolute;
-    top: 307px;
-    left: -13px;
+    position: relative;
+    top: -4px;
+    left: -20px;
     >p{
       padding-left: 16px;
     }
