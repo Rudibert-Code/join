@@ -1,8 +1,11 @@
-import { Component, computed, HostListener, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Supabase, Task, Subtask, TaskContacts, Contact } from '../../supabase';
+import { Supabase, Task, Subtask} from '../../supabase';
 import { RouterLink } from '@angular/router';
+
+import { TicketDetails } from '../../components/ticket-details/ticket-details';
+import { TicketEdit } from '../../components/ticket-edit/ticket-edit';
 
 interface subTask {
   title: String;
@@ -27,12 +30,14 @@ interface newSubTask {
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, TicketDetails],
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })
+
 export class Board implements OnInit {
   db = inject(Supabase);
+
   contacts = computed(() => this.db.contacts());
   tasks = computed(() => this.db.tasks());
   subtasks = computed(() => this.db.subtasks());
@@ -249,67 +254,6 @@ export class Board implements OnInit {
   newDialogDescription: string = '';
   newDialogDueDate: string = '';
 
-  openTicketEdit() {
-    const dialogEdit = document.getElementById('ticket_edit') as HTMLDialogElement;
-    const dialogEditTitle = document.getElementById('editTaskTitle') as HTMLInputElement;
-    const dialogEditDescription = document.getElementById(
-      'editTaskDescription',
-    ) as HTMLInputElement;
-    const dialogEditDueDate = document.getElementById('subtask_edit_dd') as HTMLInputElement;
-    let dialogPrio: string = '';
-
-    for (let index = 0; index < this.tasks().length; index++) {
-      if (this.tasks()[index].id == this.ticketCardID) {
-        dialogEditTitle.value = this.tasks()[index].title;
-        dialogEditDescription.value = this.tasks()[index].description;
-        dialogEditDueDate.value = this.tasks()[index].due_date;
-        dialogPrio = this.tasks()[index].priority;
-      }
-    }
-    this.closeTicketCard(false);
-    this.editTicketPrio(dialogPrio);
-    this.setContactColor(this.ticketCardID);
-    dialogEdit.showModal();
-  }
-
-  editTicketPrio(newPrio: string) {
-    const iconUrgent = document.getElementById('edit_prio_urgent') as HTMLButtonElement;
-    const iconMedium = document.getElementById('edit_prio_medium') as HTMLButtonElement;
-    const iconLow = document.getElementById('edit_prio_low') as HTMLButtonElement;
-    iconUrgent.classList.remove('edit_prio_urgent');
-    iconMedium.classList.remove('edit_prio_medium');
-    iconLow.classList.remove('edit_prio_low');
-    switch (newPrio) {
-      case 'urgent':
-        iconUrgent.classList.add('edit_prio_urgent');
-        break;
-
-      case 'medium':
-        iconMedium.classList.add('edit_prio_medium');
-        break;
-
-      case 'low':
-        iconLow.classList.add('edit_prio_low');
-        break;
-    }
-    this.db.updateTaskPrio(this.ticketCardID, newPrio);
-  }
-
-  updateTicketEdit() {
-    const ticketTitle = document.getElementById('editTaskTitle') as HTMLInputElement;
-    const ticketDescription = document.getElementById('editTaskDescription') as HTMLInputElement;
-    const ticketDueDate = document.getElementById('subtask_edit_dd') as HTMLInputElement;
-
-    this.newDialogEditTitle = ticketTitle.value;
-    this.newDialogDescription = ticketDescription.value;
-    this.newDialogDueDate = ticketDueDate.value;
-
-    this.db.updateTaskTitle(this.ticketCardID, this.newDialogEditTitle);
-    this.db.updateTaskDescription(this.ticketCardID, this.newDialogDescription);
-    this.db.updateTaskDueDate(this.ticketCardID, this.newDialogDueDate);
-    this.closeTicketCard(true);
-  }
-
   setContactColor(taskId: number) {
     for (let index = 0; index < this.db.task_contacts().length; index++) {
       if (this.db.task_contacts()[index].task_id == taskId) {
@@ -326,54 +270,6 @@ export class Board implements OnInit {
         }
       }
     }
-  }
-
-  subtaskInput: boolean = false;
-
-  checkSubtaskInput() {
-    let subtaskCheckButton = document.getElementById('subtask_input_check') as HTMLImageElement;
-    if (this.subtaskInput == false) {
-      this.subtaskInput = true;
-      subtaskCheckButton.style.display = 'flex';
-    }
-  }
-
-  unCheckSubtaskInput() {
-    let subtaskCheckButton = document.getElementById('subtask_input_check') as HTMLImageElement;
-    this.subtaskInput = false;
-    subtaskCheckButton.style.display = 'none';
-  }
-
-  async createNewSubtask() {
-    let subtaskInput = document.getElementById('editTaskSubtasks') as HTMLInputElement;
-    let newSubtaskTitle = subtaskInput.value;
-    let newSubtask: newSubTask[] = [
-      {
-        task_id: this.ticketCardID,
-        title: newSubtaskTitle,
-        is_done: false,
-      },
-    ];
-    let newSubtaskID: number = 0;
-    for (let index = 0; index < this.db.subtasks().length; index++) {
-      if (this.db.subtasks()[index].title == newSubtaskTitle) {
-        newSubtaskID = this.db.subtasks()[index].id;
-      }
-    }
-    this.subtasksCache.push({
-      title: newSubtaskTitle,
-      is_Done: false,
-      id: newSubtaskID,
-    });
-    this.db.addSubtasks(newSubtask);
-    subtaskInput.value = '';
-    this.unCheckSubtaskInput();
-  }
-
-  deleteSubtask(subtask: subTask) {
-    let targetSubtask = document.getElementById(String(subtask.id)) as HTMLDivElement;
-    targetSubtask.style.display = 'none';
-    this.db.deleteSubtask(subtask.id);
   }
 
   contactsCache: contacts[] = [];
@@ -399,7 +295,7 @@ export class Board implements OnInit {
         name: String(matchingContact.first_name),
         surname: String(matchingContact.last_name),
         initials: `${matchingContact.first_name.charAt(0).toUpperCase()}${matchingContact.last_name.charAt(0).toUpperCase()}`,
-        color: String(matchingContact.color.slice(1)),
+        color: String(matchingContact.color),
       });
     }
   }
@@ -419,6 +315,9 @@ export class Board implements OnInit {
         });
       }
     }
+    setTimeout(()=>{
+    this.setCheckBoxState(id);
+    },0)
   }
 
   setTicketCatClass(cat: string) {
@@ -470,97 +369,24 @@ export class Board implements OnInit {
     if (changes == true) {
       this.assignContactsToTask(this.openTicketID, this.ddContacts);
     }
-    this.closeDropDown();
   }
 
-  deleteTicket() {
-    this.closeTicketCard(false);
-    for (let index = 0; index < this.subtasks().length; index++) {
-      if (this.subtasks()[index].task_id == this.openTicketID) {
-        this.db.deleteSubtask(this.subtasks()[index].id);
-      }
-    }
-    this.db.deleteTask(this.openTicketID);
-  }
-
-  checkBox(x: subTask) {
-    let checkBoxID = String(x.id);
-    let subTaskState: boolean = true;
-    let currentButton = document.getElementById(
-      String('checkbox_' + checkBoxID),
-    ) as HTMLImageElement;
-
-    if (currentButton.classList.contains('subtasks_btn_true')) {
-      currentButton.classList.remove('subtasks_btn_true');
-      currentButton.classList.add('subtasks_btn_false');
-      currentButton.src="assets/UI/checkbox_default.png"
-      subTaskState = false;
-    } else{
-      currentButton.classList.remove('subtasks_btn_false');
-      currentButton.classList.add('subtasks_btn_true');
-      currentButton.src="assets/UI/checkbox_selected.png";
-    }
-    this.db.updateSubtasks(x.id, subTaskState);
-  }
-
-  ddContacts: number[] = [];
-  ddOpen: boolean = false;
-
-  openDropDown() {
-    let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
-    if (this.ddOpen == false) {
-      this.ddOpen = true;
-      dropdownWindow.style.display = 'flex';
-      for (let index = 0; index < this.db.task_contacts().length; index++) {
-        if (this.db.task_contacts()[index].task_id == this.openTicketID) {
-          let currentContactID = Number(this.db.task_contacts()[index].contact_id);
-          this.selectDropDownContact(currentContactID);
-        }
-      }
+  setCheckBoxState(taskID:number){
+  for (let index = 0; index < this.db.subtasks().length; index++) {
+    let targetCheckBox = document.getElementById("checkbox_" + this.db.subtasks()[index].id) as HTMLImageElement;
+    if (this.db.subtasks()[index].task_id == taskID && this.db.subtasks()[index].is_done == true) {
+      targetCheckBox.src ="assets/UI/checkbox_selected.png";
+    } else if (this.db.subtasks()[index].task_id == taskID && this.db.subtasks()[index].is_done == false) {
+      targetCheckBox.src ="assets/UI/checkbox_default.png";
     }
   }
+}
 
-  closeDropDown() {
-    let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
-    dropdownWindow.style.display = 'none';
-    for (let index = 0; index < this.ddContacts.length; index++) {
-      let contact = document.getElementById(
-        'dd_contact_' + String(this.ddContacts[index]),
-      ) as HTMLDivElement;
-      let checkBox = document.getElementById(
-        'dd_checkbox_' + String(this.ddContacts[index]),
-      ) as HTMLImageElement;
-      contact.classList.remove('contact_selected');
-      checkBox.src = 'assets/UI/checkbox_default.png';
-    }
-    this.ddContacts = [];
-    this.ddOpen = false;
-  }
-
-  selectDropDownContact(contactID: number) {
-    let selectedContact = document.getElementById(
-      'dd_contact_' + String(contactID),
-    ) as HTMLDivElement;
-    let selectedCheckBox = document.getElementById(
-      'dd_checkbox_' + String(contactID),
-    ) as HTMLImageElement;
-
-    if (this.ddContacts.includes(contactID) == false) {
-      this.ddContacts.push(contactID);
-      selectedContact.classList.add('contact_selected');
-      selectedCheckBox.src = 'assets/UI/checkbox_selected_white.png';
-    } else if (this.ddContacts.includes(contactID) == true) {
-      this.ddContacts.indexOf(contactID) !== -1 &&
-        this.ddContacts.splice(this.ddContacts.indexOf(contactID), 1);
-      selectedContact.classList.remove('contact_selected');
-      selectedCheckBox.src = 'assets/UI/checkbox_default.png';
-    }
-  }
+ ddContacts: number[] = [];
 
   async assignContactsToTask(taskId: number, contactIds: number[]) {
     this.filterContacts(taskId);
     const taskContacts = this.buildTaskContacts(taskId, contactIds);
-    console.table(taskContacts);
     await this.db.addTaskContacts(taskContacts);
   }
 

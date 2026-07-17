@@ -174,55 +174,6 @@ svg {
   padding: 4px;
   margin: 0;
 }
-.contacts_icon {
-  height: 42px;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &_ffa35e {
-    aspect-ratio: 1 / 1;
-    border-radius: 100px;
-    padding: 4px;
-    background-color: $user_orange;
-    color: $main_white;
-  }
-  &_ff5eb3 {
-    aspect-ratio: 1 / 1;
-    border-radius: 100px;
-    padding: 4px;
-    background-color: $user_pink;
-    color: $main_white;
-  }
-  &_6e52ff {
-    aspect-ratio: 1 / 1;
-    border-radius: 100px;
-    padding: 4px;
-    background-color: $user_blue;
-    color: $main_white;
-  }
-  &_9327ff {
-    aspect-ratio: 1 / 1;
-    border-radius: 100px;
-    padding: 4px;
-    background-color: $user_purple;
-    color: $main_white;
-  }
-  &_00bee8{
-    aspect-ratio: 1 / 1;
-    border-radius: 100px;
-    padding: 4px;
-    background-color: $user_lightblue;
-    color: $main_white;
-  }
-  &_ff745e{
-    aspect-ratio: 1 / 1;
-    border-radius: 100px;
-    padding: 4px;
-    background-color: $user_red;
-    color: $main_white;
-  }
-}
 .edit_prio{
   width: 100%;
   display: flex;

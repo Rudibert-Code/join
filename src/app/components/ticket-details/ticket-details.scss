@@ -1,0 +1,14 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/dialog';
+
+.contacts_icon {
+  height: 42px;
+  aspect-ratio: 1 / 1;
+  border-radius: 100px;
+  padding: 4px;
+  background-color: $user_blue;
+  color: $main_white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
