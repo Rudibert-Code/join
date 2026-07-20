@@ -48,7 +48,7 @@ export class Contacts {
     return Array.from(groups.entries());
   });
 
-  getInitials(contact: any) {
+  getInitials(contact: Contact) {
     const firstNameLetter = contact.first_name.charAt(0).toUpperCase();
     const lastNameLetter = contact.last_name.charAt(0).toUpperCase();
 
