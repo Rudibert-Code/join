@@ -1,4 +1,4 @@
-<div class="edit-modal-overlay">
+<div class="edit-modal-overlay" (click)="onOverlayClick($event)">
   <div
     class="edit-modal"
     [class.edit-modal--closing]="isClosing"
@@ -23,19 +23,55 @@
       </div>
 
       <form class="edit-modal__form" [formGroup]="editContactForm" (ngSubmit)="saveContact()">
-        <div class="edit-modal__field">
-          <input class="" type="text" formControlName="firstname" />
-          <img src="assets/UI/vector/icon_user.svg" alt="Person Icon" />
+        <div class="edit-modal__form-group">
+          <div class="edit-modal__field">
+            <input class="" type="text" formControlName="firstname" />
+            <img src="assets/UI/vector/icon_user.svg" alt="Person Icon" />
+          </div>
+          <p
+            class="edit-modal__error"
+            [class.edit-modal__error--visible]="
+              editContactForm.controls.firstname.invalid &&
+              (editContactForm.controls.firstname.dirty || editContactForm.controls.firstname.touched)
+            "
+            aria-live="polite"
+          >
+            First name must have at least 3 characters.
+          </p>
         </div>
 
-        <div class="edit-modal__field">
-          <input class="" type="text" formControlName="lastname" />
-          <img src="assets/UI/vector/icon_user.svg" alt="Person Icon" />
+        <div class="edit-modal__form-group">
+          <div class="edit-modal__field">
+            <input class="" type="text" formControlName="lastname" />
+            <img src="assets/UI/vector/icon_user.svg" alt="Person Icon" />
+          </div>
+          <p
+            class="edit-modal__error"
+            [class.edit-modal__error--visible]="
+              editContactForm.controls.lastname.invalid &&
+              (editContactForm.controls.lastname.dirty || editContactForm.controls.lastname.touched)
+            "
+            aria-live="polite"
+          >
+            Last name must have at least 3 characters.
+          </p>
         </div>
 
-        <div class="edit-modal__field">
-          <input type="email" formControlName="email" />
-          <img src="assets/UI/vector/icon_mail.svg" alt="Email Icon" />
+        <div class="edit-modal__form-group">
+          <div class="edit-modal__field">
+            <input type="email" formControlName="email" />
+            <img src="assets/UI/vector/icon_mail.svg" alt="Email Icon" />
+          </div>
+          <p
+            class="edit-modal__error"
+            [class.edit-modal__error--visible]="
+              editContactForm.controls.email.invalid &&
+              (editContactForm.controls.email.dirty || editContactForm.controls.email.touched)
+            "
+            aria-live="polite"
+          >
+            Email must contain an &#64; and end with at least 2 letters (e.g. .de).
+          </p>
         </div>
 
         <div class="edit-modal__field">
@@ -46,7 +82,9 @@
         <div class="edit-modal__actions">
           <button class="edit-modal__delete" type="button" (click)="deleteContact()">Delete</button>
 
-          <button class="edit-modal__save" type="submit">Save ✓</button>
+          <button class="edit-modal__save" type="submit" [disabled]="editContactForm.invalid">
+            Save ✓
+          </button>
         </div>
       </form>
     </section>

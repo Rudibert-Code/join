@@ -9,6 +9,8 @@ import { Supabase } from '../../supabase';
   styleUrl: './edit-contact-modal.scss',
 })
 export class EditContactModal {
+  private static readonly EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
+
   contacts = inject(Supabase);
   avatarColor: string = '';
   initalFirstname: string = '';
@@ -35,9 +37,15 @@ export class EditContactModal {
   }
 
   editContactForm = new FormGroup({
-    firstname: new FormControl('', { validators: [Validators.required] }),
-    lastname: new FormControl('', { validators: [Validators.required] }),
-    email: new FormControl('', { validators: [Validators.required, Validators.email] }),
+    firstname: new FormControl('', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }),
+    lastname: new FormControl('', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }),
+    email: new FormControl('', {
+      validators: [Validators.required, Validators.pattern(EditContactModal.EMAIL_PATTERN)],
+    }),
     phone: new FormControl('', { validators: [Validators.required] }),
   });
 
@@ -71,6 +79,12 @@ export class EditContactModal {
     this.animationCloseTimer = window.setTimeout(() => {
       this.emitClose();
     }, this.animationDuration);
+  }
+
+  onOverlayClick(event: MouseEvent) {
+    if (event.target === event.currentTarget) {
+      this.requestClose();
+    }
   }
 
   onModalAnimationEnd(event: AnimationEvent) {
