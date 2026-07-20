@@ -28,7 +28,7 @@ export class ContactForm {
   contactForm = new FormGroup({
     first_name: new FormControl('', { validators: [Validators.required, Validators.minLength(3)] }),
     last_name: new FormControl('', { validators: [Validators.required, Validators.minLength(3)] }),
-    email: new FormControl('', { validators: [Validators.required, Validators.email] }),
+    email: new FormControl('', { validators: [Validators.required, Validators.pattern('^[^@]+@[^@.]{3,}\\.[a-zA-Z]{2,}$')] }),
     phone: new FormControl('', {
       validators: [Validators.required, Validators.minLength(5), Validators.pattern(/^[0-9]+$/)],
     }),

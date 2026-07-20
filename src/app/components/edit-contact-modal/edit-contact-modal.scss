@@ -31,11 +31,12 @@
 
 .edit-modal__close {
     position: absolute;
-    top: 14px;
-    right: 0;
+    top: 30px;
+    right: 30px;
     border: unset;
     background: transparent;
     cursor: pointer;
+    padding: 0;
 }
 
 .edit-modal__headline h2 {
