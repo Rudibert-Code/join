@@ -3,6 +3,9 @@ import { Router, RouterLink } from '@angular/router';
 import { Supabase, newContact } from '../../supabase';
 import { FormsModule } from '@angular/forms';
 
+/**
+ * Handles user registration, form validation, and contact creation.
+ */
 @Component({
   selector: 'app-signup',
   imports: [RouterLink, FormsModule],
@@ -26,6 +29,9 @@ export class Signup {
     acceptPolicy: false,
   };
 
+  /**
+   * Toggles the visibility state of the main password input field.
+   */
   showPassword() {
     const password = document.getElementById('pwd') as HTMLInputElement | null;
     if (!password) return;
@@ -38,6 +44,9 @@ export class Signup {
     }
   }
 
+  /**
+   * Toggles the visibility state of the confirm password input field.
+   */
   showConfirmPassword() {
     const reqPassword = document.getElementById('reqPw') as HTMLInputElement | null;
     if (!reqPassword) return;
@@ -50,6 +59,9 @@ export class Signup {
     }
   }
 
+  /**
+   * Validates form inputs and submits new user account credentials to Supabase.
+   */
   async onSubmitSignUp() {
     if (this.signUpData.password !== this.signUpData.confirmPassword) {
       this.passwordsDoNotMatch = true;
@@ -72,6 +84,9 @@ export class Signup {
     this.router.navigate(['/login']);
   }
 
+  /**
+   * Checks current authentication status on load and redirects logged-in users to summary.
+   */
   async ngOnInit() {
     await this.db.ensureAuthLoaded();
     if (this.db.isLoggedIn()) {
@@ -80,6 +95,9 @@ export class Signup {
     }
   }
 
+  /**
+   * Creates a corresponding contact record in the database for the new user.
+   */
   async pushInContact() {
     const contact: newContact = {
       first_name: this.signUpData.firstName,

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+/**
+ * Renders the static legal notice page.
+ */
 @Component({
   selector: 'app-legal-notice',
   imports: [],

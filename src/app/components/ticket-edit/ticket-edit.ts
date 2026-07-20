@@ -1,19 +1,33 @@
 import { Component, inject} from '@angular/core';
 import { Board } from '../../pages/board/board';
 
-
+/**
+ * Represents a subtask item for display in the ticket edit dialog.
+ */
 interface subTask {
+  /** The text content of the subtask. */
   title: String;
+  /** Completion status of the subtask. */
   is_Done: Boolean;
+  /** Unique database identifier for the subtask. */
   id: number;
 }
 
+/**
+ * Payload structure for creating a new subtask record.
+ */
 interface newSubTask {
+  /** Parent task identifier. */
   task_id: number;
+  /** Title or content of the subtask. */
   title: string;
+  /** Initial completion state. */
   is_done: boolean;
 }
 
+/**
+ * Handles editing existing task details, including title, description, due date, priority, contacts, and subtasks.
+ */
 @Component({
   selector: 'app-ticket-edit',
   imports: [],
@@ -22,10 +36,15 @@ interface newSubTask {
 })
 export class TicketEdit {
 
+/** Reference to parent Board component instance. */
 board = inject(Board);
 
+/** Tracks toggle state of contact selection dropdown. */
 ddOpen: boolean = false;
 
+/**
+   * Opens contact dropdown menu and pre-selects contacts currently assigned to task.
+   */
 openDropDown() {
   let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
   if (this.ddOpen == false) {
@@ -40,6 +59,9 @@ openDropDown() {
   }
 }
 
+/**
+   * Closes contact selection dropdown menu and resets selection states.
+   */
 closeDropDown() {
   let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
   dropdownWindow.style.display = 'none';
@@ -57,6 +79,11 @@ closeDropDown() {
   this.ddOpen = false;
 }
 
+/**
+   * Updates visual priority button highlights and saves updated priority in database.
+   * 
+   * @param newPrio - Priority string identifier ('urgent', 'medium', or 'low').
+   */
 editTicketPrio(newPrio: string) {
   const iconUrgent = document.getElementById('edit_prio_urgent') as HTMLButtonElement;
   const iconMedium = document.getElementById('edit_prio_medium') as HTMLButtonElement;
@@ -78,6 +105,11 @@ editTicketPrio(newPrio: string) {
   this.board.db.updateTaskPrio(this.board.ticketCardID, newPrio);
 }
 
+/**
+   * Toggles selection state of a contact inside dropdown list.
+   * 
+   * @param contactID - Target contact ID.
+   */
 selectDropDownContact(contactID: number) {
   let selectedContact = document.getElementById(
     'dd_contact_' + String(contactID),
@@ -99,6 +131,9 @@ selectDropDownContact(contactID: number) {
 
 subtaskInput: boolean = false;
 
+/**
+   * Displays action confirmation buttons for subtask input field.
+   */
 checkSubtaskInput() {
   let subtaskCheckButton = document.getElementById('subtask_input_check') as HTMLImageElement;
   if (this.subtaskInput == false) {
@@ -106,12 +141,19 @@ checkSubtaskInput() {
     subtaskCheckButton.style.display = 'flex';
   }
 }
+
+/**
+   * Hides action confirmation buttons for subtask input field.
+   */
 unCheckSubtaskInput() {
   let subtaskCheckButton = document.getElementById('subtask_input_check') as HTMLImageElement;
   this.subtaskInput = false;
   subtaskCheckButton.style.display = 'none';
 }
 
+/**
+   * Creates a new subtask, posts payload to database, and updates cache.
+   */
 async createNewSubtask() {
   let subtaskInput = document.getElementById('editTaskSubtasks') as HTMLInputElement;
   let newSubtaskTitle = subtaskInput.value;
@@ -138,12 +180,20 @@ async createNewSubtask() {
   this.unCheckSubtaskInput();
 }
 
+/**
+   * Hides subtask UI element and deletes subtask entry from database.
+   * 
+   * @param subtask - Target subtask object to remove.
+   */
 deleteSubtask(subtask: subTask) {
   let targetSubtask = document.getElementById(String(subtask.id)) as HTMLDivElement;
   targetSubtask.style.display = 'none';
   this.board.db.deleteSubtask(subtask.id);
 }
 
+/**
+   * Persists modified title, description, and due date values to database and closes dialog.
+   */
 updateTicketEdit() {
   const ticketTitle = document.getElementById('editTaskTitle') as HTMLInputElement;
   const ticketDescription = document.getElementById('editTaskDescription') as HTMLInputElement;
@@ -157,6 +207,11 @@ updateTicketEdit() {
   this.board.closeTicketCard(true);
 }
 
+/**
+   * Closes ticket dialog and resets dropdown selection view.
+   * 
+   * @param X - Flag indicating if changes should be saved on modal close.
+   */
 closeTC(X:boolean){
   this.board.closeTicketCard(X);
   this.closeDropDown();

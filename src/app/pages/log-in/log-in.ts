@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { Supabase, User } from '../../supabase';
 import { FormsModule } from '@angular/forms';
 
+/**
+ * Handles user login, guest access, password visibility toggling, and splash animations.
+ */
 @Component({
   selector: 'app-log-in',
   standalone: true,
@@ -25,6 +28,9 @@ export class LogIn {
   private visibilityOnSrc = 'assets/UI/icon_visibility.png';
   private visibilityOffSrc = 'assets/UI/icon_visibility-off.png';
 
+  /**
+   * Authenticates user with email and password, navigating to summary on success.
+   */
   async onSubmitLogin() {
     const { data, error } = await this.db.signIn(this.loginData.email, this.loginData.password);
     if (error) {
@@ -41,6 +47,9 @@ export class LogIn {
     }
   }
 
+  /**
+   * Logs the user in as a guest and redirects to the summary page.
+   */
   onGuestLogin() {
     this.db.signInAsGuest();
 
@@ -49,6 +58,9 @@ export class LogIn {
     });
   }
 
+  /**
+   * Checks existing login session on load and triggers splash screen animation.
+   */
   async ngOnInit() {
     await this.db.ensureAuthLoaded();
     if (this.db.isLoggedIn()) {
@@ -58,6 +70,9 @@ export class LogIn {
     this.startAnimation();
   }
 
+  /**
+   * Toggles input field type between password and plain text.
+   */
   showPassword() {
     const password = document.getElementById('pwd') as HTMLInputElement | null;
     if (!password) return;
@@ -70,6 +85,9 @@ export class LogIn {
     }
   }
 
+  /**
+   * Triggers the initial splash screen SCSS transition after a slight delay.
+   */
   startAnimation() {
     let splash = document.getElementById('splash-container') as HTMLInputElement | null;
     setTimeout(() => {

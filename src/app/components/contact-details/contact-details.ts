@@ -1,44 +1,56 @@
-import { Injectable,Component, inject } from '@angular/core';
+import { Injectable, Component, inject } from '@angular/core';
 import { Supabase } from '../../supabase';
 import { EditContactModal } from '../edit-contact-modal/edit-contact-modal';
-import { timeout } from 'rxjs';
 
-let savedName:string="";
-let savedSurName:string="";
-let savedPhone:string="";
-let savedEmail:string="";
-let savedColor:string="";
+let savedName: string = '';
+let savedSurName: string = '';
+let savedPhone: string = '';
+let savedEmail: string = '';
+let savedColor: string = '';
 
-let isActive:boolean=false;
+let isActive: boolean = false;
 
+/**
+ * Component and root injectable service managing detailed view display,
+ * modal editing triggers, and deletion for selected contacts.
+ */
 @Component({
   selector: 'app-contact-details',
   imports: [EditContactModal],
   templateUrl: './contact-details.html',
   styleUrl: './contact-details.scss',
 })
-
 @Injectable({
   providedIn: 'root',
 })
-
 export class ContactDetails {
+  /** Supabase service instance for contact operations and data signals. */
   db = inject(Supabase);
 
+  /** Tracks active visibility state of detail view panel. */
   detailViewActive = isActive;
 
-  userName:String= savedName; 
-  userSurName:String=savedSurName;
-  userEmail:String=savedEmail;
-  userPhone:String=savedPhone;
-  userInitials:String=(this.userName.charAt(0).toUpperCase())+(this.userSurName.charAt(0).toUpperCase());
-  userColor:String=savedColor;
+  userName: String = savedName;
+  userSurName: String = savedSurName;
+  userEmail: String = savedEmail;
+  userPhone: String = savedPhone;
+  userInitials: String =
+    this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
+  userColor: String = savedColor;
+  /** Database ID of currently selected contact. */
   selectedContactId: number | null = null;
+
+  /** Controls visibility state of edit contact modal dialog. */
   isEditModalOpen = false;
 
-  loadDetails(contactId:number){
+  /**
+   * Fetches contact record by ID, populates local view variables, and applies avatar styles.
+   *
+   * @param contactId - Target contact database ID.
+   */
+  loadDetails(contactId: number) {
     let contact = this.db.contacts();
-    let selectedContact = contact.find(contact => contact.id === contactId);
+    let selectedContact = contact.find((contact) => contact.id === contactId);
     if (!selectedContact) {
       return;
     }
@@ -53,16 +65,23 @@ export class ContactDetails {
     savedPhone = String(selectedContact.phone);
     this.userColor = String(selectedContact.color);
     savedColor = String(selectedContact.color);
-    this.userInitials = (this.userName.charAt(0).toUpperCase())+(this.userSurName.charAt(0).toUpperCase());
+    this.userInitials =
+      this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
 
     let userIcon = document.getElementById('user_initials') as HTMLDivElement;
     userIcon.style.backgroundColor = String(this.userColor);
   }
 
+  /**
+   * Displays edit contact modal dialog.
+   */
   openEditModal() {
     this.isEditModalOpen = true;
   }
 
+  /**
+   * Closes edit contact modal and refreshes active contact details.
+   */
   closeEditModal() {
     this.isEditModalOpen = false;
 
@@ -71,6 +90,9 @@ export class ContactDetails {
     }
   }
 
+  /**
+   * Deletes currently selected contact from database and resets local display state.
+   */
   async deleteContact() {
     this.closeWindow();
 
@@ -80,37 +102,48 @@ export class ContactDetails {
 
     await this.db.deleteContact(this.selectedContactId);
 
-    setTimeout(()=>{
-    this.selectedContactId = null;
-    this.userName = "";
-    this.userSurName = "";
-    this.userEmail = "";
-    this.userPhone = "";
-    this.userInitials = "";
-    this.isEditModalOpen = false;
-    },0)
+    setTimeout(() => {
+      this.selectedContactId = null;
+      this.userName = '';
+      this.userSurName = '';
+      this.userEmail = '';
+      this.userPhone = '';
+      this.userInitials = '';
+      this.isEditModalOpen = false;
+    }, 0);
 
     isActive = this.detailViewActive;
   }
 
-  openWindow(){
+  /**
+   * Opens detail view popup window and applies active transition classes.
+   */
+  openWindow() {
     let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
-    detailsPopUp.classList.remove("in-active"); 
-    if (detailsPopUp.classList.contains("active")) {
-      detailsPopUp.classList.remove("active");
+    detailsPopUp.classList.remove('in-active');
+    if (detailsPopUp.classList.contains('active')) {
+      detailsPopUp.classList.remove('active');
     }
-    setTimeout(()=>{
-    detailsPopUp.classList.add("active");
-    },0)
+    setTimeout(() => {
+      detailsPopUp.classList.add('active');
+    }, 0);
   }
 
-  closeWindow(){
-    let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement; 
-    detailsPopUp.classList.remove("active");
-    detailsPopUp.classList.add("in-active");
+  /**
+   * Closes detail view popup window with transition classes.
+   */
+  closeWindow() {
+    let detailsPopUp = document.getElementById('contactDetails') as HTMLDialogElement;
+    detailsPopUp.classList.remove('active');
+    detailsPopUp.classList.add('in-active');
   }
 
-  changeState(X:boolean){
+  /**
+   * Updates state tracking detail view activity.
+   * 
+   * @param X - Activity state boolean.
+   */
+  changeState(X: boolean) {
     this.detailViewActive = X;
   }
 }

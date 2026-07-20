@@ -4,10 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Board } from '../../pages/board/board';
 
+/**
+ * Mobile view wrapper providing access to board state and actions.
+ */
 @Component({
   selector: 'app-board-mobile',
   standalone: true,
-  imports: [FormsModule,RouterLink,CommonModule],
+  imports: [FormsModule, RouterLink, CommonModule],
   templateUrl: './board-mobile.html',
   styleUrl: './board-mobile.scss',
 })

@@ -2,8 +2,9 @@ import { Component, HostListener, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Supabase } from '../../supabase';
 
-//let isActive:any = false;
-
+/**
+ * Handles the header user avatar dropdown menu popup, menu animation states, click-outside dismissal, and user sign-out.
+ */
 @Component({
   selector: 'app-submenu-popup',
   imports: [RouterLink],
@@ -11,10 +12,18 @@ import { Supabase } from '../../supabase';
   styleUrl: './submenu-popup.scss',
 })
 export class SubmenuPopup {
+  /** Supabase service instance for authentication operations. */
   supabase = inject(Supabase);
-  router = inject(Router);
-  isActive: any = false;
 
+  /** Angular Router instance for page navigation. */
+  router = inject(Router);
+
+  /** Tracks visibility state of the popup submenu dialog. */
+  isActive: boolean = false;
+
+  /**
+   * Toggles the submenu popup open/close state and updates CSS transition classes.
+   */
   toggleSubMenu() {
     let submenuBox = document.getElementById('submenu') as HTMLDialogElement;
     if (this.isActive == false) {
@@ -28,6 +37,11 @@ export class SubmenuPopup {
     }
   }
 
+  /**
+   * Closes the submenu popup when a click occurs outside of the popup container.
+   * 
+   * @param event - Document click mouse event.
+   */
   @HostListener('document:click', ['$event'])
   closeSubMenuPopUp(event: MouseEvent) {
     const clickedElement = event.target as HTMLElement;
@@ -38,6 +52,9 @@ export class SubmenuPopup {
     }
   }
 
+  /**
+   * Signs the current user out via Supabase and redirects to the login route.
+   */
   async signOut() {
     await this.supabase.signOut();
     this.router.navigate(['/login']);

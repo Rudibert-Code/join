@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 
-
+/**
+ * Renders the static privacy policy page.
+ */
 @Component({
   selector: 'app-privacy-policy',
   imports: [],

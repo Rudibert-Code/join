@@ -2,14 +2,23 @@ import { Component, EventEmitter, Output, computed, inject, signal } from '@angu
 import { CommonModule } from '@angular/common';
 import { Contact, Supabase } from '../../supabase';
 import { ContactForm } from '../contact-form/contact-form';
-import { ContactDetails } from '../contact-details/contact-details'
+import { ContactDetails } from '../contact-details/contact-details';
 
+/**
+ * Cache structure storing the currently active/selected contact ID.
+ */
 interface contactCache {
-  id:number;
+  /** Database ID of the active contact. */
+  id: number;
 }
 
-let currentContact:contactCache[] = [];
+/** Global memory cache tracking the last selected contact across component re-initializations. */
+let currentContact: contactCache[] = [];
 
+/**
+ * Renders the main contacts list view, alphabetical grouping, contact selection,
+ * and handles layout changes for mobile viewports vs. desktop views.
+ */
 @Component({
   selector: 'app-contacts',
   standalone: true,
@@ -17,21 +26,33 @@ let currentContact:contactCache[] = [];
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
-
 export class Contacts {
+  /** Supabase service instance for contact operations and reactive signal data. */
   db = inject(Supabase);
+
+  /** ContactDetails instance for controlling detail panel views. */
   cd = inject(ContactDetails);
-  
+
+  /** Signal state controlling visibility of the "Add Contact" form modal/overlay. */
   showContactForm = signal(false);
 
+  /**
+   * Sets state to open the contact creation form overlay.
+   */
   openContactForm() {
     this.showContactForm.set(true);
   }
 
+  /**
+   * Sets state to close the contact creation form overlay.
+   */
   closeContactForm() {
     this.showContactForm.set(false);
   }
-  
+
+  /**
+   * Computed signal that groups all contacts alphabetically by the uppercase first letter of their first name.
+   */
   groupedContacts = computed(() => {
     const groups = new Map<string, Contact[]>();
 
@@ -48,6 +69,12 @@ export class Contacts {
     return Array.from(groups.entries());
   });
 
+  /**
+   * Helper function calculating two-letter uppercase initials for a contact object.
+   *
+   * @param contact - Contact object containing first_name and last_name properties.
+   * @returns Concatenated uppercase initials.
+   */
   getInitials(contact: any) {
     const firstNameLetter = contact.first_name.charAt(0).toUpperCase();
     const lastNameLetter = contact.last_name.charAt(0).toUpperCase();
@@ -55,103 +82,129 @@ export class Contacts {
     return firstNameLetter + lastNameLetter;
   }
 
-userInitials:string="";
-userColor:String="";
-userName:string="";
-userSurName:string="";
-userEmail:string="";
-userPhone:string="";
+  userInitials: string = '';
+  userColor: String = '';
+  userName: string = '';
+  userSurName: string = '';
+  userEmail: string = '';
+  userPhone: string = '';
 
+  /** Emits when a contact item is selected. */
+  @Output() contactSelected = new EventEmitter<Contact>();
 
-@Output() contactSelected = new EventEmitter<Contact>();
-@Output() mobileDetailViewChange = new EventEmitter<boolean>();
+  /** Emits true when entering mobile detail view and false when returning to list view. */
+  @Output() mobileDetailViewChange = new EventEmitter<boolean>();
 
-ngOnInit() {
-  if (currentContact.length > 0 && !this.isMobileViewport()) {
-    const currentContactID = currentContact[0].id;
-    for (let index = 0; index < this.db.contacts().length; index++) {
-      if (this.db.contacts()[index].id == currentContactID) {
-        let currentContactData:Contact = ({
-          id: currentContactID,
-          first_name: this.db.contacts()[index].first_name,
-          last_name: this.db.contacts()[index].last_name,
-          phone: this.db.contacts()[index].phone,
-          email: this.db.contacts()[index].email,
-          color: this.db.contacts()[index].color
-        });
-        this.openContactDetails(currentContactData);
+  /**
+   * Restores previously selected contact from global cache if returning on desktop viewport.
+   */
+  ngOnInit() {
+    if (currentContact.length > 0 && !this.isMobileViewport()) {
+      const currentContactID = currentContact[0].id;
+      for (let index = 0; index < this.db.contacts().length; index++) {
+        if (this.db.contacts()[index].id == currentContactID) {
+          let currentContactData: Contact = {
+            id: currentContactID,
+            first_name: this.db.contacts()[index].first_name,
+            last_name: this.db.contacts()[index].last_name,
+            phone: this.db.contacts()[index].phone,
+            email: this.db.contacts()[index].email,
+            color: this.db.contacts()[index].color,
+          };
+          this.openContactDetails(currentContactData);
+        }
       }
+      this.cd.openWindow();
+      this.cd.loadDetails(currentContactID);
     }
-    this.cd.openWindow();
-    this.cd.loadDetails(currentContactID);
-  }
-}
-
-openContactDetails(contact: Contact) {
-  this.contactSelected.emit(contact);
-
-  currentContact = [{
-    id:contact.id
-  }]
-  
-  if (!this.isMobileViewport()) {
-    this.cd.openWindow();
   }
 
-  if (this.isMobileViewport()) {
+  /**
+   * Handles user selection of a contact item, updates detail view DOM/state, and adapts layout for mobile or desktop.
+   *
+   * @param contact - Selected contact record.
+   */
+  openContactDetails(contact: Contact) {
+    this.contactSelected.emit(contact);
+
+    currentContact = [
+      {
+        id: contact.id,
+      },
+    ];
+
+    if (!this.isMobileViewport()) {
+      this.cd.openWindow();
+    }
+
+    if (this.isMobileViewport()) {
+      let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
+      let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
+      let contactID = Number(contact.id);
+      let array = this.db.contacts();
+
+      for (let index = 0; index < array.length; index++) {
+        if (array[index].id == contactID) {
+          this.userName = array[index].first_name;
+          this.userSurName = array[index].last_name;
+          this.userInitials =
+            this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
+          this.userEmail = array[index].email;
+          this.userPhone = array[index].phone;
+          this.userColor = array[index].color;
+          let userIcon = document.getElementById('user_icon') as HTMLParagraphElement;
+          userIcon.style.backgroundColor = String(this.userColor);
+        }
+      }
+      contactContainer.style.display = 'none';
+      detailContainer.style.display = 'flex';
+      this.mobileDetailViewChange.emit(true);
+      this.cd.openWindow();
+    }
+
+    this.cd.loadDetails(contact.id);
+
+    setTimeout(() => {
+      this.markContactAsClicked(contact);
+    }, 0);
+  }
+
+  /**
+   * Applies CSS highlight styling to the selected contact item and removes active style from all others.
+   *
+   * @param contact - Contact item to mark active.
+   */
+  markContactAsClicked(contact: Contact) {
+    for (let index = 0; index < this.db.contacts().length; index++) {
+      let currentContactID = this.db.contacts()[index].last_name + this.db.contacts()[index].id;
+      let targetContactIcon = document.getElementById(currentContactID);
+      targetContactIcon?.classList.remove('clicked');
+      this.cd.changeState(true);
+    }
+    let userID = String(contact.last_name + contact.id);
+    let userIconID = document.getElementById(userID) as HTMLDivElement;
+    userIconID.classList.add('clicked');
+  }
+
+  /**
+   * Switches mobile display mode from detail back to contact list view.
+   */
+  returnToContacts() {
     let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
     let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
-    let contactID = Number(contact.id);
-    let array = this.db.contacts();
-
-    for (let index = 0; index < array.length; index++) {
-      if (array[index].id == contactID) {
-        this.userName = array[index].first_name;
-        this.userSurName = array[index].last_name;
-        this.userInitials = this.userName.charAt(0).toUpperCase()+this.userSurName.charAt(0).toUpperCase(); 
-        this.userEmail = array[index].email;
-        this.userPhone = array[index].phone;
-        this.userColor = array[index].color;
-        let userIcon = document.getElementById('user_icon') as HTMLParagraphElement;
-        userIcon.style.backgroundColor = String(this.userColor);
-      }      
-    }
-    contactContainer.style.display="none"
-    detailContainer.style.display="flex"
-    this.mobileDetailViewChange.emit(true);
-    this.cd.openWindow();
+    contactContainer.style.display = 'flex';
+    contactContainer.style.flexDirection = 'column';
+    detailContainer.style.display = 'none';
+    this.mobileDetailViewChange.emit(false);
+    this.cd.changeState(false);
   }
 
-  this.cd.loadDetails(contact.id);
-
-  setTimeout(()=>{
-  this.markContactAsClicked(contact); 
-  },0)
-}
-
-markContactAsClicked(contact:Contact){
-  for (let index = 0; index < this.db.contacts().length; index++) {
-    let currentContactID = this.db.contacts()[index].last_name + this.db.contacts()[index].id ;
-    let targetContactIcon = document.getElementById(currentContactID);
-    targetContactIcon?.classList.remove("clicked");
-    this.cd.changeState(true);
+  /**
+   * Checks whether the current screen width matches mobile/tablet viewport criteria (< 1024px).
+   *
+   * @returns True if screen width is 1023px or less.
+   */
+  private isMobileViewport() {
+    return window.matchMedia('(max-width: 1023px)').matches;
   }
-  let userID = String(contact.last_name + contact.id);
-  let userIconID = document.getElementById(userID) as HTMLDivElement;
-  userIconID.classList.add("clicked");
-}
-
-returnToContacts(){
-  let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
-  let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
-  contactContainer.style.display="flex";
-  contactContainer.style.flexDirection="column";
-  detailContainer.style.display="none";
-  this.mobileDetailViewChange.emit(false);
-  this.cd.changeState(false);
-}
-
-private isMobileViewport() {
-  return window.matchMedia('(max-width: 1023px)').matches;
-}
 }

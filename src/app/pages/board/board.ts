@@ -24,6 +24,9 @@ interface newSubTask {
   is_done: boolean;
 }
 
+/**
+ * Manages the main kanban board view including drag-and-drop, task status updates, and ticket modal handling.
+ */
 @Component({
   selector: 'app-board',
   standalone: true,
@@ -47,14 +50,26 @@ export class Board implements OnInit {
   openTicketID: number = 0;
   activeDropZone: string | null = null;
 
+  /**
+   * Checks whether the given drop zone ID matches the currently active drop target.
+   * 
+   * @param zone - Drop zone container ID.
+   * @returns True if active drop target.
+   */
   isDropTarget(zone: string): boolean {
     return this.activeDropZone === zone;
   }
 
+  /**
+   * Triggers initial data loading on component initialization.
+   */
   ngOnInit() {
     this.loadTasks();
   }
 
+  /**
+   * Fetches contacts, tasks, subtasks, and task-contact relations from the database.
+   */
   async loadTasks() {
     const contact = await this.db.getContacts();
     const tasks = await this.db.getTasks();
@@ -62,22 +77,40 @@ export class Board implements OnInit {
     const task_contacts = await this.db.getTaskToContacts();
   }
 
+  /**
+   * Retrieves filtered tasks for the 'to_do' column.
+   */
   get todoTasks() {
     return this.filterTasksByCategory('to_do');
   }
 
+  /**
+   * Retrieves filtered tasks for the 'in_progress' column.
+   */
   get progressTasks() {
     return this.filterTasksByCategory('in_progress');
   }
 
+  /**
+   * Retrieves filtered tasks for the 'await_feedback' column.
+   */
   get feedbackTasks() {
     return this.filterTasksByCategory('await_feedback');
   }
 
+  /**
+   * Retrieves filtered tasks for the 'done' column.
+   */
   get doneTasks() {
     return this.filterTasksByCategory('done');
   }
 
+  /**
+   * Filters tasks by column status key and matches against search query if present.
+   * 
+   * @param categoryKey - Column identifier key.
+   * @returns Array of filtered task objects.
+   */
   private filterTasksByCategory(categoryKey: 'to_do' | 'in_progress' | 'await_feedback' | 'done') {
     let filtered = this.tasks().filter((task) => this.getCategoryKey(task) === categoryKey);
 
@@ -92,10 +125,22 @@ export class Board implements OnInit {
     return filtered;
   }
 
+  /**
+   * Normalizes raw priority string values.
+   * 
+   * @param priority - Raw priority string.
+   * @returns Cleaned priority string.
+   */
   getNormalizedPriority(priority: string): string {
     return priority.replace(/^\$/, '').trim().toLowerCase();
   }
 
+  /**
+   * Maps task status string to valid category key.
+   * 
+   * @param task - The task object.
+   * @returns Category key value.
+   */
   private getCategoryKey(task: Task): 'to_do' | 'in_progress' | 'await_feedback' | 'done' {
     const status = task.status?.toLowerCase().trim() || '';
 
@@ -111,6 +156,12 @@ export class Board implements OnInit {
     return 'to_do';
   }
 
+  /**
+   * Handles dragstart event by attaching task ID to drag payload.
+   * 
+   * @param id - Task ID.
+   * @param event - HTML DragEvent.
+   */
   startDragging(id: number, event: DragEvent) {
     event.dataTransfer?.setData('text/plain', id.toString());
     const target = event.target as HTMLElement;
@@ -120,6 +171,11 @@ export class Board implements OnInit {
     }
   }
 
+  /**
+   * Cleans up dragging CSS classes and active drop zone state.
+   * 
+   * @param event - HTML DragEvent.
+   */
   dragEnd(event: DragEvent) {
     const target = event.target as HTMLElement;
     const taskCard = target.closest('.task-card') as HTMLElement;
@@ -135,6 +191,12 @@ export class Board implements OnInit {
     }, 50);
   }
 
+  /**
+   * Handles dragover event over potential drop column.
+   * 
+   * @param zone - Target drop zone ID.
+   * @param event - HTML DragEvent.
+   */
   dragOver(zone: string, event: DragEvent) {
     event.preventDefault();
     if (this.activeDropZone !== zone) {
@@ -145,6 +207,12 @@ export class Board implements OnInit {
     }
   }
 
+  /**
+   * Resets drop zone state when mouse drags out of target boundary.
+   * 
+   * @param zone - Drop zone container ID.
+   * @param event - HTML DragEvent.
+   */
   dragLeave(zone: string, event: DragEvent) {
     const rect = (event.target as HTMLElement).getBoundingClientRect();
     const x = event.clientX;
@@ -158,6 +226,11 @@ export class Board implements OnInit {
     }
   }
 
+  /**
+   * Applies CSS highlight class to drop zone element.
+   * 
+   * @param zone - Container element ID.
+   */
   private addDropTargetClass(zone: string) {
     const container = document.getElementById(zone) as HTMLElement;
     if (container) {
@@ -165,6 +238,11 @@ export class Board implements OnInit {
     }
   }
 
+  /**
+   * Removes CSS highlight class from drop zone element.
+   * 
+   * @param zone - Container element ID.
+   */
   private removeDropTargetClass(zone: string) {
     const container = document.getElementById(zone) as HTMLElement;
     if (container) {
@@ -172,6 +250,12 @@ export class Board implements OnInit {
     }
   }
 
+  /**
+   * Updates task status in database on drag drop completion.
+   * 
+   * @param status - Target status value.
+   * @param event - HTML DragEvent.
+   */
   async moveToStatus(status: string, event: DragEvent) {
     event.preventDefault();
     const idStr = event.dataTransfer?.getData('text/plain');
@@ -188,16 +272,33 @@ export class Board implements OnInit {
     }
   }
 
+  /**
+   * Direct status update trigger for mobile interface.
+   * 
+   * @param id - Task ID.
+   * @param status - Target status string.
+   */
   async mobileMoveToStatus(id: number, status: string) {
     await this.db.updateTaskStatus(id, status);
     this.loadTasks();
   }
 
+  /**
+   * Determines card styling CSS class according to task category.
+   * 
+   * @param category - Category name.
+   * @returns CSS class string.
+   */
   getTaskCardClass(category: string): string {
     const categoryLower = category?.toLowerCase().trim() || '';
     return categoryLower.includes('technical') ? 'task-card--technical' : 'task-card--user';
   }
 
+  /**
+   * Opens ticket details dialog and populates data for selected task.
+   * 
+   * @param id - Task ID.
+   */
   openTicketCard(id: number) {
     const dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
     const ticketTitle = document.getElementById('ticket_title') as HTMLHeadingElement;
@@ -225,6 +326,13 @@ export class Board implements OnInit {
     dialogWindow.showModal();
   }
 
+  /**
+   * Truncates title or description text strings exceeding display length limits.
+   * 
+   * @param text - Text string to trim.
+   * @param type - Field type ('title' or 'description').
+   * @returns Truncated string with ellipsis if necessary.
+   */
   cutInout(text: string, type: string) {
     let newString: string = '';
 
@@ -243,6 +351,11 @@ export class Board implements OnInit {
   newDialogDescription: string = '';
   newDialogDueDate: string = '';
 
+  /**
+   * Applies contact avatar color class to corresponding contact element.
+   * 
+   * @param taskId - Task ID.
+   */
   setContactColor(taskId: number) {
     for (let index = 0; index < this.db.task_contacts().length; index++) {
       if (this.db.task_contacts()[index].task_id == taskId) {
@@ -263,6 +376,11 @@ export class Board implements OnInit {
 
   contactsCache: contacts[] = [];
 
+  /**
+   * Populates cached contact details linked to specified task ID.
+   * 
+   * @param id - Task ID.
+   */
   async getContacts(id: number) {
     this.contactsCache = [];
 
@@ -291,6 +409,11 @@ export class Board implements OnInit {
 
   subtasksCache: subTask[] = [];
 
+  /**
+   * Fetches subtasks linked to given task ID and updates visual checkbox states.
+   * 
+   * @param id - Task ID.
+   */
   async getSubTasks(id: any) {
     this.subtasksCache = [];
     for (let index = 0; index < this.subtasks().length; index++) {
@@ -307,6 +430,11 @@ export class Board implements OnInit {
     },0)
   }
 
+/**
+   * Sets category badge style class on ticket element.
+   * 
+   * @param cat - Category name string.
+   */
   setTicketCatClass(cat: string) {
     let className: string = '';
     let targetParagraph = document.getElementById('ticket_category') as HTMLParagraphElement;
@@ -323,10 +451,21 @@ export class Board implements OnInit {
     targetParagraph.classList.add(className);
   }
 
+  /**
+   * Formats ISO date hyphens into slashes for UI presentation.
+   * 
+   * @param date - Date string.
+   * @returns Formatted date string.
+   */
   setTicketDueDate(date: string) {
     return date.replaceAll('-', '/');
   }
 
+  /**
+   * Updates ticket priority icon image source based on priority level.
+   * 
+   * @param prio - Priority string.
+   */
   setTicketPrioIcon(prio: string) {
     let ticketPrioIcon = document.getElementById('prio-icon') as HTMLImageElement;
     let iconURL: string = '';
@@ -345,6 +484,11 @@ export class Board implements OnInit {
     ticketPrioIcon.src = iconURL;
   }
 
+  /**
+   * Closes active ticket dialogs and saves assigned contacts if changes occurred.
+   * 
+   * @param changes - Flag indicating whether changes were made.
+   */
   closeTicketCard(changes: boolean) {
     let dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
     let dialogEdit = document.getElementById('ticket_edit') as HTMLDialogElement;
@@ -355,6 +499,11 @@ export class Board implements OnInit {
     }
   }
 
+  /**
+   * Updates checkbox image source according to subtask completion status.
+   * 
+   * @param taskID - Task ID.
+   */
   setCheckBoxState(taskID:number){
   for (let index = 0; index < this.db.subtasks().length; index++) {
     let targetCheckBox = document.getElementById("checkbox_" + this.db.subtasks()[index].id) as HTMLImageElement;
@@ -368,12 +517,23 @@ export class Board implements OnInit {
 
  ddContacts: number[] = [];
 
+ /**
+   * Assigns array of contact IDs to task record in database.
+   * 
+   * @param taskId - Task ID.
+   * @param contactIds - Array of contact IDs.
+   */
   async assignContactsToTask(taskId: number, contactIds: number[]) {
     this.filterContacts(taskId);
     const taskContacts = this.buildTaskContacts(taskId, contactIds);
     await this.db.addTaskContacts(taskContacts);
   }
 
+  /**
+   * Removes assigned contact entries for task from dropdown cache array.
+   * 
+   * @param taskID - Task ID.
+   */
   filterContacts(taskID: number) {
     let entryCounter: number = 0;
     for (let index = 0; index < this.db.task_contacts().length; index++) {
@@ -384,6 +544,13 @@ export class Board implements OnInit {
     this.ddContacts.splice(0, entryCounter);
   }
 
+  /**
+   * Maps contact IDs to task-contact relationship payload objects.
+   * 
+   * @param taskId - Task ID.
+   * @param contactIds - Array of contact IDs.
+   * @returns Array of relation objects.
+   */
   buildTaskContacts(taskId: number, contactIds: number[]) {
     return contactIds.map((contactId) => ({
       task_id: taskId,
@@ -391,15 +558,33 @@ export class Board implements OnInit {
     }));
   }
 
+  /**
+   * Retrieves all subtasks belonging to specified task ID.
+   * 
+   * @param taskId - Task ID.
+   * @returns Array of subtasks.
+   */
   getSubtaskAmount(taskId: number): Subtask[] {
     return this.subtasks().filter((subtask) => subtask.task_id === taskId);
   }
 
+  /**
+   * Counts number of completed subtasks for task.
+   * 
+   * @param taskId - Task ID.
+   * @returns Count of completed subtasks.
+   */
   getCompletedSubtasksAmount(taskId: number): number {
     const taskSubtasks = this.getSubtaskAmount(taskId);
     return taskSubtasks.filter((subtask) => subtask.is_done).length;
   }
 
+  /**
+   * Calculates overall subtask completion percentage for task progress bar.
+   * 
+   * @param taskId - Task ID.
+   * @returns Completion percentage between 0 and 100.
+   */
   getProgress(taskId: number): number {
     const taskSubtasks = this.getSubtaskAmount(taskId);
     const total = taskSubtasks.length;
@@ -408,6 +593,12 @@ export class Board implements OnInit {
     return (completed / total) * 100;
   }
 
+  /**
+   * Maps contact details and avatar styles for rendering on board task card preview.
+   * 
+   * @param taskId - Task ID.
+   * @returns Array of contact initial and color objects.
+   */
   getContactsForTaskcard(taskId: number) {
     const allContacts = this.contacts();
     const relationContacts = this.task_contacts();

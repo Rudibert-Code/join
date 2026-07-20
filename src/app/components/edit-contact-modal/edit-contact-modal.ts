@@ -2,6 +2,9 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Supabase } from '../../supabase';
 
+/**
+ * Dialog modal component for editing existing contact details or removing contacts.
+ */
 @Component({
   selector: 'app-edit-contact-modal',
   imports: [ReactiveFormsModule],
@@ -9,19 +12,39 @@ import { Supabase } from '../../supabase';
   styleUrl: './edit-contact-modal.scss',
 })
 export class EditContactModal {
+  /** Regular expression pattern used for strict email format validation. */
   private static readonly EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
 
+  /** Supabase service instance for contact CRUD operations. */
   contacts = inject(Supabase);
+
+  /** Hex color assigned to contact avatar. */
   avatarColor: string = '';
+
+  /** First name initial derived from fetched contact data. */
   initalFirstname: string = '';
+
+  /** Last name initial derived from fetched contact data. */
   initalLastname: string = '';
+
+  /** State flag controlling close animation SCSS classes. */
   isClosing = false;
+
+  /** Database ID of the contact being edited. */
   @Input() contactId!: number;
+
+  /** Event emitted when modal requests closing. */
   @Output() close = new EventEmitter<void>();
 
+  /** Timer handle for fallback close animation timeout. */
   private animationCloseTimer?: number;
+
+  /** Fallback timeout duration in milliseconds matching CSS animation speed. */
   private readonly animationDuration = 250;
 
+  /**
+   * Fetches target contact details on initialization and populates avatar state and form controls.
+   */
   async ngOnInit() {
     const contact = await this.contacts.getContactById(this.contactId);
     this.avatarColor = contact.color;
@@ -36,6 +59,7 @@ export class EditContactModal {
     });
   }
 
+  /** Reactive form group defining structure and field validation rules. */
   editContactForm = new FormGroup({
     firstname: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],
@@ -49,6 +73,9 @@ export class EditContactModal {
     phone: new FormControl('', { validators: [Validators.required] }),
   });
 
+  /**
+   * Validates form inputs, saves updated contact details to Supabase, and triggers close animation.
+   */
   async saveContact() {
     if (this.editContactForm.invalid) {
       this.editContactForm.markAllAsTouched();
@@ -65,11 +92,17 @@ export class EditContactModal {
     this.requestClose();
   }
 
+  /**
+   * Permanently deletes contact from Supabase and triggers close animation.
+   */
   async deleteContact() {
     await this.contacts.deleteContact(this.contactId);
     this.requestClose();
   }
 
+  /**
+   * Initiates close animation sequence with fallback timer.
+   */
   requestClose() {
     if (this.isClosing) {
       return;
@@ -81,12 +114,22 @@ export class EditContactModal {
     }, this.animationDuration);
   }
 
+  /**
+   * Handles click events on backdrop overlay to close modal when clicking outside contents.
+   *
+   * @param event - Mouse click event.
+   */
   onOverlayClick(event: MouseEvent) {
     if (event.target === event.currentTarget) {
       this.requestClose();
     }
   }
 
+  /**
+   * Listens for CSS slide-out animation finish events to cleanly emit close event.
+   *
+   * @param event - CSS Animation event.
+   */
   onModalAnimationEnd(event: AnimationEvent) {
     if (!this.isClosing || event.target !== event.currentTarget) {
       return;
@@ -97,6 +140,9 @@ export class EditContactModal {
     }
   }
 
+  /**
+   * Safely clears pending animation timers and emits output close event.
+   */
   private emitClose() {
     if (!this.isClosing) {
       return;
