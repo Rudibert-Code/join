@@ -69,13 +69,7 @@ export class Contacts {
     return Array.from(groups.entries());
   });
 
-  /**
-   * Helper function calculating two-letter uppercase initials for a contact object.
-   *
-   * @param contact - Contact object containing first_name and last_name properties.
-   * @returns Concatenated uppercase initials.
-   */
-  getInitials(contact: any) {
+  getInitials(contact: Contact) {
     const firstNameLetter = contact.first_name.charAt(0).toUpperCase();
     const lastNameLetter = contact.last_name.charAt(0).toUpperCase();
 
