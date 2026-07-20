@@ -3,16 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Supabase, Task, Subtask} from '../../supabase';
 import { RouterLink } from '@angular/router';
-
 import { TicketDetails } from '../../components/ticket-details/ticket-details';
-import { TicketEdit } from '../../components/ticket-edit/ticket-edit';
+import { BoardMobile } from '../../pages/board-mobile/board-mobile';
 
 interface subTask {
   title: String;
   is_Done: Boolean;
   id: number;
 }
-
 interface contacts {
   id: number;
   name: string;
@@ -20,7 +18,6 @@ interface contacts {
   initials: string;
   color: string;
 }
-
 interface newSubTask {
   task_id: number;
   title: string;
@@ -30,26 +27,23 @@ interface newSubTask {
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, TicketDetails],
+  imports: [CommonModule, RouterLink, FormsModule, TicketDetails, BoardMobile],
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })
 
 export class Board implements OnInit {
   db = inject(Supabase);
-
   contacts = computed(() => this.db.contacts());
   tasks = computed(() => this.db.tasks());
   subtasks = computed(() => this.db.subtasks());
   task_contacts = computed(() => this.db.task_contacts());
-
   taskTitle: string = '';
   taskDescr: string = '';
   taskLimitDate: string = '';
   taskPriority: string = '';
   taskCategory: string = '';
   searchQuery: string = '';
-
   openTicketID: number = 0;
   activeDropZone: string | null = null;
 
@@ -95,7 +89,6 @@ export class Board implements OnInit {
           task.description?.toLowerCase().includes(query),
       );
     }
-
     return filtered;
   }
 
@@ -185,8 +178,6 @@ export class Board implements OnInit {
 
     if (idStr) {
       const id = Number(idStr);
-      //const id = parseInt(idStr, 10);
-
       await this.db.updateTaskStatus(id, status);
       this.loadTasks();
     }
@@ -206,8 +197,6 @@ export class Board implements OnInit {
     const categoryLower = category?.toLowerCase().trim() || '';
     return categoryLower.includes('technical') ? 'task-card--technical' : 'task-card--user';
   }
-
-  //Open Ticket Card
 
   openTicketCard(id: number) {
     const dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
@@ -304,10 +293,8 @@ export class Board implements OnInit {
 
   async getSubTasks(id: any) {
     this.subtasksCache = [];
-
     for (let index = 0; index < this.subtasks().length; index++) {
       if (this.subtasks()[index].task_id == id) {
-        //this.subtasksCache.unshift((this.subtasks()[index].title));
         this.subtasksCache.push({
           title: this.subtasks()[index].title,
           is_Done: this.subtasks()[index].is_done,
@@ -329,7 +316,6 @@ export class Board implements OnInit {
       case 'Technical Tasks':
         className = 'task-card--technical';
         break;
-
       default:
         className = 'task-card--user';
         break;
@@ -349,11 +335,9 @@ export class Board implements OnInit {
       case 'urgent':
         iconURL = 'assets/UI/icon_prio-urgent.png';
         break;
-
       case 'low':
         iconURL = 'assets/UI/icon_prio-low.png';
         break;
-
       default:
         iconURL = 'assets/UI/icon_prio-medium.png';
         break;
@@ -419,9 +403,7 @@ export class Board implements OnInit {
   getProgress(taskId: number): number {
     const taskSubtasks = this.getSubtaskAmount(taskId);
     const total = taskSubtasks.length;
-
     if (total === 0) return 0;
-
     const completed = taskSubtasks.filter((subtask) => subtask.is_done).length;
     return (completed / total) * 100;
   }
