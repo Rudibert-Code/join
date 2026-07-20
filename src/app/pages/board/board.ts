@@ -172,7 +172,7 @@ export class Board implements OnInit {
   }
 
   /**
-   * Cleans up dragging CSS classes and active drop zone state.
+   * Cleans up dragging SCSS classes and active drop zone state.
    * 
    * @param event - HTML DragEvent.
    */
@@ -227,7 +227,7 @@ export class Board implements OnInit {
   }
 
   /**
-   * Applies CSS highlight class to drop zone element.
+   * Applies SCSS highlight class to drop zone element.
    * 
    * @param zone - Container element ID.
    */
@@ -239,7 +239,7 @@ export class Board implements OnInit {
   }
 
   /**
-   * Removes CSS highlight class from drop zone element.
+   * Removes SCSS highlight class from drop zone element.
    * 
    * @param zone - Container element ID.
    */
@@ -284,10 +284,10 @@ export class Board implements OnInit {
   }
 
   /**
-   * Determines card styling CSS class according to task category.
+   * Determines card styling SCSS class according to task category.
    * 
    * @param category - Category name.
-   * @returns CSS class string.
+   * @returns SCSS class string.
    */
   getTaskCardClass(category: string): string {
     const categoryLower = category?.toLowerCase().trim() || '';

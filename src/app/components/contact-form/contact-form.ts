@@ -55,7 +55,7 @@ export class ContactForm {
   /** Timer handle for fallback close animation timeout. */
   private animationCloseTimer?: number;
 
-  /** Fallback timeout duration in milliseconds matching CSS animation speed. */
+  /** Fallback timeout duration in milliseconds matching SCSS animation speed. */
   private ANIMATION_DURATION = 250;
 
   /**
@@ -72,7 +72,7 @@ export class ContactForm {
   }
 
   /**
-   * Listens for panel slide-out CSS animation end events to trigger close emit.
+   * Listens for panel slide-out SCSS animation end events to trigger close emit.
    *
    * @param event - CSS Animation event.
    */

@@ -39,7 +39,7 @@ export class EditContactModal {
   /** Timer handle for fallback close animation timeout. */
   private animationCloseTimer?: number;
 
-  /** Fallback timeout duration in milliseconds matching CSS animation speed. */
+  /** Fallback timeout duration in milliseconds matching SCSS animation speed. */
   private readonly animationDuration = 250;
 
   /**
@@ -126,9 +126,9 @@ export class EditContactModal {
   }
 
   /**
-   * Listens for CSS slide-out animation finish events to cleanly emit close event.
+   * Listens for SCSS slide-out animation finish events to cleanly emit close event.
    *
-   * @param event - CSS Animation event.
+   * @param event - SCSS Animation event.
    */
   onModalAnimationEnd(event: AnimationEvent) {
     if (!this.isClosing || event.target !== event.currentTarget) {

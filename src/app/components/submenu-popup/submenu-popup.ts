@@ -22,7 +22,7 @@ export class SubmenuPopup {
   isActive: boolean = false;
 
   /**
-   * Toggles the submenu popup open/close state and updates CSS transition classes.
+   * Toggles the submenu popup open/close state and updates SCSS transition classes.
    */
   toggleSubMenu() {
     let submenuBox = document.getElementById('submenu') as HTMLDialogElement;

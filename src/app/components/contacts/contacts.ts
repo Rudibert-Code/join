@@ -164,7 +164,7 @@ export class Contacts {
   }
 
   /**
-   * Applies CSS highlight styling to the selected contact item and removes active style from all others.
+   * Applies SCSS highlight styling to the selected contact item and removes active style from all others.
    *
    * @param contact - Contact item to mark active.
    */
