@@ -7,7 +7,9 @@
   >
     <header class="dialog-header d-flex column">
       <div class="d-flex right-bound">
-        <button class="dialog-close" type="button" (click)="requestClose()"><p class="margin-correction">X</p></button>
+        <button class="dialog-close" type="button" (click)="requestClose()">
+          <p class="margin-correction">X</p>
+        </button>
       </div>
       <div class="d-flex column-column">
         <img class="d-none logo" src="assets/UI/logo_join_white.png" alt="company logo" />
@@ -85,14 +87,12 @@
             >
               Please type your email.
             </span>
-          </p>
-          <p class="contact-form__error">
             <span
               *ngIf="
-                contactForm.get('email')?.hasError('missingAt') && contactForm.get('email')?.touched
+                contactForm.get('email')?.hasError('pattern') && contactForm.get('email')?.touched
               "
             >
-              This email is unavaiable.
+              Please enter a valid email address.
             </span>
           </p>
         </div>
