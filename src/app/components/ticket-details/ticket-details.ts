@@ -153,13 +153,12 @@ export class TicketDetails {
   /**
    * Populates subtasks cache for the selected task ID.
    *
-   * @param id - Task ID.
+* @param id - Unique database ID of the task.
    */
-  async getSubTasks(id: any) {
+  async getSubTasks(id: number) {
     this.subtasksCache = [];
     for (let index = 0; index < this.board.subtasks().length; index++) {
       if (this.board.subtasks()[index].task_id == id) {
-        //this.subtasksCache.unshift((this.subtasks()[index].title));
         this.subtasksCache.push({
           title: this.board.subtasks()[index].title,
           is_Done: this.board.subtasks()[index].is_done,

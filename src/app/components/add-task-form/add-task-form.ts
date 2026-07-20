@@ -12,6 +12,16 @@ import {
 import { Contact, Supabase } from '../../supabase';
 import { ActivatedRoute, Router } from '@angular/router';
 
+export interface TaskFormRawValue {
+  title: string;
+  description: string | null;
+  due_date: string;
+  priority: 'urgent' | 'medium' | 'low';
+  category: 'Technical Tasks' | 'User Story' | '';
+  assignedContactIds: number[];
+  subtasks: string[];
+}
+
 /**
  * Component providing a reactive form to create new tasks, manage subtasks,
  * assign contacts, and persist data via Supabase.
@@ -304,13 +314,13 @@ export class AddTaskForm {
     return false;
   }
 
-  /**
+/**
    * Prepares payload object for primary task record insertion.
-   *
-   * @param formValue - Raw value of task form.
+   * 
+   * @param formValue - Raw value of task form matching TaskFormRawValue.
    * @returns Formatted task data object.
    */
-  private buildNewTask(formValue: any) {
+  private buildNewTask(formValue: TaskFormRawValue) {
     return {
       title: formValue.title.trim(),
       description: formValue.description?.trim() || null,
@@ -324,10 +334,10 @@ export class AddTaskForm {
   /**
    * Inserts primary task record into Supabase database.
    *
-   * @param formValue - Raw value of task form.
+   * @param formValue - Raw value of task form matching TaskFormRawValue.
    * @returns Created task database object or error state.
    */
-  private async createMainTask(formValue: any) {
+  private async createMainTask(formValue: TaskFormRawValue) {
     const newTask = this.buildNewTask(formValue);
 
     return await this.supabase.addTask(newTask);
