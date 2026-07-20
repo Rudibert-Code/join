@@ -81,6 +81,12 @@ export class EditContactModal {
     }, this.animationDuration);
   }
 
+  onOverlayClick(event: MouseEvent) {
+    if (event.target === event.currentTarget) {
+      this.requestClose();
+    }
+  }
+
   onModalAnimationEnd(event: AnimationEvent) {
     if (!this.isClosing || event.target !== event.currentTarget) {
       return;
