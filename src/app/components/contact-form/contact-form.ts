@@ -14,6 +14,7 @@ import { Supabase, newContact } from '../../supabase';
   templateUrl: './contact-form.html',
   styleUrl: './contact-form.scss',
 })
+
 export class ContactForm {
   /** Event emitted when the form requests closing. */
   @Output() close = new EventEmitter<void>();
