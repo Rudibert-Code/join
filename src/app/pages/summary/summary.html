@@ -1,4 +1,5 @@
 <section class="main-wrapper">
+
   @if (showGreetingIntro) {
     <section class="greeting-intro" aria-hidden="true">
       <div class="greeting-intro__text">
@@ -15,7 +16,6 @@
       <p>Key Metrics at a Glance</p>
     </div>
   </header>
-
   <main class="summary-content">
     <section class="metrics-grid" aria-label="Task overview" routerLink="/board">
       <div class="metric-card metric-card--top">
@@ -26,7 +26,6 @@
           <p>To-do</p>
         </div>
       </div>
-
       <div class="metric-card metric-card--top" routerLink="/board">
         <img class="metric-icon metric-icon--default" src="assets/UI/icon_done.png" alt="" />
         <img class="metric-icon metric-icon--hover" src="assets/UI/icon_done_white.png" alt="" />
@@ -35,7 +34,6 @@
           <p>Done</p>
         </div>
       </div>
-
       <div class="metric-card metric-card--deadline" routerLink="/board">
         <div class="deadline-count">
           <img class="metric-icon metric-icon--urgent" src="assets/UI/icon_urgent.png" alt="" />
@@ -50,23 +48,19 @@
           <p>Upcoming Deadline</p>
         </div>
       </div>
-
       <div class="metric-card metric-card--small" routerLink="/board">
         <h3>{{ tasks().length }}</h3>
         <p>Tasks in Board</p>
       </div>
-
       <div class="metric-card metric-card--small" routerLink="/board">
         <h3>{{ progressTasks.length }}</h3>
         <p>Tasks In Progress</p>
       </div>
-
       <div class="metric-card metric-card--small" routerLink="/board">
         <h3>{{ feedbackTasks.length }}</h3>
         <p>Awaiting Feedback</p>
       </div>
     </section>
-
     <section class="greeting-panel" [class.greeting-panel--intro]="showGreetingIntro">
       <p>{{ greetingText }}</p>
       <h3>{{ displayName }}</h3>

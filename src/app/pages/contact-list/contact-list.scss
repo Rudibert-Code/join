@@ -3,6 +3,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
+
     >app-contact-details{
         height: calc(100vh - 80px);
         flex: 1;
@@ -12,18 +13,23 @@
     .contacts{
         display: flex;
     }
+
     .details{
         display: flex;
     }
+    
 @media(max-width:1023px){
     .screen{
         justify-content: center;
+
         >app-contacts{
             flex: 1;
         }
+
         >app-contact-details{
             z-index: 100;
         }
+
         .details{
             display: none;
         }

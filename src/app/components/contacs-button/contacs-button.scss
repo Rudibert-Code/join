@@ -2,21 +2,16 @@
 
 .contact-button_shape{
     cursor: pointer;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     z-index: 2;
-
     position: fixed;
     top: calc(100% - 152px);
     left: calc(100% - 72px);
-
     width: 56px;
     height: 56px;
     border-radius: 100px;
-
     background-color: $main_header;
     box-shadow: 0 8px 5px rgba(0, 0, 0, 0.177);
 

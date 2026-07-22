@@ -26,6 +26,7 @@ export class SubmenuPopup {
    */
   toggleSubMenu() {
     let submenuBox = document.getElementById('submenu') as HTMLDialogElement;
+    
     if (this.isActive == false) {
       submenuBox.classList.remove('out');
       submenuBox.classList.add('in');

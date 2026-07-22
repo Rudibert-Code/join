@@ -92,6 +92,7 @@ export class Supabase {
     if (!this.authInitPromise) {
       this.authInitPromise = this.initAuth();
     }
+
     await this.authInitPromise;
   }
 
@@ -99,6 +100,7 @@ export class Supabase {
     if (this.authReady()) {
       return;
     }
+
     const {
       data: { user },
     } = await this.supabase.auth.getUser();
@@ -109,6 +111,7 @@ export class Supabase {
         this.isGuest.set(false);
       }
     });
+
     this.authReady.set(true);
   }
 
@@ -117,22 +120,27 @@ export class Supabase {
       .from('contacts')
       .select('id, first_name, last_name, phone, email, color')
       .order('first_name', { ascending: true });
+
     if (error) {
       console.error('Supabase getContacts error', error);
       return;
     }
+
     if (!contacts) {
       this.contacts.set([]);
       return;
     }
+
     this.contacts.set(contacts);
   }
 
   async setContact(newContact: newContact) {
     const { data, error } = await this.supabase.from('contacts').insert([newContact]).select();
+
     if (data) {
       await this.getContacts();
     }
+
     return data;
   }
 
@@ -142,20 +150,24 @@ export class Supabase {
       .update(updatedContact)
       .eq('id', id)
       .select();
+
     if (error) {
       console.error('Supabase updateContact error', error);
       return;
     }
+
     await this.getContacts();
     return data;
   }
 
   async deleteContact(id: number) {
     const { error } = await this.supabase.from('contacts').delete().eq('id', id);
+
     if (error) {
       console.error('Supabase deleteContact error', error);
       return;
     }
+
     await this.getContacts();
   }
 
@@ -172,9 +184,11 @@ export class Supabase {
       .select('*')
       .eq('id', contactId)
       .single();
+
     if (error) {
       throw error;
     }
+
     return data;
   }
 
@@ -183,34 +197,41 @@ export class Supabase {
       .from('tasks')
       .select('id, title, description, due_date, priority, category, status')
       .order('title', { ascending: true });
+
     if (error) {
       console.error('Supabase getTasks error', error);
       this.tasks.set([]);
       return [];
     }
+
     if (!tasks) {
       this.tasks.set([]);
       return [];
     }
+
     this.tasks.set(tasks);
     return tasks;
   }
 
   async deleteTask(id: number) {
     const { error } = await this.supabase.from('tasks').delete().eq('id', id);
+
     if (error) {
       console.error('Supabase deleteTask error', error);
       return;
     }
+
     await this.getTasks();
   }
 
   async deleteSubtask(id: number) {
     const { error } = await this.supabase.from('subtasks').delete().eq('id', id);
+
     if (error) {
       console.error('Supabase deleteSubtask error', error);
       return;
     }
+
     await this.getSubtasks();
   }
 
@@ -219,15 +240,18 @@ export class Supabase {
       .from('subtasks')
       .select('id,task_id,title,is_done,created_at')
       .order('created_at', { ascending: true });
+
     if (error) {
       console.error('Supabase getSubtasks error', error);
       this.subtasks.set([]);
       return [];
     }
+
     if (!subtasks) {
       this.subtasks.set([]);
       return [];
     }
+
     this.subtasks.set(subtasks);
     return subtasks;
   }
@@ -236,15 +260,18 @@ export class Supabase {
     const { data: task_contacts, error } = await this.supabase
       .from('task_contacts')
       .select('task_id,contact_id');
+
     if (error) {
       console.error('Supabase getTaskToContacts error', error);
       this.task_contacts.set([]);
       return [];
     }
+
     if (!task_contacts) {
       this.task_contacts.set([]);
       return [];
     }
+
     this.task_contacts.set(task_contacts);
     return task_contacts;
   }
@@ -253,21 +280,26 @@ export class Supabase {
     if (taskContacts.length === 0) {
       return [];
     }
+
     const { data, error } = await this.supabase.from('task_contacts').insert(taskContacts).select();
+
     if (error) {
       console.error('Supabase addTaskContacts error', error);
       return;
     }
+
     await this.getTaskToContacts();
     return data;
   }
 
   async addTask(newTask: NewTask) {
     const { data, error } = await this.supabase.from('tasks').insert([newTask]).select().single();
+
     if (error) {
       console.error('Supabase addTask error', error);
       return;
     }
+
     await this.getTasks();
     return data;
   }
@@ -276,11 +308,14 @@ export class Supabase {
     if (newSubtasks.length === 0) {
       return [];
     }
+
     const { data, error } = await this.supabase.from('subtasks').insert(newSubtasks).select();
+
     if (error) {
       console.error('Supabase addSubtasks error', error);
       return;
     }
+
     await this.getSubtasks();
     return data;
   }
@@ -291,10 +326,12 @@ export class Supabase {
       .update({ is_done })
       .eq('id', id)
       .select();
+
     if (error) {
       console.error('Supabase uupdatedSubtask error', error);
       return;
     }
+
     return data;
   }
 
@@ -304,10 +341,12 @@ export class Supabase {
       .update({ status })
       .eq('id', id)
       .select();
+
     if (error) {
       console.error('Supabase updateTaskStatus error', error);
       return;
     }
+
     return data;
   }
 
@@ -317,10 +356,12 @@ export class Supabase {
       .update({ priority })
       .eq('id', id)
       .select();
+
     if (error) {
       console.error('Supabase updateTaskPrio error', error);
       return;
     }
+
     return data;
   }
 
@@ -330,10 +371,12 @@ export class Supabase {
       .update({ title })
       .eq('id', id)
       .select();
+
     if (error) {
       console.error('Supabase updateTaskPrio error', error);
       return;
     }
+
     return data;
   }
 
@@ -343,10 +386,12 @@ export class Supabase {
       .update({ description })
       .eq('id', id)
       .select();
+
     if (error) {
       console.error('Supabase updateTaskPrio error', error);
       return;
     }
+
     return data;
   }
 
@@ -356,10 +401,12 @@ export class Supabase {
       .update({ due_date })
       .eq('id', id)
       .select();
+
     if (error) {
       console.error('Supabase updateTaskPrio error', error);
       return;
     }
+
     return data;
   }
 
@@ -374,6 +421,7 @@ export class Supabase {
         },
       },
     });
+
     return { data, error };
   }
 
@@ -382,10 +430,12 @@ export class Supabase {
       email: email,
       password: password,
     });
+    
     if (data.user) {
       this.authUser.set(data.user);
       this.isGuest.set(false);
     }
+
     return { data, error };
   }
 

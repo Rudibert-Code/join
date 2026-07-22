@@ -12,6 +12,7 @@ import { Contact } from '../../supabase';
   templateUrl: './contact-links-mobile-details.html',
   styleUrl: './contact-links-mobile-details.scss',
 })
+
 export class ContactLinksMobileDetails {
   @ViewChild(ContactDetails) detailsComponent?: ContactDetails;
 

@@ -11,10 +11,12 @@ button{
     margin: 32px 0;
     background-color: $main_header;
     border: none;
+    
     >p{
         font-weight: bold;
         color: $main_white;
     }
+
     &:hover{
         background-color: $main_blue;
         box-shadow: 0 3px 2px rgba(0, 0, 0, 0.2);
@@ -32,9 +34,11 @@ button{
     overflow-x: hidden;
     box-shadow: 8px 0 5px rgba(0, 0, 0, 0.177);
     background-color: white;
+
     >p{
         padding-left: 36px;
     }
+
     >div{
         padding-left: 16px;
     }
@@ -48,14 +52,11 @@ button{
 
 .contact-details-mobile{
     width: 100%;
-
     display: none;
     flex-direction: column;
     justify-content: start;
     align-items: start;
-
     padding-left: 32px;
-
     background-color: $main_white;
 }
 
@@ -63,6 +64,7 @@ button{
     width: 100%;
     display: flex;
     justify-content: end;
+
     &_icon{
         cursor: pointer;
         height: 50px;
@@ -70,6 +72,7 @@ button{
         padding-right: 32px;
     }
 }
+
 .contact{
     cursor: pointer;
     width: 100%;
@@ -80,15 +83,18 @@ button{
     gap: 8px;
     margin-bottom: 24px;
     border-radius: 8px;
+
     >h1{
       margin: 0;  
       margin-top: 16px;
     }
+
     >p{
         margin: 0;  
         margin-top: 8px;
         font-size: 2.0rem;
     }
+
     &_second{
         width: 100%;
         display: flex;
@@ -96,11 +102,13 @@ button{
         justify-self: start;
         align-items: start;
     }
+
     &_line{
         width: 59px;
         height: 4px;
         background-color: $main_blue;
     }
+
     &_icon{
         display: flex;
         justify-content: center;
@@ -110,23 +118,29 @@ button{
         border-radius: 100px;
         outline: white solid 4px;
         background-color: $user_purple;
+
         >p{
             color: $main_white;
         }
+
         &:active{
             border-width: 2px;
             border-color: $main_white;
         }
     }
+
     &_email{
         color: $main_blue;
     }
+
     &:hover{
         background-color: $main_white;
     }
+
     &:active{
         background-color: $main_header;
     }
+
     div{
         margin-left: 24px;
     }
@@ -136,6 +150,7 @@ button{
     .contact-full-name{
         color: $main_white;
     }
+
     &:hover{
         background-color: $main_header;
     }
@@ -161,31 +176,37 @@ button{
         margin: 16px 0;
         gap: 16px;
     }
+
     &_name{
         font-size: 3.2rem;
         color: $main_header; 
     }
+
     &_email{
         color: $main_blue;
     }
 }
 
-
 .bg-color_ffa35e{
     background-color: $user_orange;
 }
+
 .bg-color_ff5eb3{
     background-color: $user_pink;
 }
+
 .bg-color_6e52ff{
     background-color: $user_blue;
 }
+
 .bg-color_9327ff{
     background-color: $user_orange;
 }
+
 .bg-color_00bee8{
     background-color: $user_lightblue;
 }
+
 .bg-color_ff745e{
     background-color: $user_red;
 }
@@ -195,15 +216,18 @@ button{
     .contact_email{
         font-size: 1.4rem;
     }
+
     .contact-button{
         display: none;
     }
 }
+
 @media(max-width:1190px){
     .main-container{
         height: 100%;
         width: 100%;
     }
+
     .contact{
         overflow-y: none;
         &_second{

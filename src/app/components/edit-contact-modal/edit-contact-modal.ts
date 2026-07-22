@@ -64,12 +64,15 @@ export class EditContactModal {
     firstname: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],
     }),
+
     lastname: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],
     }),
+
     email: new FormControl('', {
       validators: [Validators.required, Validators.pattern(EditContactModal.EMAIL_PATTERN)],
     }),
+
     phone: new FormControl('', { validators: [Validators.required] }),
   });
 
@@ -81,6 +84,7 @@ export class EditContactModal {
       this.editContactForm.markAllAsTouched();
       return;
     }
+
     const formValue = this.editContactForm.getRawValue();
     const updatedContact = {
       first_name: formValue.firstname!,
@@ -149,6 +153,7 @@ export class EditContactModal {
     }
 
     this.isClosing = false;
+    
     if (this.animationCloseTimer) {
       window.clearTimeout(this.animationCloseTimer);
       this.animationCloseTimer = undefined;

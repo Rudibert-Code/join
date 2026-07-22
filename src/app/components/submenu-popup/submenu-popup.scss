@@ -4,6 +4,7 @@
   0% {left: 100%;}
   100% {left: calc(100% - 166px);}
 }
+
 @keyframes fadeOut {
   0% {left: calc(100% - 166px);}
   100% {left: 100%;}
@@ -14,14 +15,17 @@
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
 }
+
 .out{
     animation-name: fadeOut;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
 }
+
 .help{
     display: none;
 }
+
 .submenu{
     width: 150px;
     border-radius: 16px 0 16px 16px;

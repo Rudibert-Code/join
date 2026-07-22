@@ -10,6 +10,7 @@ import { Component, inject } from '@angular/core';
   templateUrl: './help.html',
   styleUrl: './help.scss',
 })
+
 export class Help {
   location = inject(Location);
 

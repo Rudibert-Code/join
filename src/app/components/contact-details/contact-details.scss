@@ -14,9 +14,11 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
+
     >p{
         font-size: 2.0rem;
     }
+
     &_head{
         display: flex;
         justify-content: center;
@@ -24,6 +26,7 @@
         gap: 16px;
         padding-left: 32px;
     }
+
     &_separator{
         width: 2px;
         height: 59px;
@@ -49,12 +52,14 @@ dialog{
     position: relative;
     left: 32px;
     z-index: 100;
+
     &.active{
         opacity: 1;
         position: relative;
         left: -16px;
         transition: 0.5s;
     }
+    
     &.in-active{
         opacity: 0;
         position: relative;
@@ -68,17 +73,22 @@ dialog{
     justify-content: center;
     align-items: center;
     gap: 8px;
-        >svg{
-            width: 24px;
-            height: 24px;
-        }
-        .svg_color{
-            fill: $main_header;
-        }
+
+    >svg{
+        width: 24px;
+        height: 24px;
+    }
+
+    .svg_color{
+        fill: $main_header;
+    }
+
     &:hover{
+
         >p{
             color: $main_blue;
         }
+
         .svg_color{
             fill: $main_blue;
         }
@@ -92,6 +102,7 @@ dialog{
     align-items: center;
     gap: 32px;
     margin-bottom: 16px;
+
     >div{
         display: flex;
         justify-content: center;
@@ -115,11 +126,9 @@ dialog{
 .user_icon{
     height: 120px;
     aspect-ratio: 1 / 1;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     background-color: $user_purple;
     border-radius: 100px;
     margin-right: 16px;

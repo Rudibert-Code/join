@@ -9,12 +9,11 @@
       <a class="header__help display_not_mobile" routerLink="/help" aria-label="Help">
         <img src="assets/UI/vector/icon_help.svg" alt="" />
       </a>
-
       <div (click)="submenuPopup.toggleSubMenu(); $event.stopPropagation()" class="user_icon">
         <!--<p>N/A</p>-->
         <p>{{ userInitials() }}</p>
       </div>
     </div>
   }
+  
 </section>
-

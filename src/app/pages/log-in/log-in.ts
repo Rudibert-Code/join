@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './log-in.html',
   styleUrls: ['./log-in.scss'],
 })
+
 export class LogIn {
   db = inject(Supabase);
   router = inject(Router);
@@ -33,11 +34,13 @@ export class LogIn {
    */
   async onSubmitLogin() {
     const { data, error } = await this.db.signIn(this.loginData.email, this.loginData.password);
+
     if (error) {
       this.loginError = 'Email or Password does not exist.';
       this.cd.detectChanges();
       return;
     }
+
     if (data.user) {
       const firstName = data.user.user_metadata?.['first_name'];
       const lastName = data.user.user_metadata?.['last_name'];
@@ -52,7 +55,6 @@ export class LogIn {
    */
   onGuestLogin() {
     this.db.signInAsGuest();
-
     this.router.navigate(['/summary'], {
       state: { playGreetingIntro: true, userName: 'Guest' },
     });
@@ -63,10 +65,12 @@ export class LogIn {
    */
   async ngOnInit() {
     await this.db.ensureAuthLoaded();
+
     if (this.db.isLoggedIn()) {
       this.router.navigate(['/summary']);
       return;
     }
+
     this.startAnimation();
   }
 
@@ -75,7 +79,9 @@ export class LogIn {
    */
   showPassword() {
     const password = document.getElementById('pwd') as HTMLInputElement | null;
+
     if (!password) return;
+    
     if (password.type === 'password') {
       password.type = 'text';
       this.iconSrc = this.visibilityOnSrc;

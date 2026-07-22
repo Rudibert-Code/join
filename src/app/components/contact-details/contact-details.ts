@@ -7,7 +7,6 @@ let savedSurName: string = '';
 let savedPhone: string = '';
 let savedEmail: string = '';
 let savedColor: string = '';
-
 let isActive: boolean = false;
 
 /**
@@ -29,13 +28,12 @@ export class ContactDetails {
 
   /** Tracks active visibility state of detail view panel. */
   detailViewActive = isActive;
-
   userName: String = savedName;
   userSurName: String = savedSurName;
   userEmail: String = savedEmail;
   userPhone: String = savedPhone;
   userInitials: String =
-    this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
+  this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
   userColor: String = savedColor;
   /** Database ID of currently selected contact. */
   selectedContactId: number | null = null;

@@ -74,11 +74,13 @@ export class AddTaskForm {
       nonNullable: true,
       validators: [Validators.required],
     }),
+
     description: new FormControl(''),
     due_date: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, this.dueDateValidator.bind(this)],
     }),
+
     priority: new FormControl<'urgent' | 'medium' | 'low'>('medium', {
       nonNullable: true,
       validators: [Validators.required],
@@ -203,7 +205,6 @@ export class AddTaskForm {
    */
   selectedContacts(): Contact[] {
     const selectedIds = this.taskForm.controls.assignedContactIds.value;
-
     return this.contacts().filter((contact) => selectedIds.includes(contact.id));
   }
 
@@ -339,7 +340,6 @@ export class AddTaskForm {
    */
   private async createMainTask(formValue: TaskFormRawValue) {
     const newTask = this.buildNewTask(formValue);
-
     return await this.supabase.addTask(newTask);
   }
 
@@ -368,7 +368,6 @@ export class AddTaskForm {
    */
   private async createSubtasks(taskId: number, subtaskTitles: string[]) {
     const newSubtasks = this.buildNewSubtasks(taskId, subtaskTitles);
-
     await this.supabase.addSubtasks(newSubtasks);
   }
 
@@ -394,7 +393,6 @@ export class AddTaskForm {
    */
   private async assignContactsToTask(taskId: number, contactIds: number[]) {
     const taskContacts = this.buildTaskContacts(taskId, contactIds);
-
     await this.supabase.addTaskContacts(taskContacts);
   }
 
@@ -415,7 +413,6 @@ export class AddTaskForm {
 
     await this.createSubtasks(createdTask.id, formValue.subtasks);
     await this.assignContactsToTask(createdTask.id, formValue.assignedContactIds);
-
     this.clearTaskForm();
     await this.router.navigate(['/board']);
   }

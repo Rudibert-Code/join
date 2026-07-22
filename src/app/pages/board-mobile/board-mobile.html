@@ -75,7 +75,6 @@
               >
                 <p>{{ contact.initials }}</p>
               </div>
-
               <div
                 *ngIf="board.getContactsForTaskcard(task.id).length > 3"
                 class="user-badge overflow-badge"
@@ -273,7 +272,6 @@
                 [style.backgroundColor]="contact.color">
                 <p>{{ contact.initials }}</p>
               </div>
-
               <div
                 *ngIf="board.getContactsForTaskcard(task.id).length > 3"
                 class="user-badge overflow-badge">

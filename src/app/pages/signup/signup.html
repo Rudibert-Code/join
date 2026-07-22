@@ -36,9 +36,11 @@
             <img class="user-icon" src="assets/UI/icon_user.png" alt="user icon" />
           </div>
           <div class="placeholder-errors">
+
             @if (firstnameInput.invalid && firstnameInput.touched) {
               <span class="error-message leftbound">Please enter at least 3 characters.</span>
             }
+
           </div>
           <div class="input-icon-wrapper">
             <input
@@ -55,9 +57,11 @@
             <img class="user-icon" src="assets/UI/icon_user.png" alt="user icon" />
           </div>
           <div class="placeholder-errors">
+
             @if (lastnameInput.invalid && lastnameInput.touched) {
               <span class="error-message leftbound">Please enter at least 3 characters.</span>
             }
+
           </div>
           <div class="input-icon-wrapper">
             <input
@@ -74,9 +78,11 @@
             <img class="mail-icon" src="assets/UI/icon_mail.png" alt="mail icon" />
           </div>
           <div class="placeholder-errors">
+
             @if (emailInput.invalid && emailInput.touched) {
               <span class="error-message leftbound">Please enter a valid email address.</span>
             }
+
           </div>
           <div class="input-icon-wrapper">
             <input
@@ -93,9 +99,11 @@
             <img class="visibility-icon" [src]="iconSrc" (click)="showPassword()" alt="lock icon" />
           </div>
           <div class="placeholder-errors">
+
             @if (passwordInput.invalid && passwordInput.touched) {
               <span class="error-message leftbound">Please enter at least 8 characters.</span>
             }
+
           </div>
           <div class="input-icon-wrapper">
             <input
@@ -116,12 +124,15 @@
             />
           </div>
           <div class="placeholder-errors">
+
             @if (confirmPwInput.invalid && confirmPwInput.touched) {
               <span class="error-message leftbound">Please confirm your password.</span>
             }
+
             @if (passwordsDoNotMatch) {
               <span class="error-message leftbound">Passwords do not match!</span>
             }
+            
           </div>
           <div class="d-flex center">
             <input

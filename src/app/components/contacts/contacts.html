@@ -1,5 +1,4 @@
 <div class="main-container">
-
   <div class="contact-details-mobile" id="details_mobile">
     <section (click)="returnToContacts()" class="return_button">
       <img class="return_button_icon" src="assets/UI/icon_arrow.png" alt="">
@@ -11,12 +10,10 @@
           <div class="contact_line"></div>
         </div>
     </section>
-    
     <section class="user">
         <p class="user_icon" id="user_icon">{{userInitials}}</p>
         <p class="user_name">{{userName}} {{userSurName}}</p>
     </section>
-
     <section>
       <p>Contact Information</p>
       <div>
@@ -28,16 +25,12 @@
         <p>{{userPhone}}</p>
       </div>
     </section>
-    
   </div>
-
-
   <div class="no-scroll" id="contact_container">
     <button class="contact-button" (click)="openContactForm()">
       <p>Add new contact</p>
       <img src="assets/UI/vector/icon_add-user.svg" alt="">
     </button>
-
     <app-contact-form
       *ngIf="showContactForm()"
       (close)="closeContactForm()"
@@ -52,7 +45,6 @@
           <div class="contact_icon" [style.background-color]="contact.color">
             <p>{{ getInitials(contact) }}</p>
           </div>
-    
           <div>
             <p class="contact-full-name">{{ contact.first_name }} {{ contact.last_name }}</p>
             <p class="contact_email">{{ contact.email }}</p>
@@ -60,6 +52,6 @@
         </div>
       }
     }
+    
   </div>
-
 </div>

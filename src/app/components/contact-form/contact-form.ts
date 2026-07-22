@@ -65,6 +65,7 @@ export class ContactForm {
     if (this.isClosing) {
       return;
     }
+
     this.isClosing = true;
     this.animationCloseTimer = window.setTimeout(() => {
       this.emitClose();
@@ -80,6 +81,7 @@ export class ContactForm {
     if (!this.isClosing || event.target !== event.currentTarget) {
       return;
     }
+
     if (event.animationName === 'slideDown' || event.animationName === 'slideOut') {
       this.emitClose();
     }

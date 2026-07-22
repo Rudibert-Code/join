@@ -114,7 +114,6 @@
     display: flex;
     align-items: center;
     gap: 8px;
-
     border: 1px solid $main-border;
     border-radius: 8px;
     background-color: white;
@@ -208,6 +207,7 @@
     .edit-modal__close--mobileIMG{
         display: none;
     }
+    
     .edit-modal__close--desktopIMG{
         display: block;
     }

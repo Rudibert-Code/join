@@ -14,6 +14,7 @@ import { Board } from '../../pages/board/board';
   templateUrl: './board-mobile.html',
   styleUrl: './board-mobile.scss',
 })
+
 export class BoardMobile {
   board = inject(Board);
 }

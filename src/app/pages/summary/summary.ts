@@ -15,6 +15,7 @@ import { User as SupabaseUser } from '@supabase/supabase-js';
   standalone: true,
   imports: [DatePipe, RouterLink],
 })
+
 export class Summary {
   db = inject(Supabase);
   tasks = computed(() => this.db.tasks());
@@ -69,6 +70,7 @@ export class Summary {
     }
 
     const authUser = this.db.authUser();
+
     if (authUser) {
       this.displayName = this.getUserDisplayName(authUser);
       return;
@@ -89,6 +91,7 @@ export class Summary {
    */
   async getGreetingText() {
     const currentHour = new Date().getHours();
+    
     if (currentHour >= 5 && currentHour < 11) {
       this.greetingText = 'Good morning,';
     } else if (currentHour >= 11 && currentHour < 18) {

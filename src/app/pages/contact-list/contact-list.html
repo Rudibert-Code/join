@@ -3,11 +3,13 @@
     [contactId]="selectedContactId"
     [isEditMode]="isMobileDetailView"
   ></app-contacs-button>
+
   <app-contacts
     class="contacts"
     id="app-contacts"
     (contactSelected)="onContactSelected($event)"
     (mobileDetailViewChange)="onMobileDetailViewChange($event)"
   ></app-contacts>
+  
   <app-contact-details class="details" id="app-contact-details"></app-contact-details>
 </div>

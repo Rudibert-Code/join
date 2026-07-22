@@ -12,10 +12,11 @@ import { SubmenuPopup } from '../submenu-popup/submenu-popup';
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
+
 export class Header {
   /** Supabase service instance for retrieving current user data and auth state. */
   db = inject(Supabase);
-
+  
   /**
    * Computed signal that derives user avatar initials from current state.
    * Returns 'G' for guests, uppercase first/last name initials if present,

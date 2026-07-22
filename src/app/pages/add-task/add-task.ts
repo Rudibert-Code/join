@@ -10,4 +10,5 @@ import { AddTaskForm } from '../../components/add-task-form/add-task-form';
   templateUrl: './add-task.html',
   styleUrl: './add-task.scss',
 })
+
 export class AddTask {}

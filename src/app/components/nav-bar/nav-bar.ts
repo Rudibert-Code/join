@@ -11,6 +11,7 @@ import { Supabase } from '../../supabase';
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.scss',
 })
+
 export class NavBar {
   /** Supabase service instance for authentication operations. */
   db = inject(Supabase);

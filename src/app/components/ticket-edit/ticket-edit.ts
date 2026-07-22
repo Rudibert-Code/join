@@ -34,6 +34,7 @@ interface newSubTask {
   templateUrl: './ticket-edit.html',
   styleUrl: './ticket-edit.scss',
 })
+
 export class TicketEdit {
 
 /** Reference to parent Board component instance. */
@@ -47,10 +48,13 @@ ddOpen: boolean = false;
    */
 openDropDown() {
   let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
+
   if (this.ddOpen == false) {
     this.ddOpen = true;
     dropdownWindow.style.display = 'flex';
+
     for (let index = 0; index < this.board.db.task_contacts().length; index++) {
+
       if (this.board.db.task_contacts()[index].task_id == this.board.openTicketID) {
         let currentContactID = Number(this.board.db.task_contacts()[index].contact_id);
         this.selectDropDownContact(currentContactID);
@@ -65,6 +69,7 @@ openDropDown() {
 closeDropDown() {
   let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
   dropdownWindow.style.display = 'none';
+
   for (let index = 0; index < this.board.ddContacts.length; index++) {
     let contact = document.getElementById(
       'dd_contact_' + String(this.board.ddContacts[index]),
@@ -75,6 +80,7 @@ closeDropDown() {
     contact.classList.remove('contact_selected');
     checkBox.src = 'assets/UI/checkbox_default.png';
   }
+
   this.board.ddContacts = [];
   this.ddOpen = false;
 }
@@ -117,6 +123,7 @@ selectDropDownContact(contactID: number) {
   let selectedCheckBox = document.getElementById(
     'dd_checkbox_' + String(contactID),
   ) as HTMLImageElement;
+
   if (this.board.ddContacts.includes(contactID) == false) {
     this.board.ddContacts.push(contactID);
     selectedContact.classList.add('contact_selected');
@@ -136,6 +143,7 @@ subtaskInput: boolean = false;
    */
 checkSubtaskInput() {
   let subtaskCheckButton = document.getElementById('subtask_input_check') as HTMLImageElement;
+
   if (this.subtaskInput == false) {
     this.subtaskInput = true;
     subtaskCheckButton.style.display = 'flex';
@@ -165,16 +173,20 @@ async createNewSubtask() {
     },
   ];
   let newSubtaskID: number = 0;
+
   for (let index = 0; index < this.board.db.subtasks().length; index++) {
+
     if (this.board.db.subtasks()[index].title == newSubtaskTitle) {
       newSubtaskID = this.board.db.subtasks()[index].id;
     }
   }
+
   this.board.subtasksCache.push({
     title: newSubtaskTitle,
     is_Done: false,
     id: newSubtaskID,
   });
+  
   this.board.db.addSubtasks(newSubtask);
   subtaskInput.value = '';
   this.unCheckSubtaskInput();

@@ -51,10 +51,10 @@ interface newSubTask {
   templateUrl: './ticket-details.html',
   styleUrl: './ticket-details.scss',
 })
+
 export class TicketDetails {
   /** Reference to parent Board component instance. */
   board = inject(Board);
-
   taskTitle: string = '';
   taskDescr: string = '';
   taskLimitDate: string = '';
@@ -62,7 +62,6 @@ export class TicketDetails {
   taskCategory: string = '';
   searchQuery: string = '';
   openTicketID: number = 0;
-
   ticketCardID: number = 0;
   newDialogEditTitle: string = '';
   newDialogDescription: string = '';
@@ -81,6 +80,7 @@ export class TicketDetails {
     let dialogPrio: string = '';
 
     for (let index = 0; index < this.board.tasks().length; index++) {
+
       if (this.board.tasks()[index].id == this.board.ticketCardID) {
         dialogEditTitle.value = this.board.tasks()[index].title;
         dialogEditDescription.value = this.board.tasks()[index].description;
@@ -88,6 +88,7 @@ export class TicketDetails {
         dialogPrio = this.board.tasks()[index].priority;
       }
     }
+
     this.board.closeTicketCard(false);
     this.editTicketPrio(dialogPrio);
     this.board.setContactColor(this.ticketCardID);
@@ -130,14 +131,19 @@ export class TicketDetails {
   async getContacts(id: number) {
     this.contactsCache = [];
     const linkedContacts = this.board.contacts();
+
     for (const relation of this.board.task_contacts()) {
+
       if (relation.task_id !== id) {
         continue;
       }
+
       const matchingContact = linkedContacts.find((contact) => contact.id === relation.contact_id);
+
       if (!matchingContact) {
         continue;
       }
+
       this.contactsCache.push({
         id: Number(matchingContact.id),
         name: String(matchingContact.first_name),
@@ -157,7 +163,9 @@ export class TicketDetails {
    */
   async getSubTasks(id: number) {
     this.subtasksCache = [];
+
     for (let index = 0; index < this.board.subtasks().length; index++) {
+
       if (this.board.subtasks()[index].task_id == id) {
         this.subtasksCache.push({
           title: this.board.subtasks()[index].title,
@@ -225,7 +233,9 @@ export class TicketDetails {
    */
   deleteTicket() {
     this.board.closeTicketCard(false);
+
     for (let index = 0; index < this.board.subtasks().length; index++) {
+
       if (this.board.subtasks()[index].task_id == this.openTicketID) {
         this.board.db.deleteSubtask(this.board.subtasks()[index].id);
       }
@@ -244,6 +254,7 @@ export class TicketDetails {
     let currentButton = document.getElementById(
       String('checkbox_' + checkBoxID),
     ) as HTMLImageElement;
+
     if (currentButton.classList.contains('subtasks_btn_true')) {
       currentButton.classList.remove('subtasks_btn_true');
       currentButton.classList.add('subtasks_btn_false');
@@ -254,6 +265,7 @@ export class TicketDetails {
       currentButton.classList.add('subtasks_btn_true');
       currentButton.src = 'assets/UI/checkbox_selected.png';
     }
+    
     this.board.db.updateSubtasks(x.id, subTaskState);
   }
 

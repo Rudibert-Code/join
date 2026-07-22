@@ -8,12 +8,10 @@
       <button class="edit-modal__close edit-modal__close--mobileIMG" type="button" (click)="requestClose()">
         <img class="" src="assets/UI/vector/icon_close.svg" alt="Schließen" />
       </button>
-
       <div class="edit-modal__headline">
         <h2>Edit contact</h2>
       </div>
     </section>
-
     <section class="edit-modal__body">
       <button class="edit-modal__close edit-modal__close--desktopIMG" type="button" (click)="requestClose()">
         <img class="" src="assets/UI/vector/icon_cancle.svg" alt="Schließen" />
@@ -21,7 +19,6 @@
       <div class="edit-modal__avatar" [style.backgroundColor]="avatarColor">
         <p>{{initalFirstname}}{{initalLastname}}</p>
       </div>
-
       <form class="edit-modal__form" [formGroup]="editContactForm" (ngSubmit)="saveContact()">
         <div class="edit-modal__form-group">
           <div class="edit-modal__field">
@@ -39,7 +36,6 @@
             First name must have at least 3 characters.
           </p>
         </div>
-
         <div class="edit-modal__form-group">
           <div class="edit-modal__field">
             <input class="" type="text" formControlName="lastname" />
@@ -73,15 +69,12 @@
             Email must contain an &#64; and end with at least 2 letters (e.g. .de).
           </p>
         </div>
-
         <div class="edit-modal__field">
           <input type="tel" formControlName="phone" />
           <img src="assets/UI/vector/icon_call.svg" alt="Telefon Icon" />
         </div>
-
         <div class="edit-modal__actions">
           <button class="edit-modal__delete" type="button" (click)="deleteContact()">Delete</button>
-
           <button class="edit-modal__save" type="submit" [disabled]="editContactForm.invalid">
             Save ✓
           </button>

@@ -33,6 +33,13 @@ export class Contacts {
   /** ContactDetails instance for controlling detail panel views. */
   cd = inject(ContactDetails);
 
+  userInitials: string = '';
+  userColor: String = '';
+  userName: string = '';
+  userSurName: string = '';
+  userEmail: string = '';
+  userPhone: string = '';
+
   /** Signal state controlling visibility of the "Add Contact" form modal/overlay. */
   showContactForm = signal(false);
 
@@ -72,16 +79,8 @@ export class Contacts {
   getInitials(contact: Contact) {
     const firstNameLetter = contact.first_name.charAt(0).toUpperCase();
     const lastNameLetter = contact.last_name.charAt(0).toUpperCase();
-
     return firstNameLetter + lastNameLetter;
   }
-
-  userInitials: string = '';
-  userColor: String = '';
-  userName: string = '';
-  userSurName: string = '';
-  userEmail: string = '';
-  userPhone: string = '';
 
   /** Emits when a contact item is selected. */
   @Output() contactSelected = new EventEmitter<Contact>();
@@ -95,7 +94,9 @@ export class Contacts {
   ngOnInit() {
     if (currentContact.length > 0 && !this.isMobileViewport()) {
       const currentContactID = currentContact[0].id;
+
       for (let index = 0; index < this.db.contacts().length; index++) {
+
         if (this.db.contacts()[index].id == currentContactID) {
           let currentContactData: Contact = {
             id: currentContactID,
@@ -108,6 +109,7 @@ export class Contacts {
           this.openContactDetails(currentContactData);
         }
       }
+
       this.cd.openWindow();
       this.cd.loadDetails(currentContactID);
     }
@@ -175,6 +177,7 @@ export class Contacts {
       targetContactIcon?.classList.remove('clicked');
       this.cd.changeState(true);
     }
+    
     let userID = String(contact.last_name + contact.id);
     let userIconID = document.getElementById(userID) as HTMLDivElement;
     userIconID.classList.add('clicked');

@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './signup.html',
   styleUrl: './signup.scss',
 })
+
 export class Signup {
   db = inject(Supabase);
   router = inject(Router);
@@ -34,7 +35,9 @@ export class Signup {
    */
   showPassword() {
     const password = document.getElementById('pwd') as HTMLInputElement | null;
+
     if (!password) return;
+    
     if (password.type === 'password') {
       password.type = 'text';
       this.iconSrc = this.visibilityOnSrc;
@@ -49,7 +52,9 @@ export class Signup {
    */
   showConfirmPassword() {
     const reqPassword = document.getElementById('reqPw') as HTMLInputElement | null;
+
     if (!reqPassword) return;
+    
     if (reqPassword.type === 'password') {
       reqPassword.type = 'text';
       this.confirmIconSrc = this.visibilityOnSrc;
@@ -67,19 +72,24 @@ export class Signup {
       this.passwordsDoNotMatch = true;
       return;
     }
+
     this.passwordsDoNotMatch = false;
+
     if (!this.signUpData.acceptPolicy) {
       return;
     }
+
     const { data, error } = await this.db.signUpWithEmail(
       this.signUpData.email,
       this.signUpData.password,
       this.signUpData.firstName,
       this.signUpData.lastName,
     );
+
     if (error) {
       return;
     }
+
     await this.pushInContact();
     this.router.navigate(['/login']);
   }
@@ -89,6 +99,7 @@ export class Signup {
    */
   async ngOnInit() {
     await this.db.ensureAuthLoaded();
+
     if (this.db.isLoggedIn()) {
       this.router.navigate(['/summary']);
       return;
@@ -105,6 +116,7 @@ export class Signup {
       email: this.signUpData.email,
     };
     const result = await this.db.setContact(contact);
+    
     if (!result) {
       console.error('Contact creation failed');
     }

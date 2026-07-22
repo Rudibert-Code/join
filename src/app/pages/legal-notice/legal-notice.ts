@@ -9,4 +9,5 @@ import { Component } from '@angular/core';
   templateUrl: './legal-notice.html',
   styleUrl: './legal-notice.scss',
 })
+
 export class LegalNotice {}

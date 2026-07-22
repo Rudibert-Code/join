@@ -9,4 +9,5 @@ import { Component } from '@angular/core';
   templateUrl: './ticket-card.html',
   styleUrl: './ticket-card.scss',
 })
+
 export class TicketCard {}
