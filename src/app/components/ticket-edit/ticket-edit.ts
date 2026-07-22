@@ -71,12 +71,8 @@ closeDropDown() {
   dropdownWindow.style.display = 'none';
 
   for (let index = 0; index < this.board.ddContacts.length; index++) {
-    let contact = document.getElementById(
-      'dd_contact_' + String(this.board.ddContacts[index]),
-    ) as HTMLDivElement;
-    let checkBox = document.getElementById(
-      'dd_checkbox_' + String(this.board.ddContacts[index]),
-    ) as HTMLImageElement;
+    let contact = document.getElementById('dd_contact_' + String(this.board.ddContacts[index]),) as HTMLDivElement;
+    let checkBox = document.getElementById('dd_checkbox_' + String(this.board.ddContacts[index]),) as HTMLImageElement;
     contact.classList.remove('contact_selected');
     checkBox.src = 'assets/UI/checkbox_default.png';
   }
@@ -117,12 +113,8 @@ editTicketPrio(newPrio: string) {
    * @param contactID - Target contact ID.
    */
 selectDropDownContact(contactID: number) {
-  let selectedContact = document.getElementById(
-    'dd_contact_' + String(contactID),
-  ) as HTMLDivElement;
-  let selectedCheckBox = document.getElementById(
-    'dd_checkbox_' + String(contactID),
-  ) as HTMLImageElement;
+  let selectedContact = document.getElementById('dd_contact_' + String(contactID),) as HTMLDivElement;
+  let selectedCheckBox = document.getElementById('dd_checkbox_' + String(contactID),) as HTMLImageElement;
 
   if (this.board.ddContacts.includes(contactID) == false) {
     this.board.ddContacts.push(contactID);
@@ -173,7 +165,6 @@ async createNewSubtask() {
     },
   ];
   let newSubtaskID: number = 0;
-
   for (let index = 0; index < this.board.db.subtasks().length; index++) {
 
     if (this.board.db.subtasks()[index].title == newSubtaskTitle) {
@@ -181,15 +172,18 @@ async createNewSubtask() {
     }
   }
 
+  this.pushToSubtasksCache(newSubtaskTitle, newSubtaskID);
+  this.board.db.addSubtasks(newSubtask);
+  subtaskInput.value = '';
+  this.unCheckSubtaskInput();
+}
+
+pushToSubtasksCache(newSubtaskTitle:string, newSubtaskID:number){
   this.board.subtasksCache.push({
     title: newSubtaskTitle,
     is_Done: false,
     id: newSubtaskID,
   });
-  
-  this.board.db.addSubtasks(newSubtask);
-  subtaskInput.value = '';
-  this.unCheckSubtaskInput();
 }
 
 /**

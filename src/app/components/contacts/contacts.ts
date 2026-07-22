@@ -136,15 +136,13 @@ export class Contacts {
     if (this.isMobileViewport()) {
       let contactContainer = document.getElementById('contact_container') as HTMLDivElement;
       let detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
-      let contactID = Number(contact.id);
       let array = this.db.contacts();
 
       for (let index = 0; index < array.length; index++) {
-        if (array[index].id == contactID) {
+        if (array[index].id == Number(contact.id)) {
           this.userName = array[index].first_name;
           this.userSurName = array[index].last_name;
-          this.userInitials =
-            this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
+          this.userInitials = this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
           this.userEmail = array[index].email;
           this.userPhone = array[index].phone;
           this.userColor = array[index].color;

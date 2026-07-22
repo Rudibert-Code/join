@@ -73,9 +73,7 @@ export class TicketDetails {
   openTicketEdit() {
     const dialogEdit = document.getElementById('ticket_edit') as HTMLDialogElement;
     const dialogEditTitle = document.getElementById('editTaskTitle') as HTMLInputElement;
-    const dialogEditDescription = document.getElementById(
-      'editTaskDescription',
-    ) as HTMLInputElement;
+    const dialogEditDescription = document.getElementById('editTaskDescription',) as HTMLInputElement;
     const dialogEditDueDate = document.getElementById('subtask_edit_dd') as HTMLInputElement;
     let dialogPrio: string = '';
 
@@ -131,7 +129,6 @@ export class TicketDetails {
   async getContacts(id: number) {
     this.contactsCache = [];
     const linkedContacts = this.board.contacts();
-
     for (const relation of this.board.task_contacts()) {
 
       if (relation.task_id !== id) {
@@ -251,9 +248,7 @@ export class TicketDetails {
   checkBox(x: subTask) {
     let checkBoxID = String(x.id);
     let subTaskState: boolean = true;
-    let currentButton = document.getElementById(
-      String('checkbox_' + checkBoxID),
-    ) as HTMLImageElement;
+    let currentButton = document.getElementById(String('checkbox_' + checkBoxID),) as HTMLImageElement;
 
     if (currentButton.classList.contains('subtasks_btn_true')) {
       currentButton.classList.remove('subtasks_btn_true');
