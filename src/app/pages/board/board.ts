@@ -300,30 +300,36 @@ export class Board implements OnInit {
    * @param id - Task ID.
    */
   openTicketCard(id: number) {
+    const task = this.tasks().find(t => t.id === id);
+    if (!task) return;
+  
     const dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
+  
+    this.ticketCardID = id;
+    this.openTicketID = id;
+  
+    this.populateTicketDialog(task);
+    this.getContacts(id);
+    this.getSubTasks(id);
+  
+    dialogWindow.showModal();
+  }
+
+  private populateTicketDialog(task: Task) {
     const ticketTitle = document.getElementById('ticket_title') as HTMLHeadingElement;
     const ticketDescription = document.getElementById('ticket_description') as HTMLParagraphElement;
     const ticketDueDate = document.getElementById('ticket_due-date') as HTMLParagraphElement;
     const ticketPriority = document.getElementById('ticket_priority') as HTMLParagraphElement;
     const ticketCategory = document.getElementById('ticket_category') as HTMLParagraphElement;
-
-    this.ticketCardID = id;
-
-    for (let index = 0; index < this.tasks().length; index++) {
-      if (this.tasks()[index].id == id) {
-        ticketTitle.textContent = this.cutInout(this.tasks()[index].title, 'title');
-        ticketDescription.innerHTML = this.cutInout(this.tasks()[index].description, 'description');
-        ticketDueDate.innerHTML = String(this.setTicketDueDate(this.tasks()[index].due_date));
-        ticketPriority.innerHTML = this.tasks()[index].priority;
-        this.setTicketPrioIcon(this.tasks()[index].priority);
-        ticketCategory.innerHTML = this.tasks()[index].category;
-        this.setTicketCatClass(this.tasks()[index].category);
-      }
-    }
-    this.openTicketID = id;
-    this.getContacts(id);
-    this.getSubTasks(id);
-    dialogWindow.showModal();
+  
+    ticketTitle.textContent = this.cutInout(task.title, 'title');
+    ticketDescription.textContent = this.cutInout(task.description, 'description');
+    ticketDueDate.textContent = String(this.setTicketDueDate(task.due_date));
+    ticketPriority.textContent = task.priority;
+    ticketCategory.textContent = task.category;
+  
+    this.setTicketPrioIcon(task.priority);
+    this.setTicketCatClass(task.category);
   }
 
   /**
@@ -364,9 +370,7 @@ export class Board implements OnInit {
         for (let index = 0; index < this.db.contacts().length; index++) {
           if (this.db.contacts()[index].id == currentContactID) {
             let currentContactClass = 'contacts_icon_' + this.db.contacts()[index].color.slice(1);
-            let currentContact = document.getElementById(
-              String(currentContactID),
-            ) as HTMLDivElement;
+            let currentContact = document.getElementById(String(currentContactID)) as HTMLDivElement;
             currentContact.classList.add(currentContactClass);
           }
         }
@@ -377,34 +381,44 @@ export class Board implements OnInit {
   contactsCache: contacts[] = [];
 
   /**
+   * Retrieves all task-contact relations that belong to the provided task ID.
+   *
+   * @param id - Task ID.
+   * @returns Matching task-contact relation objects.
+   */
+  private getTaskContactRelations(id: number) {
+    return this.task_contacts().filter((relation) => relation.task_id === id);
+  }
+
+  /**
+   * Maps task-contact relations to the contact cache format used by the board UI.
+   *
+   * @param relations - Task-contact relation objects.
+   * @returns Array of cached contact details.
+   */
+  private mapContactsToCache(relations: { task_id: number; contact_id: number }[]) {
+    const linkedContacts = this.contacts();
+
+    return relations
+      .map((relation) => linkedContacts.find((contact) => contact.id === relation.contact_id))
+      .filter((contact): contact is (typeof linkedContacts)[number] => Boolean(contact))
+      .map((contact) => ({
+        id: Number(contact.id),
+        name: String(contact.first_name),
+        surname: String(contact.last_name),
+        initials: `${contact.first_name.charAt(0).toUpperCase()}${contact.last_name.charAt(0).toUpperCase()}`,
+        color: String(contact.color),
+      }));
+  }
+
+  /**
    * Populates cached contact details linked to specified task ID.
    * 
    * @param id - Task ID.
    */
   async getContacts(id: number) {
-    this.contactsCache = [];
-
-    const linkedContacts = this.contacts();
-
-    for (const relation of this.task_contacts()) {
-      if (relation.task_id !== id) {
-        continue;
-      }
-
-      const matchingContact = linkedContacts.find((contact) => contact.id === relation.contact_id);
-
-      if (!matchingContact) {
-        continue;
-      }
-
-      this.contactsCache.push({
-        id: Number(matchingContact.id),
-        name: String(matchingContact.first_name),
-        surname: String(matchingContact.last_name),
-        initials: `${matchingContact.first_name.charAt(0).toUpperCase()}${matchingContact.last_name.charAt(0).toUpperCase()}`,
-        color: String(matchingContact.color),
-      });
-    }
+    const relations = this.getTaskContactRelations(id);
+    this.contactsCache = this.mapContactsToCache(relations);
   }
 
   subtasksCache: subTask[] = [];
@@ -469,7 +483,6 @@ export class Board implements OnInit {
   setTicketPrioIcon(prio: string) {
     let ticketPrioIcon = document.getElementById('prio-icon') as HTMLImageElement;
     let iconURL: string = '';
-
     switch (prio) {
       case 'urgent':
         iconURL = 'assets/UI/icon_prio-urgent.png';
@@ -505,15 +518,15 @@ export class Board implements OnInit {
    * @param taskID - Task ID.
    */
   setCheckBoxState(taskID:number){
-  for (let index = 0; index < this.db.subtasks().length; index++) {
-    let targetCheckBox = document.getElementById("checkbox_" + this.db.subtasks()[index].id) as HTMLImageElement;
-    if (this.db.subtasks()[index].task_id == taskID && this.db.subtasks()[index].is_done == true) {
-      targetCheckBox.src ="assets/UI/checkbox_selected.png";
-    } else if (this.db.subtasks()[index].task_id == taskID && this.db.subtasks()[index].is_done == false) {
-      targetCheckBox.src ="assets/UI/checkbox_default.png";
+    for (let index = 0; index < this.db.subtasks().length; index++) {
+      let targetCheckBox = document.getElementById("checkbox_" + this.db.subtasks()[index].id) as HTMLImageElement;
+      if (this.db.subtasks()[index].task_id == taskID && this.db.subtasks()[index].is_done == true) {
+        targetCheckBox.src ="assets/UI/checkbox_selected.png";
+      } else if (this.db.subtasks()[index].task_id == taskID && this.db.subtasks()[index].is_done == false) {
+        targetCheckBox.src ="assets/UI/checkbox_default.png";
+      }
     }
   }
-}
 
  ddContacts: number[] = [];
 

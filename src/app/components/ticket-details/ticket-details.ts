@@ -248,7 +248,7 @@ export class TicketDetails {
   checkBox(x: subTask) {
     let checkBoxID = String(x.id);
     let subTaskState: boolean = true;
-    let currentButton = document.getElementById(String('checkbox_' + checkBoxID),) as HTMLImageElement;
+    let currentButton = document.getElementById(String('checkbox_' + checkBoxID)) as HTMLImageElement;
 
     if (currentButton.classList.contains('subtasks_btn_true')) {
       currentButton.classList.remove('subtasks_btn_true');
