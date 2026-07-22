@@ -54,7 +54,6 @@ openDropDown() {
     dropdownWindow.style.display = 'flex';
 
     for (let index = 0; index < this.board.db.task_contacts().length; index++) {
-
       if (this.board.db.task_contacts()[index].task_id == this.board.openTicketID) {
         let currentContactID = Number(this.board.db.task_contacts()[index].contact_id);
         this.selectDropDownContact(currentContactID);
@@ -152,25 +151,47 @@ unCheckSubtaskInput() {
 }
 
 /**
-   * Creates a new subtask, posts payload to database, and updates cache.
+   * Builds the payload for a new subtask entry.
+   *
+   * @param title - Subtask text entered by the user.
+   * @returns New subtask payload object.
    */
-async createNewSubtask() {
-  let subtaskInput = document.getElementById('editTaskSubtasks') as HTMLInputElement;
-  let newSubtaskTitle = subtaskInput.value;
-  let newSubtask: newSubTask[] = [
+private buildNewSubtask(title: string): newSubTask[] {
+  return [
     {
       task_id: this.board.ticketCardID,
-      title: newSubtaskTitle,
+      title,
       is_done: false,
     },
   ];
-  let newSubtaskID: number = 0;
-  for (let index = 0; index < this.board.db.subtasks().length; index++) {
+}
 
-    if (this.board.db.subtasks()[index].title == newSubtaskTitle) {
-      newSubtaskID = this.board.db.subtasks()[index].id;
+/**
+   * Resolves the existing database ID for a subtask title if one already exists.
+   *
+   * @param title - Subtask text entered by the user.
+   * @returns Database ID for matching subtask or 0 when none exists.
+   */
+private getExistingSubtaskId(title: string): number {
+  let existingSubtaskId = 0;
+
+  for (let index = 0; index < this.board.db.subtasks().length; index++) {
+    if (this.board.db.subtasks()[index].title == title) {
+      existingSubtaskId = this.board.db.subtasks()[index].id;
     }
   }
+
+  return existingSubtaskId;
+}
+
+/**
+   * Creates a new subtask, posts payload to database, and updates cache.
+   */
+async createNewSubtask() {
+  const subtaskInput = document.getElementById('editTaskSubtasks') as HTMLInputElement;
+  const newSubtaskTitle = subtaskInput.value;
+  const newSubtask = this.buildNewSubtask(newSubtaskTitle);
+  const newSubtaskID = this.getExistingSubtaskId(newSubtaskTitle);
 
   this.pushToSubtasksCache(newSubtaskTitle, newSubtaskID);
   this.board.db.addSubtasks(newSubtask);
