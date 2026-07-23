@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { Supabase } from '../../supabase';
+import { Supabase } from '../../core/services/supabase';
 import { NewContact } from '../../models/contact.model';
 import { FormsModule } from '@angular/forms';
+import { Auth } from '../../core/services/auth';
 
 /**
  * Handles user registration, form validation, and contact creation.
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class Signup {
   db = inject(Supabase);
+  auth = inject(Auth);
   router = inject(Router);
   iconSrc = 'assets/UI/icon_locked.png';
   confirmIconSrc = 'assets/UI/icon_locked.png';
@@ -65,31 +67,26 @@ export class Signup {
   }
 
   /**
-   * Validates form inputs and submits new user account credentials to Supabase.
+   * Validates form inputs and submits new user account credentials to Authentification Service.
    */
   async onSubmitSignUp() {
     if (this.signUpData.password !== this.signUpData.confirmPassword) {
       this.passwordsDoNotMatch = true;
       return;
     }
-
     this.passwordsDoNotMatch = false;
-
     if (!this.signUpData.acceptPolicy) {
       return;
     }
-
-    const { data, error } = await this.db.signUpWithEmail(
+    const { data, error } = await this.auth.signUpWithEmail(
       this.signUpData.email,
       this.signUpData.password,
       this.signUpData.firstName,
       this.signUpData.lastName,
     );
-
     if (error) {
       return;
     }
-
     await this.pushInContact();
     this.router.navigate(['/login']);
   }
@@ -98,9 +95,9 @@ export class Signup {
    * Checks current authentication status on load and redirects logged-in users to summary.
    */
   async ngOnInit() {
-    await this.db.ensureAuthLoaded();
+    await this.auth.ensureAuthLoaded();
 
-    if (this.db.isLoggedIn()) {
+    if (this.auth.isLoggedIn()) {
       this.router.navigate(['/summary']);
       return;
     }

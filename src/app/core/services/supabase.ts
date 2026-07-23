@@ -1,14 +1,13 @@
 import { Injectable, signal } from '@angular/core';
-import { createClient, User as SupabaseUser } from '@supabase/supabase-js';
-import { Contact, NewContact, TaskContacts } from './models/contact.model';
-import { Task, NewTask } from './models/task.model';
-import { Subtask, NewSubtask } from './models/subtask.model';
+import { createClient } from '@supabase/supabase-js';
+import { Contact, NewContact, TaskContacts } from '../../models/contact.model';
+import { Task, NewTask } from '../../models/task.model';
+import { Subtask, NewSubtask } from '../../models/subtask.model';
 
 /**
- * Service facilitating authentication, database interactions,
+ * Service facilitating database interactions
  * and global reactive state management via Supabase backend.
  */
-
 @Injectable({
   providedIn: 'root',
 })
@@ -30,61 +29,10 @@ export class Supabase {
   task_contacts = signal<TaskContacts[]>([]);
   /** Current date string formatted as YYYY-MM-DD for datepicker defaults. */
   today = new Date().toISOString().split('T')[0];
-  /** Signal tracking the currently authenticated Supabase Auth user. */
-  authUser = signal<SupabaseUser | null>(null);
-  /** Signal denoting whether the session operates under guest access. */
-  isGuest = signal(false);
-  /** Signal indicating whether the initial authentication handshake complete. */
-  authReady = signal(false);
-  /** Internal promise preventing duplicated initialization calls during auth checks. */
-  private authInitPromise: Promise<void> | null = null;
-
-  /**
-   * Evaluates if a valid user session or guest mode is currently active.
-   *
-   * @returns True if logged in as registered user or guest; false otherwise.
-   */
-
-  isLoggedIn() {
-    return !!this.authUser() || this.isGuest();
-  }
-
-  /**
-   * Ensures auth session initialization has finished before continuing route actions.
-   */
-
-  async ensureAuthLoaded() {
-    if (!this.authInitPromise) {
-      this.authInitPromise = this.initAuth();
-    }
-    await this.authInitPromise;
-  }
-
-  /**
-   * Initializes session auth state and attaches state change listener.
-   */
-
-  async initAuth() {
-    if (this.authReady()) {
-      return;
-    }
-    const {
-      data: { user },
-    } = await this.supabase.auth.getUser();
-    this.authUser.set(user);
-    this.supabase.auth.onAuthStateChange((_event, session) => {
-      this.authUser.set(session?.user ?? null);
-      if (session?.user) {
-        this.isGuest.set(false);
-      }
-    });
-    this.authReady.set(true);
-  }
 
   /**
    * Fetches all contacts from database ordered by first name and updates state signal.
    */
-
   async getContacts() {
     const { data: contacts, error } = await this.supabase
       .from('contacts')
@@ -104,10 +52,9 @@ export class Supabase {
   /**
    * Inserts a new contact into the database and refreshes local contact state.
    *
-   * @param NewContact - The contact payload object to create.
+   * @param newContact - The contact payload object to create.
    * @returns Inserted contact database row object.
    */
-
   async setContact(newContact: NewContact) {
     const { data, error } = await this.supabase.from('contacts').insert([newContact]).select();
     if (data) {
@@ -123,7 +70,6 @@ export class Supabase {
    * @param updatedContact - Object containing modified fields.
    * @returns Updated database record array or void on failure.
    */
-
   async updateContact(id: number, updatedContact: Partial<Contact>) {
     const { data, error } = await this.supabase
       .from('contacts')
@@ -143,7 +89,6 @@ export class Supabase {
    *
    * @param id - Target contact ID for deletion.
    */
-
   async deleteContact(id: number) {
     const { error } = await this.supabase.from('contacts').delete().eq('id', id);
     if (error) {
@@ -154,23 +99,11 @@ export class Supabase {
   }
 
   /**
-   * Queries contacts in descending order by first name.
-   */
-
-  async sortContact() {
-    const { data, error } = await this.supabase
-      .from('contacts')
-      .select('*')
-      .order('first_name', { ascending: false });
-  }
-
-  /**
    * Fetches a specific contact record from database matching the given ID.
    *
    * @param contactId - Target contact ID.
    * @returns Single contact object payload.
    */
-
   async getContactById(contactId: number) {
     const { data, error } = await this.supabase
       .from('contacts')
@@ -188,7 +121,6 @@ export class Supabase {
    *
    * @returns Array of tasks retrieved.
    */
-
   async getTasks() {
     const { data: tasks, error } = await this.supabase
       .from('tasks')
@@ -212,7 +144,6 @@ export class Supabase {
    *
    * @param id - Task ID to remove.
    */
-
   async deleteTask(id: number) {
     const { error } = await this.supabase.from('tasks').delete().eq('id', id);
     if (error) {
@@ -227,7 +158,6 @@ export class Supabase {
    *
    * @param id - Subtask ID to remove.
    */
-
   async deleteSubtask(id: number) {
     const { error } = await this.supabase.from('subtasks').delete().eq('id', id);
     if (error) {
@@ -242,7 +172,6 @@ export class Supabase {
    *
    * @returns Array of all retrieved subtasks.
    */
-
   async getSubtasks() {
     const { data: subtasks, error } = await this.supabase
       .from('subtasks')
@@ -266,7 +195,6 @@ export class Supabase {
    *
    * @returns Array of relation objects.
    */
-
   async getTaskToContacts() {
     const { data: task_contacts, error } = await this.supabase
       .from('task_contacts')
@@ -290,7 +218,6 @@ export class Supabase {
    * @param taskContacts - Array of task-contact relation pairs.
    * @returns Inserted relation records.
    */
-
   async addTaskContacts(taskContacts: TaskContacts[]) {
     if (taskContacts.length === 0) {
       return [];
@@ -310,7 +237,6 @@ export class Supabase {
    * @param newTask - New task data structure.
    * @returns Single created task record object.
    */
-
   async addTask(newTask: NewTask) {
     const { data, error } = await this.supabase.from('tasks').insert([newTask]).select().single();
     if (error) {
@@ -327,7 +253,6 @@ export class Supabase {
    * @param newSubtasks - List of subtask payload items.
    * @returns Array of created subtasks.
    */
-
   async addSubtasks(newSubtasks: NewSubtask[]) {
     if (newSubtasks.length === 0) {
       return [];
@@ -348,7 +273,6 @@ export class Supabase {
    * @param is_done - New completion state.
    * @returns Updated subtask payload.
    */
-
   async updateSubtasks(id: number, is_done: boolean) {
     const { data, error } = await this.supabase
       .from('subtasks')
@@ -356,7 +280,7 @@ export class Supabase {
       .eq('id', id)
       .select();
     if (error) {
-      console.error('Supabase uupdatedSubtask error', error);
+      console.error('Supabase updateSubtasks error', error);
       return;
     }
     return data;
@@ -369,7 +293,6 @@ export class Supabase {
    * @param status - New status string.
    * @returns Updated task record.
    */
-
   async updateTaskStatus(id: number, status: string) {
     const { data, error } = await this.supabase
       .from('tasks')
@@ -390,7 +313,6 @@ export class Supabase {
    * @param priority - Priority classification value.
    * @returns Updated task record.
    */
-
   async updateTaskPrio(id: number, priority: string) {
     const { data, error } = await this.supabase
       .from('tasks')
@@ -411,7 +333,6 @@ export class Supabase {
    * @param title - New title text.
    * @returns Updated task record.
    */
-
   async updateTaskTitle(id: number, title: string) {
     const { data, error } = await this.supabase
       .from('tasks')
@@ -419,7 +340,7 @@ export class Supabase {
       .eq('id', id)
       .select();
     if (error) {
-      console.error('Supabase updateTaskPrio error', error);
+      console.error('Supabase updateTaskTitle error', error);
       return;
     }
     return data;
@@ -432,7 +353,6 @@ export class Supabase {
    * @param description - New description text.
    * @returns Updated task record.
    */
-
   async updateTaskDescription(id: number, description: string) {
     const { data, error } = await this.supabase
       .from('tasks')
@@ -440,7 +360,7 @@ export class Supabase {
       .eq('id', id)
       .select();
     if (error) {
-      console.error('Supabase updateTaskPrio error', error);
+      console.error('Supabase updateTaskDescription error', error);
       return;
     }
     return data;
@@ -453,7 +373,6 @@ export class Supabase {
    * @param due_date - Target date string formatted as YYYY-MM-DD.
    * @returns Updated task record.
    */
-
   async updateTaskDueDate(id: number, due_date: string) {
     const { data, error } = await this.supabase
       .from('tasks')
@@ -461,86 +380,9 @@ export class Supabase {
       .eq('id', id)
       .select();
     if (error) {
-      console.error('Supabase updateTaskPrio error', error);
+      console.error('Supabase updateTaskDueDate error', error);
       return;
     }
     return data;
-  }
-
-  /**
-   * Registers a new user via Supabase email authentication.
-   *
-   * @param email - New user email.
-   * @param password - Account password.
-   * @param firstName - User first name metadata.
-   * @param lastName - User last name metadata.
-   * @returns Object wrapping data and error result properties.
-   */
-
-  async signUpWithEmail(email: string, password: string, firstName: string, lastName: string) {
-    const { data, error } = await this.supabase.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: {
-          first_name: firstName,
-          last_name: lastName,
-        },
-      },
-    });
-    return { data, error };
-  }
-
-  /**
-   * Authenticates user with email and password credentials.
-   *
-   * @param email - User email address.
-   * @param password - Account password.
-   * @returns Auth payload data and error state.
-   */
-
-  async signIn(email: string, password: string) {
-    const { data, error } = await this.supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-    if (data.user) {
-      this.authUser.set(data.user);
-      this.isGuest.set(false);
-    }
-    return { data, error };
-  }
-
-  /**
-   * Activates guest session state, bypassing credential login.
-   */
-
-  signInAsGuest() {
-    this.authUser.set(null);
-    this.isGuest.set(true);
-    this.authReady.set(true);
-  }
-
-  /**
-   * Terminates active session and resets user auth signals.
-   */
-
-  async signOut() {
-    await this.supabase.auth.signOut();
-    this.authUser.set(null);
-    this.isGuest.set(false);
-  }
-
-  /**
-   * Fetches the current authenticated user object from Supabase session.
-   *
-   * @returns User object if logged in, null otherwise.
-   */
-
-  async getCurrentUser() {
-    const {
-      data: { user },
-    } = await this.supabase.auth.getUser();
-    return user;
   }
 }

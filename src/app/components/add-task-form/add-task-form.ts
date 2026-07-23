@@ -9,7 +9,7 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { Supabase } from '../../supabase';
+import { Supabase } from '../../core/services/supabase';
 import { Contact } from '../../models/contact.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -316,9 +316,9 @@ export class AddTaskForm {
     return false;
   }
 
-/**
+  /**
    * Prepares payload object for primary task record insertion.
-   * 
+   *
    * @param formValue - Raw value of task form matching TaskFormRawValue.
    * @returns Formatted task data object.
    */
@@ -346,7 +346,7 @@ export class AddTaskForm {
 
   /**
    * Builds array of subtask insertion objects mapped to parent task ID.
-   * 
+   *
    * @param taskId - Parent task database ID.
    * @param subtaskTitles - List of subtask titles.
    * @returns Array of formatted subtask payload objects.
@@ -363,7 +363,7 @@ export class AddTaskForm {
 
   /**
    * Persists subtasks associated with created task to Supabase.
-   * 
+   *
    * @param taskId - Parent task database ID.
    * @param subtaskTitles - List of subtask titles.
    */
@@ -374,7 +374,7 @@ export class AddTaskForm {
 
   /**
    * Builds relational mapping objects linking contact IDs to created task ID.
-   * 
+   *
    * @param taskId - Target task database ID.
    * @param contactIds - List of assigned contact IDs.
    * @returns Array of task-contact join records.
@@ -388,7 +388,7 @@ export class AddTaskForm {
 
   /**
    * Persists task contact assignments in database.
-   * 
+   *
    * @param taskId - Target task database ID.
    * @param contactIds - List of assigned contact IDs.
    */

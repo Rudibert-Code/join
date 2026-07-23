@@ -10,20 +10,22 @@ import { PrivacyPolicy } from './pages/privacy-policy/privacy-policy';
 import { Summary } from './pages/summary/summary';
 import { Signup } from './pages/signup/signup';
 import { Help } from './pages/help/help';
-import { Supabase } from './supabase';
+import { Supabase } from './core/services/supabase';
+import { Auth } from './core/services/auth';
 
 const authGuard: CanActivateFn = async (): Promise<boolean | UrlTree> => {
   const db = inject(Supabase);
+  const auth = inject(Auth)
   const router = inject(Router);
-  await db.ensureAuthLoaded();
-  return db.isLoggedIn() ? true : router.parseUrl('/login');
+  await auth.ensureAuthLoaded();
+  return auth.isLoggedIn() ? true : router.parseUrl('/login');
 };
 
 const guestGuard: CanActivateFn = async (): Promise<boolean | UrlTree> => {
-  const db = inject(Supabase);
+  const auth = inject(Auth);
   const router = inject(Router);
-  await db.ensureAuthLoaded();
-  return db.isLoggedIn() ? router.parseUrl('/summary') : true;
+  await auth.ensureAuthLoaded();
+  return auth.isLoggedIn() ? router.parseUrl('/summary') : true;
 };
 
 export const routes: Routes = [

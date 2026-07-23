@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Supabase } from '../../supabase';
+import { Supabase } from '../../core/services/supabase';
 import { Contact } from '../../models/contact.model';
 import { ContactForm } from '../contact-form/contact-form';
 import { ContactDetails } from '../contact-details/contact-details';
@@ -114,65 +114,65 @@ export class Contacts {
   }
 
   /**
- * Handles user selection of a contact item, updates detail view DOM/state, and adapts layout for mobile or desktop.
- *
- * @param contact - Selected contact record.
- */
-openContactDetails(contact: Contact): void {
-  this.contactSelected.emit(contact);
-  currentContact = [{ id: contact.id }];
-  if (this.isMobileViewport()) {
-    this.setupMobileView(contact);
-  } else {
+   * Handles user selection of a contact item, updates detail view DOM/state, and adapts layout for mobile or desktop.
+   *
+   * @param contact - Selected contact record.
+   */
+  openContactDetails(contact: Contact): void {
+    this.contactSelected.emit(contact);
+    currentContact = [{ id: contact.id }];
+    if (this.isMobileViewport()) {
+      this.setupMobileView(contact);
+    } else {
+      this.cd.openWindow();
+    }
+    this.cd.loadDetails(contact.id);
+    setTimeout(() => {
+      this.markContactAsClicked(contact);
+    }, 0);
+  }
+
+  /**
+   * Prepares and updates the application layout specifically for mobile viewports.
+   *
+   * @param contact - Selected contact record.
+   */
+  private setupMobileView(contact: Contact): void {
+    this.populateUserData(contact.id);
+    this.toggleMobileContainers();
+    this.mobileDetailViewChange.emit(true);
     this.cd.openWindow();
   }
-  this.cd.loadDetails(contact.id);
-  setTimeout(() => {
-    this.markContactAsClicked(contact);
-  }, 0);
-}
 
-/**
- * Prepares and updates the application layout specifically for mobile viewports.
- *
- * @param contact - Selected contact record.
- */
-private setupMobileView(contact: Contact): void {
-  this.populateUserData(contact.id);
-  this.toggleMobileContainers();
-  this.mobileDetailViewChange.emit(true);
-  this.cd.openWindow();
-}
-
-/**
- * Retrieves contact details from the database by ID and populates local component properties.
- *
- * @param contactId - Unique identifier of the contact to load.
- */
-private populateUserData(contactId: string | number): void {
-  const foundContact = this.db.contacts().find(c => c.id == Number(contactId));
-  if (!foundContact) return;
-  this.userName = foundContact.first_name;
-  this.userSurName = foundContact.last_name;
-  this.userInitials = (this.userName.charAt(0) + this.userSurName.charAt(0)).toUpperCase();
-  this.userEmail = foundContact.email;
-  this.userPhone = foundContact.phone;
-  this.userColor = foundContact.color;
-  const userIcon = document.getElementById('user_icon') as HTMLParagraphElement;
-  if (userIcon) {
-    userIcon.style.backgroundColor = String(this.userColor);
+  /**
+   * Retrieves contact details from the database by ID and populates local component properties.
+   *
+   * @param contactId - Unique identifier of the contact to load.
+   */
+  private populateUserData(contactId: string | number): void {
+    const foundContact = this.db.contacts().find((c) => c.id == Number(contactId));
+    if (!foundContact) return;
+    this.userName = foundContact.first_name;
+    this.userSurName = foundContact.last_name;
+    this.userInitials = (this.userName.charAt(0) + this.userSurName.charAt(0)).toUpperCase();
+    this.userEmail = foundContact.email;
+    this.userPhone = foundContact.phone;
+    this.userColor = foundContact.color;
+    const userIcon = document.getElementById('user_icon') as HTMLParagraphElement;
+    if (userIcon) {
+      userIcon.style.backgroundColor = String(this.userColor);
+    }
   }
-}
 
-/**
- * Toggles DOM element visibility between the contact list and detail view for mobile displays.
- */
-private toggleMobileContainers(): void {
-  const contactContainer = document.getElementById('contact_container') as HTMLDivElement;
-  const detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
-  if (contactContainer) contactContainer.style.display = 'none';
-  if (detailContainer) detailContainer.style.display = 'flex';
-}
+  /**
+   * Toggles DOM element visibility between the contact list and detail view for mobile displays.
+   */
+  private toggleMobileContainers(): void {
+    const contactContainer = document.getElementById('contact_container') as HTMLDivElement;
+    const detailContainer = document.getElementById('details_mobile') as HTMLDivElement;
+    if (contactContainer) contactContainer.style.display = 'none';
+    if (detailContainer) detailContainer.style.display = 'flex';
+  }
 
   /**
    * Applies SCSS highlight styling to the selected contact item and removes active style from all others.
@@ -186,7 +186,7 @@ private toggleMobileContainers(): void {
       targetContactIcon?.classList.remove('clicked');
       this.cd.changeState(true);
     }
-    
+
     let userID = String(contact.last_name + contact.id);
     let userIconID = document.getElementById(userID) as HTMLDivElement;
     userIconID.classList.add('clicked');

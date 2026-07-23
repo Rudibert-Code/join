@@ -1,5 +1,5 @@
 import { Injectable, Component, inject } from '@angular/core';
-import { Supabase } from '../../supabase';
+import { Supabase } from '../../core/services/supabase';
 import { EditContactModal } from '../edit-contact-modal/edit-contact-modal';
 
 let savedName: string = '';
@@ -9,12 +9,12 @@ let savedEmail: string = '';
 let savedColor: string = '';
 let isActive: boolean = false;
 
-interface Contact{
-  first_name:string,
-  last_name:string,
-  email:string,
-  phone:string,
-  color:string,
+interface Contact {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  color: string;
 }
 
 /**
@@ -27,11 +27,9 @@ interface Contact{
   templateUrl: './contact-details.html',
   styleUrl: './contact-details.scss',
 })
-
 @Injectable({
   providedIn: 'root',
 })
-
 export class ContactDetails {
   /** Supabase service instance for contact operations and data signals. */
   db = inject(Supabase);
@@ -42,7 +40,8 @@ export class ContactDetails {
   userSurName: String = savedSurName;
   userEmail: String = savedEmail;
   userPhone: String = savedPhone;
-  userInitials: String = this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
+  userInitials: String =
+    this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
   userColor: String = savedColor;
   /** Database ID of currently selected contact. */
   selectedContactId: number | null = null;
@@ -58,7 +57,7 @@ export class ContactDetails {
   loadDetails(contactId: number) {
     let contact = this.db.contacts();
     let selectedContact = contact.find((contact) => contact.id === contactId);
-    
+
     if (!selectedContact) {
       return;
     }
@@ -70,12 +69,13 @@ export class ContactDetails {
     this.userPhone = String(selectedContact.phone);
     this.userColor = String(selectedContact.color);
     this.saveDetails(selectedContact);
-    this.userInitials = this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
+    this.userInitials =
+      this.userName.charAt(0).toUpperCase() + this.userSurName.charAt(0).toUpperCase();
     let userIcon = document.getElementById('user_initials') as HTMLDivElement;
     userIcon.style.backgroundColor = String(this.userColor);
   }
 
-  saveDetails(selectedContact: Contact){
+  saveDetails(selectedContact: Contact) {
     savedName = String(selectedContact.first_name);
     savedSurName = String(selectedContact.last_name);
     savedEmail = String(selectedContact.email);
@@ -151,7 +151,7 @@ export class ContactDetails {
 
   /**
    * Updates state tracking detail view activity.
-   * 
+   *
    * @param X - Activity state boolean.
    */
   changeState(X: boolean) {

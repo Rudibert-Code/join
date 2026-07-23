@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Supabase } from '../../supabase';
+import { Supabase } from '../../core/services/supabase';
 import { NewContact } from '../../models/contact.model';
 
 /**

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Supabase } from '../../supabase';
+import { Auth } from '../../core/services/auth';
 import { FormsModule } from '@angular/forms';
 
 /**
@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class LogIn {
-  db = inject(Supabase);
+  auth = inject(Auth);
   router = inject(Router);
   private cd = inject(ChangeDetectorRef);
   loginError: string = '';
@@ -33,7 +33,7 @@ export class LogIn {
    * Authenticates user with email and password, navigating to summary on success.
    */
   async onSubmitLogin() {
-    const { data, error } = await this.db.signIn(this.loginData.email, this.loginData.password);
+    const { data, error } = await this.auth.signIn(this.loginData.email, this.loginData.password);
 
     if (error) {
       this.loginError = 'Email or Password does not exist.';
@@ -54,7 +54,7 @@ export class LogIn {
    * Logs the user in as a guest and redirects to the summary page.
    */
   onGuestLogin() {
-    this.db.signInAsGuest();
+    this.auth.signInAsGuest();
     this.router.navigate(['/summary'], {
       state: { playGreetingIntro: true, userName: 'Guest' },
     });
@@ -64,9 +64,9 @@ export class LogIn {
    * Checks existing login session on load and triggers splash screen animation.
    */
   async ngOnInit() {
-    await this.db.ensureAuthLoaded();
+    await this.auth.ensureAuthLoaded();
 
-    if (this.db.isLoggedIn()) {
+    if (this.auth.isLoggedIn()) {
       this.router.navigate(['/summary']);
       return;
     }
@@ -81,7 +81,7 @@ export class LogIn {
     const password = document.getElementById('pwd') as HTMLInputElement | null;
 
     if (!password) return;
-    
+
     if (password.type === 'password') {
       password.type = 'text';
       this.iconSrc = this.visibilityOnSrc;

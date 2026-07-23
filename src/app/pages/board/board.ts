@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Supabase } from '../../supabase';
+import { Supabase } from '../../core/services/supabase';
 import { Task } from '../../models/task.model';
 import { Subtask } from '../../models/subtask.model';
 import { RouterLink } from '@angular/router';

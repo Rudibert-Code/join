@@ -1,7 +1,7 @@
 <nav>
   <img class="navbar__logo" src="assets/UI/vector/logo_join-white.svg" alt="Join" />
 
-  @if (db.isLoggedIn()) {
+  @if (auth.isLoggedIn()) {
     <section class="navbar__links">
       <a class="navbar__link" [routerLink]="['/summary']" routerLinkActive="active">
         <div class="navbar__icon">

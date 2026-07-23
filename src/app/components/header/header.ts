@@ -1,14 +1,15 @@
 import { Component, computed, inject } from '@angular/core';
-import { Supabase } from '../../supabase';
+import { Supabase } from '../../core/services/supabase';
 import { RouterLink } from '@angular/router';
 import { SubmenuPopup } from '../submenu-popup/submenu-popup';
+import { Auth } from '../../core/services/auth';
 
 /**
  * Handles application header display, including brand navigation and dynamically calculated user initials.
  */
 @Component({
   selector: 'app-header',
-  imports: [RouterLink,SubmenuPopup],
+  imports: [RouterLink, SubmenuPopup],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -16,18 +17,19 @@ import { SubmenuPopup } from '../submenu-popup/submenu-popup';
 export class Header {
   /** Supabase service instance for retrieving current user data and auth state. */
   db = inject(Supabase);
-  
+  auth = inject(Auth)
+
   /**
    * Computed signal that derives user avatar initials from current state.
    * Returns 'G' for guests, uppercase first/last name initials if present,
    * or the first letter of the email address as fallback.
    */
   userInitials = computed(() => {
-    if (this.db.isGuest()) {
+    if (this.auth.isGuest()) {
       return 'G';
     }
 
-    const user = this.db.authUser();
+    const user = this.auth.authUser();
 
     if (!user) {
       return '';

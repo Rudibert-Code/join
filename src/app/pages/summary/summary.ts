@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, computed } from '@angular/core';
-import { Supabase } from '../../supabase';
+import { Supabase } from '../../core/services/supabase';
 import { Task } from '../../models/task.model';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { User as SupabaseUser } from '@supabase/supabase-js';
+import { Auth } from '../../core/services/auth';
 
 /**
  * Displays the summary dashboard with task metrics, upcoming deadlines, and a personalized greeting.
@@ -18,6 +19,7 @@ import { User as SupabaseUser } from '@supabase/supabase-js';
 
 export class Summary {
   db = inject(Supabase);
+  auth = inject(Auth)
   tasks = computed(() => this.db.tasks());
   router = inject(ActivatedRoute);
   deadline: Date = new Date();
@@ -64,12 +66,12 @@ export class Summary {
    * Determines and sets the display name for the user (guest, cached, or authenticated).
    */
   async getDisplayName() {
-    if (this.db.isGuest()) {
+    if (this.auth.isGuest()) {
       this.displayName = 'Guest';
       return;
     }
 
-    const authUser = this.db.authUser();
+    const authUser = this.auth.authUser();
 
     if (authUser) {
       this.displayName = this.getUserDisplayName(authUser);
@@ -91,7 +93,7 @@ export class Summary {
    */
   async getGreetingText() {
     const currentHour = new Date().getHours();
-    
+
     if (currentHour >= 5 && currentHour < 11) {
       this.greetingText = 'Good morning,';
     } else if (currentHour >= 11 && currentHour < 18) {

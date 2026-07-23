@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Supabase } from '../../supabase';
+import { Supabase } from '../../core/services/supabase';
 
 /**
  * Dialog modal component for editing existing contact details or removing contacts.
@@ -153,7 +153,7 @@ export class EditContactModal {
     }
 
     this.isClosing = false;
-    
+
     if (this.animationCloseTimer) {
       window.clearTimeout(this.animationCloseTimer);
       this.animationCloseTimer = undefined;

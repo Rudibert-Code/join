@@ -4,7 +4,7 @@
   <p class="header__title">Kanban Project Management Tool</p>
   <div class="user_icon_position"></div>
 
-  @if (db.isLoggedIn()) {
+  @if (auth.isLoggedIn()) {
     <div class="header__actions">
       <a class="header__help display_not_mobile" routerLink="/help" aria-label="Help">
         <img src="assets/UI/vector/icon_help.svg" alt="" />

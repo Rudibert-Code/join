@@ -1,6 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Supabase } from './supabase';
+import { Supabase } from './core/services/supabase';
+import { Auth } from './core/services/auth';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,10 @@ import { Supabase } from './supabase';
 export class App {
   protected readonly title = signal('join');
   dbService = inject(Supabase);
+  authService = inject(Auth)
 
   ngOnInit() {
-    this.dbService.initAuth();
+    this.authService.initAuth();
     this.dbService.getContacts();
-    //this.dbService.setContact({first_name: 'string2' last_name: 'string2',phone: 'string2', email: 'string2'});
-    //this.dbService.updateContact({id:number})
-    //this.dbService.deleteContact({id:number})
   }
 }
