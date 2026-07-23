@@ -1,6 +1,7 @@
 import { Component, inject} from '@angular/core';
 import { Board } from '../../pages/board/board';
 import { ContactService } from '../../core/services/contact.service';
+import { SubtaskService } from '../../core/services/subtask.service';
 
 /**
  * Represents a subtask item for display in the ticket edit dialog.
@@ -42,6 +43,8 @@ export class TicketEdit {
 board = inject(Board);
 
 cs = inject(ContactService);
+
+sts = inject(SubtaskService);
 
 /** Tracks toggle state of contact selection dropdown. */
 ddOpen: boolean = false;
@@ -203,7 +206,7 @@ async createNewSubtask() {
 }
 
 pushToSubtasksCache(newSubtaskTitle:string, newSubtaskID:number){
-  this.board.subtasksCache.push({
+  this.sts.subtasksCache.push({
     title: newSubtaskTitle,
     is_Done: false,
     id: newSubtaskID,

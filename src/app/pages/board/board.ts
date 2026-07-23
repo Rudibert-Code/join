@@ -3,17 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Supabase } from '../../core/services/supabase';
 import { Task } from '../../models/task.model';
-import { Subtask } from '../../models/subtask.model';
 import { RouterLink } from '@angular/router';
 import { TicketDetails } from '../../components/ticket-details/ticket-details';
 import { BoardMobile } from '../../pages/board-mobile/board-mobile';
 import { ContactService } from '../../core/services/contact.service';
-
-interface subTask {
-  title: String;
-  is_Done: Boolean;
-  id: number;
-}
+import { SubtaskService } from '../../core/services/subtask.service';
 
 /**
  * Manages the main kanban board view including drag-and-drop, task status updates, and ticket modal handling.
@@ -28,9 +22,10 @@ interface subTask {
 export class Board implements OnInit {
   db = inject(Supabase);
   cs = inject(ContactService);
+  sts = inject(SubtaskService);
   contacts = computed(() => this.cs.contacts());
   tasks = computed(() => this.db.tasks());
-  subtasks = computed(() => this.db.subtasks());
+  subtasks = computed(() => this.sts.subtasks());
   task_contacts = computed(() => this.db.task_contacts());
   searchQuery: string = '';
   openTicketID: number = 0;
@@ -284,7 +279,7 @@ export class Board implements OnInit {
 
     this.populateTicketDialog(task);
     this.cs.getContacts(id);
-    this.getSubTasks(id);
+    this.sts.getSubTasks(id);
 
     dialogWindow.showModal();
   }
@@ -330,30 +325,6 @@ export class Board implements OnInit {
   newDialogEditTitle: string = '';
   newDialogDescription: string = '';
   newDialogDueDate: string = '';
-
-
-  subtasksCache: subTask[] = [];
-
-  /**
-   * Fetches subtasks linked to given task ID and updates visual checkbox states.
-   *
-   * @param id - Task ID.
-   */
-  async getSubTasks(id: number) {
-    this.subtasksCache = [];
-    for (let index = 0; index < this.subtasks().length; index++) {
-      if (this.subtasks()[index].task_id == id) {
-        this.subtasksCache.push({
-          title: this.subtasks()[index].title,
-          is_Done: this.subtasks()[index].is_done,
-          id: this.subtasks()[index].id,
-        });
-      }
-    }
-    setTimeout(() => {
-      this.setCheckBoxState(id);
-    }, 0);
-  }
 
   /**
    * Sets category badge style class on ticket element.
@@ -421,64 +392,5 @@ export class Board implements OnInit {
     if (changes == true) {
       this.cs.assignContactsToTask(this.openTicketID, this.cs.ddContacts);
     }
-  }
-
-  /**
-   * Updates checkbox image source according to subtask completion status.
-   *
-   * @param taskID - Task ID.
-   */
-  setCheckBoxState(taskID: number) {
-    for (let index = 0; index < this.db.subtasks().length; index++) {
-      let targetCheckBox = document.getElementById(
-        'checkbox_' + this.db.subtasks()[index].id,
-      ) as HTMLImageElement;
-      if (
-        this.db.subtasks()[index].task_id == taskID &&
-        this.db.subtasks()[index].is_done == true
-      ) {
-        targetCheckBox.src = 'assets/UI/checkbox_selected.png';
-      } else if (
-        this.db.subtasks()[index].task_id == taskID &&
-        this.db.subtasks()[index].is_done == false
-      ) {
-        targetCheckBox.src = 'assets/UI/checkbox_default.png';
-      }
-    }
-  }
-
-  /**
-   * Retrieves all subtasks belonging to specified task ID.
-   *
-   * @param taskId - Task ID.
-   * @returns Array of subtasks.
-   */
-  getSubtaskAmount(taskId: number): Subtask[] {
-    return this.subtasks().filter((subtask) => subtask.task_id === taskId);
-  }
-
-  /**
-   * Counts number of completed subtasks for task.
-   *
-   * @param taskId - Task ID.
-   * @returns Count of completed subtasks.
-   */
-  getCompletedSubtasksAmount(taskId: number): number {
-    const taskSubtasks = this.getSubtaskAmount(taskId);
-    return taskSubtasks.filter((subtask) => subtask.is_done).length;
-  }
-
-  /**
-   * Calculates overall subtask completion percentage for task progress bar.
-   *
-   * @param taskId - Task ID.
-   * @returns Completion percentage between 0 and 100.
-   */
-  getProgress(taskId: number): number {
-    const taskSubtasks = this.getSubtaskAmount(taskId);
-    const total = taskSubtasks.length;
-    if (total === 0) return 0;
-    const completed = taskSubtasks.filter((subtask) => subtask.is_done).length;
-    return (completed / total) * 100;
   }
 }

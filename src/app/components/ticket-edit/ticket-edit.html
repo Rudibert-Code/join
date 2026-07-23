@@ -133,7 +133,7 @@
           <input (keyup)="checkSubtaskInput()" type="text" value="" id="editTaskSubtasks" />
         </div>
         <div class="scroll_list" id="editTaskSubtasksList">
-          @for (subtask of board.subtasksCache; track $index) {
+          @for (subtask of sts.subtasksCache; track $index) {
             <div class="subtask_instance" id="{{ subtask.id }}">
               <div class="subtask_instance_front">
                 <div class="subtask_instance_dot"></div>

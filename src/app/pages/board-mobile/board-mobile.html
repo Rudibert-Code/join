@@ -58,11 +58,11 @@
           <div class="d-flex center-space">
             <div class="subtask-progress-container">
               <div class="progressbar-track">
-                <div class="progressbar-fill" [style.width.%]="board.getProgress(task.id)"></div>
+                <div class="progressbar-fill" [style.width.%]="sts.getProgress(task.id)"></div>
               </div>
             </div>
             <p>
-              {{ board.getCompletedSubtasksAmount(task.id) }}/{{ board.getSubtaskAmount(task.id).length }}
+              {{ sts.getCompletedSubtasksAmount(task.id) }}/{{ sts.getSubtaskAmount(task.id).length }}
               Subtasks
             </p>
           </div>
@@ -125,11 +125,11 @@
           <div class="d-flex center-space">
             <div class="subtask-progress-container">
               <div class="progressbar-track">
-                <div class="progressbar-fill" [style.width.%]="board.getProgress(task.id)"></div>
+                <div class="progressbar-fill" [style.width.%]="sts.getProgress(task.id)"></div>
               </div>
             </div>
             <p>
-              {{ board.getCompletedSubtasksAmount(task.id) }}/{{ board.getSubtaskAmount(task.id).length }}
+              {{ sts.getCompletedSubtasksAmount(task.id) }}/{{ sts.getSubtaskAmount(task.id).length }}
               Subtasks
             </p>
           </div>
@@ -194,11 +194,11 @@
           <div class="d-flex center-space">
             <div class="subtask-progress-container">
               <div class="progressbar-track">
-                <div class="progressbar-fill" [style.width.%]="board.getProgress(task.id)"></div>
+                <div class="progressbar-fill" [style.width.%]="sts.getProgress(task.id)"></div>
               </div>
             </div>
             <p>
-              {{ board.getCompletedSubtasksAmount(task.id) }}/{{ board.getSubtaskAmount(task.id).length }}
+              {{ sts.getCompletedSubtasksAmount(task.id) }}/{{ sts.getSubtaskAmount(task.id).length }}
               Subtasks
             </p>
           </div>
@@ -256,11 +256,11 @@
           <div class="d-flex center-space">
             <div class="subtask-progress-container">
               <div class="progressbar-track">
-                <div class="progressbar-fill" [style.width.%]="board.getProgress(task.id)"></div>
+                <div class="progressbar-fill" [style.width.%]="sts.getProgress(task.id)"></div>
               </div>
             </div>
             <p>
-              {{ board.getCompletedSubtasksAmount(task.id) }}/{{ board.getSubtaskAmount(task.id).length }}
+              {{ sts.getCompletedSubtasksAmount(task.id) }}/{{ sts.getSubtaskAmount(task.id).length }}
               Subtasks
             </p>
           </div>

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Board } from '../../pages/board/board';
 import { ContactService } from '../../core/services/contact.service';
+import { SubtaskService } from '../../core/services/subtask.service';
 
 /**
  * Mobile view wrapper providing access to board state and actions.
@@ -18,5 +19,6 @@ import { ContactService } from '../../core/services/contact.service';
 
 export class BoardMobile {
   board = inject(Board);
-  cs = inject(ContactService)
+  cs = inject(ContactService);
+  sts = inject(SubtaskService);
 }
