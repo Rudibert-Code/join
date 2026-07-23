@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Board } from '../../pages/board/board';
 import { TicketEdit } from '../../components/ticket-edit/ticket-edit';
+import { Supabase } from '../../core/services/supabase';
 
 /**
  * Represents a subtask item within the ticket detail view.
@@ -51,10 +52,10 @@ interface newSubTask {
   templateUrl: './ticket-details.html',
   styleUrl: './ticket-details.scss',
 })
-
 export class TicketDetails {
   /** Reference to parent Board component instance. */
   board = inject(Board);
+  db = inject(Supabase)
   taskTitle: string = '';
   taskDescr: string = '';
   taskLimitDate: string = '';
@@ -73,12 +74,13 @@ export class TicketDetails {
   openTicketEdit() {
     const dialogEdit = document.getElementById('ticket_edit') as HTMLDialogElement;
     const dialogEditTitle = document.getElementById('editTaskTitle') as HTMLInputElement;
-    const dialogEditDescription = document.getElementById('editTaskDescription',) as HTMLInputElement;
+    const dialogEditDescription = document.getElementById(
+      'editTaskDescription',
+    ) as HTMLInputElement;
     const dialogEditDueDate = document.getElementById('subtask_edit_dd') as HTMLInputElement;
     let dialogPrio: string = '';
 
     for (let index = 0; index < this.board.tasks().length; index++) {
-
       if (this.board.tasks()[index].id == this.board.ticketCardID) {
         dialogEditTitle.value = this.board.tasks()[index].title;
         dialogEditDescription.value = this.board.tasks()[index].description;
@@ -89,8 +91,30 @@ export class TicketDetails {
 
     this.board.closeTicketCard(false);
     this.editTicketPrio(dialogPrio);
-    this.board.setContactColor(this.ticketCardID);
+    this.setContactColor(this.ticketCardID);
     dialogEdit.showModal();
+  }
+
+  /**
+   * Applies contact avatar color class to corresponding contact element.
+   *
+   * @param taskId - Task ID.
+   */
+  setContactColor(taskId: number) {
+    for (let index = 0; index < this.db.task_contacts().length; index++) {
+      if (this.db.task_contacts()[index].task_id == taskId) {
+        let currentContactID = this.db.task_contacts()[index].contact_id;
+        for (let index = 0; index < this.db.contacts().length; index++) {
+          if (this.db.contacts()[index].id == currentContactID) {
+            let currentContactClass = 'contacts_icon_' + this.db.contacts()[index].color.slice(1);
+            let currentContact = document.getElementById(
+              String(currentContactID),
+            ) as HTMLDivElement;
+            currentContact.classList.add(currentContactClass);
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -130,7 +154,6 @@ export class TicketDetails {
     this.contactsCache = [];
     const linkedContacts = this.board.contacts();
     for (const relation of this.board.task_contacts()) {
-
       if (relation.task_id !== id) {
         continue;
       }
@@ -156,13 +179,12 @@ export class TicketDetails {
   /**
    * Populates subtasks cache for the selected task ID.
    *
-* @param id - Unique database ID of the task.
+   * @param id - Unique database ID of the task.
    */
   async getSubTasks(id: number) {
     this.subtasksCache = [];
 
     for (let index = 0; index < this.board.subtasks().length; index++) {
-
       if (this.board.subtasks()[index].task_id == id) {
         this.subtasksCache.push({
           title: this.board.subtasks()[index].title,
@@ -232,7 +254,6 @@ export class TicketDetails {
     this.board.closeTicketCard(false);
 
     for (let index = 0; index < this.board.subtasks().length; index++) {
-
       if (this.board.subtasks()[index].task_id == this.openTicketID) {
         this.board.db.deleteSubtask(this.board.subtasks()[index].id);
       }
@@ -248,7 +269,9 @@ export class TicketDetails {
   checkBox(x: subTask) {
     let checkBoxID = String(x.id);
     let subTaskState: boolean = true;
-    let currentButton = document.getElementById(String('checkbox_' + checkBoxID)) as HTMLImageElement;
+    let currentButton = document.getElementById(
+      String('checkbox_' + checkBoxID),
+    ) as HTMLImageElement;
 
     if (currentButton.classList.contains('subtasks_btn_true')) {
       currentButton.classList.remove('subtasks_btn_true');
@@ -260,7 +283,7 @@ export class TicketDetails {
       currentButton.classList.add('subtasks_btn_true');
       currentButton.src = 'assets/UI/checkbox_selected.png';
     }
-    
+
     this.board.db.updateSubtasks(x.id, subTaskState);
   }
 

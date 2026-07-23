@@ -38,11 +38,6 @@ export class Board implements OnInit {
   tasks = computed(() => this.db.tasks());
   subtasks = computed(() => this.db.subtasks());
   task_contacts = computed(() => this.db.task_contacts());
-  taskTitle: string = '';
-  taskDescr: string = '';
-  taskLimitDate: string = '';
-  taskPriority: string = '';
-  taskCategory: string = '';
   searchQuery: string = '';
   openTicketID: number = 0;
   activeDropZone: string | null = null;
@@ -224,18 +219,6 @@ export class Board implements OnInit {
   }
 
   /**
-   * Applies SCSS highlight class to drop zone element.
-   *
-   * @param zone - Container element ID.
-   */
-  private addDropTargetClass(zone: string) {
-    const container = document.getElementById(zone) as HTMLElement;
-    if (container) {
-      container.classList.add('drop-target');
-    }
-  }
-
-  /**
    * Removes SCSS highlight class from drop zone element.
    *
    * @param zone - Container element ID.
@@ -354,29 +337,6 @@ export class Board implements OnInit {
   newDialogDescription: string = '';
   newDialogDueDate: string = '';
 
-  /**
-   * Applies contact avatar color class to corresponding contact element.
-   *
-   * @param taskId - Task ID.
-   */
-  setContactColor(taskId: number) {
-    for (let index = 0; index < this.db.task_contacts().length; index++) {
-      if (this.db.task_contacts()[index].task_id == taskId) {
-        let currentContactID = this.db.task_contacts()[index].contact_id;
-
-        for (let index = 0; index < this.db.contacts().length; index++) {
-          if (this.db.contacts()[index].id == currentContactID) {
-            let currentContactClass = 'contacts_icon_' + this.db.contacts()[index].color.slice(1);
-            let currentContact = document.getElementById(
-              String(currentContactID),
-            ) as HTMLDivElement;
-            currentContact.classList.add(currentContactClass);
-          }
-        }
-      }
-    }
-  }
-
   contactsCache: contacts[] = [];
 
   /**
@@ -427,7 +387,7 @@ export class Board implements OnInit {
    *
    * @param id - Task ID.
    */
-  async getSubTasks(id: any) {
+  async getSubTasks(id: number) {
     this.subtasksCache = [];
     for (let index = 0; index < this.subtasks().length; index++) {
       if (this.subtasks()[index].task_id == id) {

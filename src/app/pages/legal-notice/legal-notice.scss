@@ -1,10 +1,28 @@
 @use '../../../styles/variables' as *;
 
+h1 {
+  margin: 0 0 24px;
+  font-size: 48px;
+}
+
+h2 {
+  margin-top: 32px;
+  font-size: 24px;
+}
+
+p {
+  font-size: 16px;
+}
+
+li {
+  margin-bottom: 16px;
+}
+
 h3 {
   color: $main_black;
 }
 
 .positioning {
-  padding: 40px 40px 10px 40px;
-  max-width: 1024px;
+  max-width: 900px;
+  padding: 80px 32px;
 }
