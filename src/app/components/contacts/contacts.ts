@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Contact, Supabase } from '../../supabase';
+import { Supabase } from '../../supabase';
+import { Contact } from '../../models/contact.model';
 import { ContactForm } from '../contact-form/contact-form';
 import { ContactDetails } from '../contact-details/contact-details';
 

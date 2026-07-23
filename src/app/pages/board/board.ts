@@ -1,7 +1,9 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Supabase, Task, Subtask} from '../../supabase';
+import { Supabase } from '../../supabase';
+import { Task } from '../../models/task.model';
+import { Subtask } from '../../models/subtask.model';
 import { RouterLink } from '@angular/router';
 import { TicketDetails } from '../../components/ticket-details/ticket-details';
 import { BoardMobile } from '../../pages/board-mobile/board-mobile';
@@ -11,17 +13,13 @@ interface subTask {
   is_Done: Boolean;
   id: number;
 }
+
 interface contacts {
   id: number;
   name: string;
   surname: string;
   initials: string;
   color: string;
-}
-interface newSubTask {
-  task_id: number;
-  title: string;
-  is_done: boolean;
 }
 
 /**
@@ -34,7 +32,6 @@ interface newSubTask {
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })
-
 export class Board implements OnInit {
   db = inject(Supabase);
   contacts = computed(() => this.db.contacts());
@@ -52,7 +49,7 @@ export class Board implements OnInit {
 
   /**
    * Checks whether the given drop zone ID matches the currently active drop target.
-   * 
+   *
    * @param zone - Drop zone container ID.
    * @returns True if active drop target.
    */
@@ -107,7 +104,7 @@ export class Board implements OnInit {
 
   /**
    * Filters tasks by column status key and matches against search query if present.
-   * 
+   *
    * @param categoryKey - Column identifier key.
    * @returns Array of filtered task objects.
    */
@@ -127,7 +124,7 @@ export class Board implements OnInit {
 
   /**
    * Normalizes raw priority string values.
-   * 
+   *
    * @param priority - Raw priority string.
    * @returns Cleaned priority string.
    */
@@ -137,7 +134,7 @@ export class Board implements OnInit {
 
   /**
    * Maps task status string to valid category key.
-   * 
+   *
    * @param task - The task object.
    * @returns Category key value.
    */
@@ -158,7 +155,7 @@ export class Board implements OnInit {
 
   /**
    * Handles dragstart event by attaching task ID to drag payload.
-   * 
+   *
    * @param id - Task ID.
    * @param event - HTML DragEvent.
    */
@@ -173,7 +170,7 @@ export class Board implements OnInit {
 
   /**
    * Cleans up dragging SCSS classes and active drop zone state.
-   * 
+   *
    * @param event - HTML DragEvent.
    */
   dragEnd(event: DragEvent) {
@@ -193,7 +190,7 @@ export class Board implements OnInit {
 
   /**
    * Handles dragover event over potential drop column.
-   * 
+   *
    * @param zone - Target drop zone ID.
    * @param event - HTML DragEvent.
    */
@@ -209,7 +206,7 @@ export class Board implements OnInit {
 
   /**
    * Resets drop zone state when mouse drags out of target boundary.
-   * 
+   *
    * @param zone - Drop zone container ID.
    * @param event - HTML DragEvent.
    */
@@ -228,7 +225,7 @@ export class Board implements OnInit {
 
   /**
    * Applies SCSS highlight class to drop zone element.
-   * 
+   *
    * @param zone - Container element ID.
    */
   private addDropTargetClass(zone: string) {
@@ -240,7 +237,7 @@ export class Board implements OnInit {
 
   /**
    * Removes SCSS highlight class from drop zone element.
-   * 
+   *
    * @param zone - Container element ID.
    */
   private removeDropTargetClass(zone: string) {
@@ -252,7 +249,7 @@ export class Board implements OnInit {
 
   /**
    * Updates task status in database on drag drop completion.
-   * 
+   *
    * @param status - Target status value.
    * @param event - HTML DragEvent.
    */
@@ -274,7 +271,7 @@ export class Board implements OnInit {
 
   /**
    * Direct status update trigger for mobile interface.
-   * 
+   *
    * @param id - Task ID.
    * @param status - Target status string.
    */
@@ -285,7 +282,7 @@ export class Board implements OnInit {
 
   /**
    * Determines card styling SCSS class according to task category.
-   * 
+   *
    * @param category - Category name.
    * @returns SCSS class string.
    */
@@ -296,22 +293,22 @@ export class Board implements OnInit {
 
   /**
    * Opens ticket details dialog and populates data for selected task.
-   * 
+   *
    * @param id - Task ID.
    */
   openTicketCard(id: number) {
-    const task = this.tasks().find(t => t.id === id);
+    const task = this.tasks().find((t) => t.id === id);
     if (!task) return;
-  
+
     const dialogWindow = document.getElementById('ticket_card') as HTMLDialogElement;
-  
+
     this.ticketCardID = id;
     this.openTicketID = id;
-  
+
     this.populateTicketDialog(task);
     this.getContacts(id);
     this.getSubTasks(id);
-  
+
     dialogWindow.showModal();
   }
 
@@ -321,20 +318,20 @@ export class Board implements OnInit {
     const ticketDueDate = document.getElementById('ticket_due-date') as HTMLParagraphElement;
     const ticketPriority = document.getElementById('ticket_priority') as HTMLParagraphElement;
     const ticketCategory = document.getElementById('ticket_category') as HTMLParagraphElement;
-  
+
     ticketTitle.textContent = this.cutInout(task.title, 'title');
     ticketDescription.textContent = this.cutInout(task.description, 'description');
     ticketDueDate.textContent = String(this.setTicketDueDate(task.due_date));
     ticketPriority.textContent = task.priority;
     ticketCategory.textContent = task.category;
-  
+
     this.setTicketPrioIcon(task.priority);
     this.setTicketCatClass(task.category);
   }
 
   /**
    * Truncates title or description text strings exceeding display length limits.
-   * 
+   *
    * @param text - Text string to trim.
    * @param type - Field type ('title' or 'description').
    * @returns Truncated string with ellipsis if necessary.
@@ -359,7 +356,7 @@ export class Board implements OnInit {
 
   /**
    * Applies contact avatar color class to corresponding contact element.
-   * 
+   *
    * @param taskId - Task ID.
    */
   setContactColor(taskId: number) {
@@ -370,7 +367,9 @@ export class Board implements OnInit {
         for (let index = 0; index < this.db.contacts().length; index++) {
           if (this.db.contacts()[index].id == currentContactID) {
             let currentContactClass = 'contacts_icon_' + this.db.contacts()[index].color.slice(1);
-            let currentContact = document.getElementById(String(currentContactID)) as HTMLDivElement;
+            let currentContact = document.getElementById(
+              String(currentContactID),
+            ) as HTMLDivElement;
             currentContact.classList.add(currentContactClass);
           }
         }
@@ -413,7 +412,7 @@ export class Board implements OnInit {
 
   /**
    * Populates cached contact details linked to specified task ID.
-   * 
+   *
    * @param id - Task ID.
    */
   async getContacts(id: number) {
@@ -425,7 +424,7 @@ export class Board implements OnInit {
 
   /**
    * Fetches subtasks linked to given task ID and updates visual checkbox states.
-   * 
+   *
    * @param id - Task ID.
    */
   async getSubTasks(id: any) {
@@ -439,14 +438,14 @@ export class Board implements OnInit {
         });
       }
     }
-    setTimeout(()=>{
-    this.setCheckBoxState(id);
-    },0)
+    setTimeout(() => {
+      this.setCheckBoxState(id);
+    }, 0);
   }
 
-/**
+  /**
    * Sets category badge style class on ticket element.
-   * 
+   *
    * @param cat - Category name string.
    */
   setTicketCatClass(cat: string) {
@@ -467,7 +466,7 @@ export class Board implements OnInit {
 
   /**
    * Formats ISO date hyphens into slashes for UI presentation.
-   * 
+   *
    * @param date - Date string.
    * @returns Formatted date string.
    */
@@ -477,7 +476,7 @@ export class Board implements OnInit {
 
   /**
    * Updates ticket priority icon image source based on priority level.
-   * 
+   *
    * @param prio - Priority string.
    */
   setTicketPrioIcon(prio: string) {
@@ -499,7 +498,7 @@ export class Board implements OnInit {
 
   /**
    * Closes active ticket dialogs and saves assigned contacts if changes occurred.
-   * 
+   *
    * @param changes - Flag indicating whether changes were made.
    */
   closeTicketCard(changes: boolean) {
@@ -514,25 +513,33 @@ export class Board implements OnInit {
 
   /**
    * Updates checkbox image source according to subtask completion status.
-   * 
+   *
    * @param taskID - Task ID.
    */
-  setCheckBoxState(taskID:number){
+  setCheckBoxState(taskID: number) {
     for (let index = 0; index < this.db.subtasks().length; index++) {
-      let targetCheckBox = document.getElementById("checkbox_" + this.db.subtasks()[index].id) as HTMLImageElement;
-      if (this.db.subtasks()[index].task_id == taskID && this.db.subtasks()[index].is_done == true) {
-        targetCheckBox.src ="assets/UI/checkbox_selected.png";
-      } else if (this.db.subtasks()[index].task_id == taskID && this.db.subtasks()[index].is_done == false) {
-        targetCheckBox.src ="assets/UI/checkbox_default.png";
+      let targetCheckBox = document.getElementById(
+        'checkbox_' + this.db.subtasks()[index].id,
+      ) as HTMLImageElement;
+      if (
+        this.db.subtasks()[index].task_id == taskID &&
+        this.db.subtasks()[index].is_done == true
+      ) {
+        targetCheckBox.src = 'assets/UI/checkbox_selected.png';
+      } else if (
+        this.db.subtasks()[index].task_id == taskID &&
+        this.db.subtasks()[index].is_done == false
+      ) {
+        targetCheckBox.src = 'assets/UI/checkbox_default.png';
       }
     }
   }
 
- ddContacts: number[] = [];
+  ddContacts: number[] = [];
 
- /**
+  /**
    * Assigns array of contact IDs to task record in database.
-   * 
+   *
    * @param taskId - Task ID.
    * @param contactIds - Array of contact IDs.
    */
@@ -544,7 +551,7 @@ export class Board implements OnInit {
 
   /**
    * Removes assigned contact entries for task from dropdown cache array.
-   * 
+   *
    * @param taskID - Task ID.
    */
   filterContacts(taskID: number) {
@@ -559,7 +566,7 @@ export class Board implements OnInit {
 
   /**
    * Maps contact IDs to task-contact relationship payload objects.
-   * 
+   *
    * @param taskId - Task ID.
    * @param contactIds - Array of contact IDs.
    * @returns Array of relation objects.
@@ -573,7 +580,7 @@ export class Board implements OnInit {
 
   /**
    * Retrieves all subtasks belonging to specified task ID.
-   * 
+   *
    * @param taskId - Task ID.
    * @returns Array of subtasks.
    */
@@ -583,7 +590,7 @@ export class Board implements OnInit {
 
   /**
    * Counts number of completed subtasks for task.
-   * 
+   *
    * @param taskId - Task ID.
    * @returns Count of completed subtasks.
    */
@@ -594,7 +601,7 @@ export class Board implements OnInit {
 
   /**
    * Calculates overall subtask completion percentage for task progress bar.
-   * 
+   *
    * @param taskId - Task ID.
    * @returns Completion percentage between 0 and 100.
    */
@@ -608,7 +615,7 @@ export class Board implements OnInit {
 
   /**
    * Maps contact details and avatar styles for rendering on board task card preview.
-   * 
+   *
    * @param taskId - Task ID.
    * @returns Array of contact initial and color objects.
    */

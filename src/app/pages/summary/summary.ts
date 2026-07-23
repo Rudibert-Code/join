@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, computed } from '@angular/core';
 import { Supabase } from '../../supabase';
-import { Task } from '../../supabase';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { Task } from '../../models/task.model';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { User as SupabaseUser } from '@supabase/supabase-js';
 
 /**

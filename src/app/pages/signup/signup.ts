@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { Supabase, newContact } from '../../supabase';
+import { Supabase } from '../../supabase';
+import { NewContact } from '../../models/contact.model';
 import { FormsModule } from '@angular/forms';
 
 /**
@@ -12,7 +13,6 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './signup.html',
   styleUrl: './signup.scss',
 })
-
 export class Signup {
   db = inject(Supabase);
   router = inject(Router);
@@ -37,7 +37,7 @@ export class Signup {
     const password = document.getElementById('pwd') as HTMLInputElement | null;
 
     if (!password) return;
-    
+
     if (password.type === 'password') {
       password.type = 'text';
       this.iconSrc = this.visibilityOnSrc;
@@ -54,7 +54,7 @@ export class Signup {
     const reqPassword = document.getElementById('reqPw') as HTMLInputElement | null;
 
     if (!reqPassword) return;
-    
+
     if (reqPassword.type === 'password') {
       reqPassword.type = 'text';
       this.confirmIconSrc = this.visibilityOnSrc;
@@ -110,13 +110,13 @@ export class Signup {
    * Creates a corresponding contact record in the database for the new user.
    */
   async pushInContact() {
-    const contact: newContact = {
+    const contact: NewContact = {
       first_name: this.signUpData.firstName,
       last_name: this.signUpData.lastName,
       email: this.signUpData.email,
     };
     const result = await this.db.setContact(contact);
-    
+
     if (!result) {
       console.error('Contact creation failed');
     }

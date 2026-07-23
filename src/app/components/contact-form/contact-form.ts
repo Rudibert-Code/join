@@ -2,7 +2,8 @@ import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Supabase, newContact } from '../../supabase';
+import { Supabase } from '../../supabase';
+import { NewContact } from '../../models/contact.model';
 
 /**
  * Modal form component for creating and persisting new contact records.
@@ -14,7 +15,6 @@ import { Supabase, newContact } from '../../supabase';
   templateUrl: './contact-form.html',
   styleUrl: './contact-form.scss',
 })
-
 export class ContactForm {
   /** Event emitted when the form requests closing. */
   @Output() close = new EventEmitter<void>();
@@ -45,7 +45,7 @@ export class ContactForm {
    */
   async onSubmit() {
     if (this.contactForm.valid) {
-      const contactPayload: newContact = this.contactForm.value as newContact;
+      const contactPayload: NewContact = this.contactForm.value as NewContact;
       const data = await this.db.setContact(contactPayload);
       this.requestClose();
     } else {

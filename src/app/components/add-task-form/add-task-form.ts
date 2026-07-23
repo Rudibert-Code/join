@@ -9,7 +9,8 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { Contact, Supabase } from '../../supabase';
+import { Supabase } from '../../supabase';
+import { Contact } from '../../models/contact.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 export interface TaskFormRawValue {

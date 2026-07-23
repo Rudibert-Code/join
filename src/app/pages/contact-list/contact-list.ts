@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Contacts } from '../../components/contacts/contacts';
 import { ContacsButton } from '../../components/contacs-button/contacs-button';
 import { ContactDetails } from '../../components/contact-details/contact-details';
-import { Contact } from '../../supabase';
+import { Contact } from '../../models/contact.model'; 
 
 /**
  * Manages the contact list view, details pane, and mobile detail view states.

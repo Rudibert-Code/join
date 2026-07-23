@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Supabase, User } from '../../supabase';
+import { Supabase } from '../../supabase';
 import { FormsModule } from '@angular/forms';
 
 /**
