@@ -113,7 +113,7 @@
           </dialog>
         </section>
         <div class="subtask_edit_contact">
-          @for (contact of board.contactsCache; track $index) {
+          @for (contact of cs.contactsCache; track $index) {
             <div class="contacts_icon" [style.background-color]="contact.color">
               <p class="icon_text">{{ contact.initials }}</p>
             </div>

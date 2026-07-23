@@ -33,7 +33,7 @@
     <section class="ticket_details">
       <p class="foreword">Assigned to:</p>
       <div class="scroll_list" id="contact_list">
-        @for (contact of board.contactsCache; track $index) {
+        @for (contact of cs.contactsCache; track $index) {
           <div class="contacts">
             <div class="contacts_icon" [style.background-color]="contact.color">
               <p class="icon_text">{{ contact.initials }}</p>

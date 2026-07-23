@@ -75,7 +75,7 @@
           <div class="d-flex center-space">
             <div class="task-card__users">
               <div
-                *ngFor="let contact of getContactsForTaskcard(task.id) | slice: 0 : 3"
+                *ngFor="let contact of cs.getContactsForTaskcard(task.id) | slice: 0 : 3"
                 class="user-badge"
                 [style.backgroundColor]="contact.color"
               >
@@ -83,10 +83,10 @@
               </div>
 
               <div
-                *ngIf="getContactsForTaskcard(task.id).length > 3"
+                *ngIf="cs.getContactsForTaskcard(task.id).length > 3"
                 class="user-badge overflow-badge"
               >
-                <p>+{{ getContactsForTaskcard(task.id).length - 3 }}</p>
+                <p>+{{ cs.getContactsForTaskcard(task.id).length - 3 }}</p>
               </div>
             </div>
             <img
@@ -145,15 +145,15 @@
           <div class="d-flex center-space">
             <div class="task-card__users">
               <div
-                *ngFor="let contact of getContactsForTaskcard(task.id) | slice: 0 : 3"
+                *ngFor="let contact of cs.getContactsForTaskcard(task.id) | slice: 0 : 3"
                 class="user-badge"
                 [style.backgroundColor]="contact.color">
                 <p>{{ contact.initials }}</p>
               </div>
               <div
-                *ngIf="getContactsForTaskcard(task.id).length > 3"
+                *ngIf="cs.getContactsForTaskcard(task.id).length > 3"
                 class="user-badge overflow-badge">
-                <p>+{{ getContactsForTaskcard(task.id).length - 3 }}</p>
+                <p>+{{ cs.getContactsForTaskcard(task.id).length - 3 }}</p>
               </div>
             </div>
             <img
@@ -212,15 +212,15 @@
           <div class="d-flex center-space">
             <div class="task-card__users">
               <div
-                *ngFor="let contact of getContactsForTaskcard(task.id) | slice: 0 : 3"
+                *ngFor="let contact of cs.getContactsForTaskcard(task.id) | slice: 0 : 3"
                 class="user-badge"
                 [style.backgroundColor]="contact.color">
                 <p>{{ contact.initials }}</p>
               </div>
               <div
-                *ngIf="getContactsForTaskcard(task.id).length > 3"
+                *ngIf="cs.getContactsForTaskcard(task.id).length > 3"
                 class="user-badge overflow-badge">
-                <p>+{{ getContactsForTaskcard(task.id).length - 3 }}</p>
+                <p>+{{ cs.getContactsForTaskcard(task.id).length - 3 }}</p>
               </div>
             </div>
             <img
@@ -279,15 +279,15 @@
           <div class="d-flex center-space">
             <div class="task-card__users">
               <div
-                *ngFor="let contact of getContactsForTaskcard(task.id) | slice: 0 : 3"
+                *ngFor="let contact of cs.getContactsForTaskcard(task.id) | slice: 0 : 3"
                 class="user-badge"
                 [style.backgroundColor]="contact.color">
                 <p>{{ contact.initials }}</p>
               </div>
               <div
-                *ngIf="getContactsForTaskcard(task.id).length > 3"
+                *ngIf="cs.getContactsForTaskcard(task.id).length > 3"
                 class="user-badge overflow-badge">
-                <p>+{{ getContactsForTaskcard(task.id).length - 3 }}</p>
+                <p>+{{ cs.getContactsForTaskcard(task.id).length - 3 }}</p>
               </div>
             </div>
             <img

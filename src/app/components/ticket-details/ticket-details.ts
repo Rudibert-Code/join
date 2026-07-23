@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Board } from '../../pages/board/board';
 import { TicketEdit } from '../../components/ticket-edit/ticket-edit';
 import { Supabase } from '../../core/services/supabase';
+import { ContactService } from '../../core/services/contact.service';
 
 /**
  * Represents a subtask item within the ticket detail view.
@@ -55,7 +56,8 @@ interface newSubTask {
 export class TicketDetails {
   /** Reference to parent Board component instance. */
   board = inject(Board);
-  db = inject(Supabase)
+  db = inject(Supabase);
+  cs = inject(ContactService);
   taskTitle: string = '';
   taskDescr: string = '';
   taskLimitDate: string = '';

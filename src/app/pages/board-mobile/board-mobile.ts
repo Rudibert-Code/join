@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Board } from '../../pages/board/board';
+import { ContactService } from '../../core/services/contact.service';
 
 /**
  * Mobile view wrapper providing access to board state and actions.
@@ -17,4 +18,5 @@ import { Board } from '../../pages/board/board';
 
 export class BoardMobile {
   board = inject(Board);
+  cs = inject(ContactService)
 }

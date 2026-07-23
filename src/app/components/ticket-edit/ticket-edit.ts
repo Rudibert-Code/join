@@ -1,5 +1,6 @@
 import { Component, inject} from '@angular/core';
 import { Board } from '../../pages/board/board';
+import { ContactService } from '../../core/services/contact.service';
 
 /**
  * Represents a subtask item for display in the ticket edit dialog.
@@ -40,6 +41,8 @@ export class TicketEdit {
 /** Reference to parent Board component instance. */
 board = inject(Board);
 
+cs = inject(ContactService);
+
 /** Tracks toggle state of contact selection dropdown. */
 ddOpen: boolean = false;
 
@@ -69,14 +72,14 @@ closeDropDown() {
   let dropdownWindow = document.getElementById('dropdown_list') as HTMLDialogElement;
   dropdownWindow.style.display = 'none';
 
-  for (let index = 0; index < this.board.ddContacts.length; index++) {
-    let contact = document.getElementById('dd_contact_' + String(this.board.ddContacts[index]),) as HTMLDivElement;
-    let checkBox = document.getElementById('dd_checkbox_' + String(this.board.ddContacts[index]),) as HTMLImageElement;
+  for (let index = 0; index < this.cs.ddContacts.length; index++) {
+    let contact = document.getElementById('dd_contact_' + String(this.cs.ddContacts[index]),) as HTMLDivElement;
+    let checkBox = document.getElementById('dd_checkbox_' + String(this.cs.ddContacts[index]),) as HTMLImageElement;
     contact.classList.remove('contact_selected');
     checkBox.src = 'assets/UI/checkbox_default.png';
   }
 
-  this.board.ddContacts = [];
+  this.cs.ddContacts = [];
   this.ddOpen = false;
 }
 
@@ -115,13 +118,13 @@ selectDropDownContact(contactID: number) {
   let selectedContact = document.getElementById('dd_contact_' + String(contactID),) as HTMLDivElement;
   let selectedCheckBox = document.getElementById('dd_checkbox_' + String(contactID),) as HTMLImageElement;
 
-  if (this.board.ddContacts.includes(contactID) == false) {
-    this.board.ddContacts.push(contactID);
+  if (this.cs.ddContacts.includes(contactID) == false) {
+    this.cs.ddContacts.push(contactID);
     selectedContact.classList.add('contact_selected');
     selectedCheckBox.src = 'assets/UI/checkbox_selected_white.png';
-  } else if (this.board.ddContacts.includes(contactID) == true) {
-    this.board.ddContacts.indexOf(contactID) !== -1 &&
-    this.board.ddContacts.splice(this.board.ddContacts.indexOf(contactID), 1);
+  } else if (this.cs.ddContacts.includes(contactID) == true) {
+    this.cs.ddContacts.indexOf(contactID) !== -1 &&
+    this.cs.ddContacts.splice(this.cs.ddContacts.indexOf(contactID), 1);
     selectedContact.classList.remove('contact_selected');
     selectedCheckBox.src = 'assets/UI/checkbox_default.png';
   }
