@@ -2,29 +2,23 @@
 <dialog class="ticket" id="ticket_card">
     <section class="header">
       <div class="task-card__category">
-        <!--<p class="task-card__category margin-correction" [ngClass]="getTaskCardClass(task.category)">-->
         <p class="ticket_category" id="ticket_category">
-          <!--{{ task.category }}-->
         </p>
       </div>
       <button (click)="closeTC(false)" class="exit_btn">
         <img src="assets/UI/icon_cancle.png" alt="" />
       </button>
     </section>
-    <!--<h2 class="title"> {{ task.title }} </h2>-->
     <h2 class="title" id="ticket_title"></h2>
     <section class="ticket_details">
-      <!--<p>{{ task.description }}</p>-->
       <p id="ticket_description"></p>
       <div class="data">
         <p class="foreword">Due Date:</p>
-        <!--<p class="ticket_date"> {{ task.due_date }} </p>-->
         <p class="ticket_date" id="ticket_due-date"></p>
       </div>
       <div class="data">
         <p class="foreword">Priority:</p>
         <div class="data">
-          <!--<p class="prio" id="prio-text">{{ task.priority }}</p>-->
           <p class="prio" id="ticket_priority"></p>
           <img src="" alt="" id="prio-icon" />
         </div>
@@ -47,7 +41,7 @@
       <p class="foreword">Subtasks:</p>
       <div class="scroll_list">
         <!--Generate subtasks here-->
-        @for (subtask of board.subtasksCache; track $index) {
+        @for (subtask of sts.subtasksCache; track $index) {
           <div class="subtasks">
             <img
               (click)="checkBox(subtask)"

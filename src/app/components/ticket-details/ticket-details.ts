@@ -3,6 +3,7 @@ import { Board } from '../../pages/board/board';
 import { TicketEdit } from '../../components/ticket-edit/ticket-edit';
 import { Supabase } from '../../core/services/supabase';
 import { ContactService } from '../../core/services/contact.service';
+import { SubtaskService } from '../../core/services/subtask.service';
 
 /**
  * Represents a subtask item within the ticket detail view.
@@ -58,6 +59,7 @@ export class TicketDetails {
   board = inject(Board);
   db = inject(Supabase);
   cs = inject(ContactService);
+  sts = inject(SubtaskService)
   taskTitle: string = '';
   taskDescr: string = '';
   taskLimitDate: string = '';
